@@ -6,11 +6,11 @@ test('profile information can be updated', function () {
     $this->actingAs($user = User::factory()->create());
 
     $this->put('/user/profile-information', [
-        'name' => 'Test Name',
+        'username' => 'Test Name',
         'email' => 'test@example.com',
     ]);
 
     expect($user->fresh())
-        ->name->toEqual('Test Name')
+        ->username->toEqual('Test Name')
         ->email->toEqual('test@example.com');
 });
