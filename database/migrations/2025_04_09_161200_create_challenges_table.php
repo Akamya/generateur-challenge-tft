@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('challenges', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('tft_users')->onDelete('cascade');
+            $table->foreignId('season_id')->constrained('tft_seasons')->onDelete('cascade');
+            $table->foreignId('position_id')->constrained('tft_positions')->onDelete('cascade');
+            $table->foreignId('formation_id')->constrained('tft_formations')->onDelete('cascade');
+            $table->foreignId('class_id')->constrained('tft_classes')->onDelete('cascade');
+            $table->foreignId('origin_id')->constrained('tft_origins')->onDelete('cascade');
             $table->timestamps();
         });
     }
