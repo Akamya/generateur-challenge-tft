@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('classes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('season_id')->constrained('tft_seasons')->onDelete('cascade');
+            $table->foreignId('season_id')->constrained('seasons')->onDelete('cascade');
             $table->timestamps();
         });
     }
