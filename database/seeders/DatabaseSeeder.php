@@ -16,6 +16,9 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             SeasonSeeder::class,
             PositionSeeder::class,
+            FormationSeeder::class,
+            ClasseSeeder::class,
+            OriginSeeder::class,
         ]);
     }
 }
