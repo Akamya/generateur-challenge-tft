@@ -53,24 +53,24 @@ const logout = () => {
                     <!-- Navigation Links -->
                     <div class="hidden md:flex space-x-8">
                         <NavLink
-                            :href="route('dashboard')"
-                            :active="route().current('dashboard')"
+                            :href="route('homepage')"
+                            :active="route().current('homepage')"
                             class="text-white hover:text-yellow-300"
                             active-class="text-yellow-300"
                         >
                             Accueil
                         </NavLink>
                         <NavLink
-                            :href="route('dashboard')"
-                            :active="route().current('dashboard')"
+                            :href="route('homepage')"
+                            :active="route().current('homepage')"
                             class="text-white hover:text-yellow-300"
                             active-class="text-yellow-300"
                         >
                             Challenges
                         </NavLink>
                         <NavLink
-                            :href="route('dashboard')"
-                            :active="route().current('dashboard')"
+                            :href="route('homepage')"
+                            :active="route().current('homepage')"
                             class="text-white hover:text-yellow-300"
                             active-class="text-yellow-300"
                         >
@@ -376,24 +376,24 @@ const logout = () => {
                 >
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink
-                            :href="route('dashboard')"
-                            :active="route().current('dashboard')"
+                            :href="route('homepage')"
+                            :active="route().current('homepage')"
                             class="text-white hover:text-yellow-300"
                             active-class="bg-blue-800 text-yellow-300"
                         >
                             Accueil
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
-                            :href="route('dashboard')"
-                            :active="route().current('dashboard')"
+                            :href="route('homepage')"
+                            :active="route().current('homepage')"
                             class="text-white hover:text-yellow-300"
                             active-class="bg-blue-800 text-yellow-300"
                         >
                             Challenges
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
-                            :href="route('dashboard')"
-                            :active="route().current('dashboard')"
+                            :href="route('homepage')"
+                            :active="route().current('homepage')"
                             class="text-white hover:text-yellow-300"
                             active-class="bg-blue-800 text-yellow-300"
                         >
