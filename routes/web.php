@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChallengeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -10,6 +11,7 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
     ]);
 })->name('homepage');
+Route::get('/generate-challenge', [ChallengeController::class, 'generate'])->name('generate');
 
 // Route::middleware([
 //     'auth:sanctum',

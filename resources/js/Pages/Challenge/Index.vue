@@ -10,23 +10,10 @@ const props = defineProps({
     canRegister: {
         type: Boolean,
     },
-    challenges: Array,
+    challenge: Object,
 });
 
 const showChallenge = ref(false);
-
-function generateChallenge() {
-    showChallenge.value = true;
-}
-
-function rerollChallenge() {
-    // Here you would call your backend to get a new challenge
-    // For now, we'll just simulate a reroll by hiding and showing the challenge
-    showChallenge.value = false;
-    setTimeout(() => {
-        showChallenge.value = true;
-    }, 300);
-}
 
 function acceptChallenge() {
     // Here you would call your backend to accept the challenge
@@ -67,7 +54,7 @@ function acceptChallenge() {
                     </p>
 
                     <button
-                        @click="generateChallenge"
+                        @click="$inertia.get(route('generate'))"
                         class="bg-yellow-500 hover:bg-yellow-400 text-black text-xl font-bold py-3 px-8 rounded-full mb-6"
                     >
                         Générer un Challenge
@@ -81,7 +68,7 @@ function acceptChallenge() {
 
                 <!-- Challenge Requirements -->
                 <div
-                    v-if="showChallenge"
+                    v-if="challenge"
                     class="bg-blue-900/80 rounded-lg p-8 max-w-2xl w-full"
                 >
                     <h2 class="text-white text-2xl font-bold mb-8 text-center">
@@ -96,7 +83,9 @@ function acceptChallenge() {
                                     1
                                 </div>
                             </div>
-                            <span class="text-white text-lg">Finir 1er</span>
+                            <span class="text-white text-lg"
+                                >Position : {{ challenge.position.name }}</span
+                            >
                         </div>
 
                         <!-- Challenge Item 2 -->
@@ -107,7 +96,7 @@ function acceptChallenge() {
                                 </div>
                             </div>
                             <span class="text-white text-lg"
-                                >Tous les Rose noire</span
+                                >Classe : {{ challenge.class.name }}</span
                             >
                         </div>
 
@@ -119,12 +108,12 @@ function acceptChallenge() {
                                 </div>
                             </div>
                             <span class="text-white text-lg"
-                                >Au moins 1 Embuscade</span
+                                >Origine : {{ challenge.origin.name }}</span
                             >
                         </div>
 
                         <!-- Challenge Item 4 -->
-                        <div class="flex items-center">
+                        <!-- <div class="flex items-center">
                             <div class="bg-orange-500 rounded-full p-2 mr-4">
                                 <div class="text-white text-2xl font-bold">
                                     ▲
@@ -133,13 +122,13 @@ function acceptChallenge() {
                             <span class="text-white text-lg"
                                 >Formation Triangle</span
                             >
-                        </div>
+                        </div> -->
                     </div>
 
                     <!-- Action Buttons -->
                     <div class="flex justify-center mt-8 space-x-6">
                         <button
-                            @click="rerollChallenge"
+                            @click="$inertia.get(route('generate'))"
                             class="bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-lg flex items-center"
                         >
                             <div class="bg-red-800 rounded p-1 mr-2">

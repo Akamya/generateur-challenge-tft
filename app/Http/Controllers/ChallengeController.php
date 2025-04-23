@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Challenge;
+use App\Models\Classe;
+use App\Models\Formation;
+use App\Models\Origin;
+use App\Models\Position;
+use App\Models\Season;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -12,12 +16,10 @@ class ChallengeController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
-        $challenges = Challenge::all();
-
         return Inertia::render('Challenge/Index', [
-            'challenges' => $challenges,
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
         ]);
@@ -70,4 +72,21 @@ class ChallengeController extends Controller
     {
         //
     }
+
+    public function generate()
+    {
+        $challenge = [
+            'position' => Position::inRandomOrder()->first(),
+            // 'formation' => Formation::inRandomOrder()->first(),
+            'class' => Classe::inRandomOrder()->first(),
+            'origin' => Origin::inRandomOrder()->first(),
+        ];
+
+        return Inertia::render('Challenge/Index', [
+            'challenge' => $challenge,
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+        ]);
+    }
+
 }
