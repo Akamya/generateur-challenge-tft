@@ -10,6 +10,7 @@ const props = defineProps({
     canRegister: {
         type: Boolean,
     },
+    auth: Object,
     challenge: Object,
 });
 
@@ -148,6 +149,7 @@ function acceptChallenge() {
                             Reroll
                         </button>
                         <button
+                            v-if="props.auth.user"
                             @click="acceptChallenge"
                             class="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-lg flex items-center"
                         >
@@ -165,7 +167,7 @@ function acceptChallenge() {
                                     />
                                 </svg>
                             </div>
-                            Accepter le défis
+                            Accepter le défi
                         </button>
                     </div>
                 </div>

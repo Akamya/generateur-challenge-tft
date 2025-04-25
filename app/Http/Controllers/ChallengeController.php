@@ -8,6 +8,7 @@ use App\Models\Origin;
 use App\Models\Position;
 use App\Models\Season;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -20,6 +21,7 @@ class ChallengeController extends Controller
     public function index()
     {
         return Inertia::render('Challenge/Index', [
+
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
         ]);
@@ -83,9 +85,13 @@ class ChallengeController extends Controller
         ];
 
         return Inertia::render('Challenge/Index', [
+
             'challenge' => $challenge,
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
+            'auth' => [
+                'user' => Auth::user(),
+            ],
         ]);
     }
 
