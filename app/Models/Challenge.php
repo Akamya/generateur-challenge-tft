@@ -31,7 +31,7 @@ class Challenge extends Model
         return $this->belongsTo(Constraint::class);
     }
 
-    public function class() {
+    public function classe() {
         return $this->belongsTo(Classe::class);
     }
 

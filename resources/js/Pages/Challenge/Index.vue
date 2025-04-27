@@ -13,13 +13,6 @@ const props = defineProps({
     auth: Object,
     challenge: Object,
 });
-
-const showChallenge = ref(false);
-
-function acceptChallenge() {
-    // Here you would call your backend to accept the challenge
-    alert("Challenge accepté !");
-}
 </script>
 
 <template>
@@ -55,7 +48,7 @@ function acceptChallenge() {
                     </p>
 
                     <button
-                        @click="$inertia.get(route('generate'))"
+                        @click="$inertia.get(route('challenge.generate'))"
                         class="bg-yellow-500 hover:bg-yellow-400 text-black text-xl font-bold py-3 px-8 rounded-full mb-6"
                     >
                         Générer un Challenge
@@ -128,24 +121,12 @@ function acceptChallenge() {
                                 {{ challenge.constraint.description }}</span
                             >
                         </div>
-
-                        <!-- Challenge Item 4 -->
-                        <!-- <div class="flex items-center">
-                            <div class="bg-orange-500 rounded-full p-2 mr-4">
-                                <div class="text-white text-2xl font-bold">
-                                    ▲
-                                </div>
-                            </div>
-                            <span class="text-white text-lg"
-                                >Formation Triangle</span
-                            >
-                        </div> -->
                     </div>
 
                     <!-- Action Buttons -->
                     <div class="flex justify-center mt-8 space-x-6">
                         <button
-                            @click="$inertia.get(route('generate'))"
+                            @click="$inertia.get(route('challenge.generate'))"
                             class="bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-lg flex items-center"
                         >
                             <div class="bg-red-800 rounded p-1 mr-2">
@@ -167,7 +148,7 @@ function acceptChallenge() {
                         <button
                             v-if="props.auth.user"
                             @click="
-                                $inertia.post(route('accept'), {
+                                $inertia.post(route('challenge.accept'), {
                                     position_id: challenge.position.id,
                                     classe_id: challenge.classe.id,
                                     origin_id: challenge.origin.id,

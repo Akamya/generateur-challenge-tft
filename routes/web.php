@@ -11,8 +11,11 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
     ]);
 })->name('homepage');
-Route::get('/generate-challenge', [ChallengeController::class, 'generate'])->name('generate');
-Route::post('/challenge/accept', [ChallengeController::class, 'accept'])->name('accept');
+Route::get('/challenge/generate', [ChallengeController::class, 'generate'])->name('challenge.generate');
+Route::post('/challenge/accept', [ChallengeController::class, 'accept'])->name('challenge.accept');
+Route::get('/challenge/{id}', [ChallengeController::class, 'show'])->name('challenge.show');
+Route::post('/challenge/{id}/complete', [ChallengeController::class, 'markAsCompleted'])->name('challenge.complete');
+Route::post('/challenge/{id}/cancel', [ChallengeController::class, 'cancel'])->name('challenge.cancel');
 
 
 // Route::middleware([

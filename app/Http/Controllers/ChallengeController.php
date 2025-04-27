@@ -48,7 +48,11 @@ class ChallengeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $challenge = Challenge::with(['season', 'position', 'constraint', 'classe', 'origin'])->findOrFail($id);
+
+        return Inertia::render('Challenge/Show', [
+            'challenge' => $challenge,
+        ]);
     }
 
     /**
@@ -103,7 +107,7 @@ class ChallengeController extends Controller
             'constraint_id' => 'required|exists:constraints,id',
         ]);
 
-        Challenge::create([
+        $challenge = Challenge::create([
             'position_id' => $data['position_id'],
             'classe_id' => $data['classe_id'],
             'origin_id' => $data['origin_id'],
@@ -112,11 +116,28 @@ class ChallengeController extends Controller
             'user_id' => Auth::id()
         ]);
 
-        return redirect()->route('homepage')->with('success', 'Challenge accepted and registered !');
+        return redirect()->route('challenge.show', $challenge->id)->with('success', 'Challenge accepted and registered !');
     }
 
     public function getCurrentSeason()
     {
         return Season::orderBy('id', 'desc')->first();
+    }
+
+    public function markAsCompleted($id)
+    {
+        $challenge = Challenge::findOrFail($id);
+        // Update challenge status to completed
+        // If you have a user system, associate this completed challenge with the user
+
+        return redirect()->route('homepage')->with('success', 'Challenge completed successfully!');
+    }
+
+    public function cancel($id)
+    {
+        $challenge = Challenge::findOrFail($id);
+        // Update challenge status to cancelled or delete the user's association with this challenge
+
+        return redirect()->route('homepage')->with('info', 'Challenge cancelled.');
     }
 }
