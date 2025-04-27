@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Challenge extends Model
 {
+    protected $fillable = [
+        'position_id',
+        'origin_id',
+        'classe_id',
+        'constraint_id',
+        'season_id',
+        'user_id'
+    ];
+
     public function user() {
         return $this->belongsTo(User::class);
     }
@@ -18,8 +27,8 @@ class Challenge extends Model
         return $this->belongsTo(Position::class);
     }
 
-    public function formation() {
-        return $this->belongsTo(Formation::class);
+    public function constraint() {
+        return $this->belongsTo(Constraint::class);
     }
 
     public function class() {

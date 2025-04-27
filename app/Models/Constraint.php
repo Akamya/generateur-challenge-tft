@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Formation extends Model
+class Constraint extends Model
 {
     public function challenges() {
         return $this->hasMany(Challenge::class);

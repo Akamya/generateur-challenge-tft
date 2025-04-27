@@ -12,6 +12,8 @@ Route::get('/', function () {
     ]);
 })->name('homepage');
 Route::get('/generate-challenge', [ChallengeController::class, 'generate'])->name('generate');
+Route::post('/challenge/accept', [ChallengeController::class, 'accept'])->name('accept');
+
 
 // Route::middleware([
 //     'auth:sanctum',

@@ -97,7 +97,7 @@ function acceptChallenge() {
                                 </div>
                             </div>
                             <span class="text-white text-lg"
-                                >Classe : {{ challenge.class.name }}</span
+                                >Classe : {{ challenge.classe.name }}</span
                             >
                         </div>
 
@@ -110,6 +110,22 @@ function acceptChallenge() {
                             </div>
                             <span class="text-white text-lg"
                                 >Origine : {{ challenge.origin.name }}</span
+                            >
+                        </div>
+
+                        <!-- Challenge Item 4 -->
+                        <div class="flex items-center">
+                            <div class="bg-orange-500 rounded-full p-2 mr-4">
+                                <div class="text-white text-2xl font-bold">
+                                    ★
+                                </div>
+                            </div>
+                            <span class="text-white text-lg"
+                                >Constraint :
+                                {{ challenge.constraint.name }}</span
+                            >
+                            <span class="text-white text-lg p-2 mr-4">
+                                {{ challenge.constraint.description }}</span
                             >
                         </div>
 
@@ -150,7 +166,14 @@ function acceptChallenge() {
                         </button>
                         <button
                             v-if="props.auth.user"
-                            @click="acceptChallenge"
+                            @click="
+                                $inertia.post(route('accept'), {
+                                    position_id: challenge.position.id,
+                                    classe_id: challenge.classe.id,
+                                    origin_id: challenge.origin.id,
+                                    constraint_id: challenge.constraint.id,
+                                })
+                            "
                             class="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-lg flex items-center"
                         >
                             <div class="bg-green-800 rounded p-1 mr-2">

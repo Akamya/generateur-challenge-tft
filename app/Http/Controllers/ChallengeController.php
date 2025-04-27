@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Challenge;
 use App\Models\Classe;
-use App\Models\Formation;
+use App\Models\Constraint;
 use App\Models\Origin;
 use App\Models\Position;
 use App\Models\Season;
@@ -21,7 +22,6 @@ class ChallengeController extends Controller
     public function index()
     {
         return Inertia::render('Challenge/Index', [
-
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
         ]);
@@ -79,13 +79,12 @@ class ChallengeController extends Controller
     {
         $challenge = [
             'position' => Position::inRandomOrder()->first(),
-            // 'formation' => Formation::inRandomOrder()->first(),
-            'class' => Classe::inRandomOrder()->first(),
+            'constraint' => Constraint::inRandomOrder()->first(),
+            'classe' => Classe::inRandomOrder()->first(),
             'origin' => Origin::inRandomOrder()->first(),
         ];
 
         return Inertia::render('Challenge/Index', [
-
             'challenge' => $challenge,
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
@@ -95,4 +94,29 @@ class ChallengeController extends Controller
         ]);
     }
 
+    public function accept(Request $request)
+    {
+        $data = $request->validate([
+            'position_id' => 'required|exists:positions,id',
+            'classe_id' => 'required|exists:classes,id',
+            'origin_id' => 'required|exists:origins,id',
+            'constraint_id' => 'required|exists:constraints,id',
+        ]);
+
+        Challenge::create([
+            'position_id' => $data['position_id'],
+            'classe_id' => $data['classe_id'],
+            'origin_id' => $data['origin_id'],
+            'constraint_id' => $data['constraint_id'],
+            'season_id' => $this->getCurrentSeason()->id,
+            'user_id' => Auth::id()
+        ]);
+
+        return redirect()->route('homepage')->with('success', 'Challenge accepted and registered !');
+    }
+
+    public function getCurrentSeason()
+    {
+        return Season::orderBy('id', 'desc')->first();
+    }
 }

@@ -16,9 +16,10 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('season_id')->constrained('seasons')->onDelete('cascade');
             $table->foreignId('position_id')->constrained('positions')->onDelete('cascade');
-            $table->foreignId('formation_id')->constrained('formations')->onDelete('cascade');
-            $table->foreignId('class_id')->constrained('classes')->onDelete('cascade');
+            $table->foreignId('constraint_id')->constrained('constraints')->onDelete('cascade');
+            $table->foreignId('classe_id')->constrained('classes')->onDelete('cascade');
             $table->foreignId('origin_id')->constrained('origins')->onDelete('cascade');
+            $table->string('status')->default('accepted');
             $table->timestamps();
         });
     }
