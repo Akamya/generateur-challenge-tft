@@ -1,6 +1,7 @@
 <script setup>
 import { Head } from "@inertiajs/vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
+import { defineProps } from "vue";
 // import tftTraitsData from "/storage/icons/tft-trait.json";
 
 const props = defineProps({
@@ -25,10 +26,6 @@ const props = defineProps({
 
 function markAsCompleted() {
     $inertia.post(route("challenge.complete", props.challenge.id));
-}
-
-function cancelChallenge() {
-    $inertia.post(route("challenge.cancel", props.challenge.id));
 }
 </script>
 
@@ -97,10 +94,20 @@ function cancelChallenge() {
                             >
                         </div>
 
-                        <!-- Additional challenge details if needed -->
-                        <div v-if="challenge.season" class="flex items-center">
+                        <div class="flex items-center">
+                            <!-- <div class="bg-orange-500 rounded-full p-2 mr-4">
+                                <img
+                                    :src="getTraitIcon(challenge.origin.name)"
+                                    alt="Origin Icon"
+                                    class="h-6 w-6"
+                                />
+                            </div> -->
                             <span class="text-white text-lg"
-                                >Saison : {{ challenge.season.name }}</span
+                                >Constraint :
+                                {{ challenge.constraint.name }}</span
+                            >
+                            <span class="text-white text-lg p-2 mr-4">
+                                {{ challenge.constraint.description }}</span
                             >
                         </div>
                     </div>
@@ -127,7 +134,13 @@ function cancelChallenge() {
                         </button>
 
                         <button
-                            @click="cancelChallenge"
+                            @click="
+                                $inertia.delete(
+                                    route('challenge.destroy', {
+                                        id: challenge.id,
+                                    })
+                                )
+                            "
                             class="bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-6 rounded-lg flex items-center"
                         >
                             <svg

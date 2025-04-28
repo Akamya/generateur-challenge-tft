@@ -16,6 +16,7 @@ Route::post('/challenge/accept', [ChallengeController::class, 'accept'])->name('
 Route::get('/challenge/{id}', [ChallengeController::class, 'show'])->name('challenge.show');
 Route::post('/challenge/{id}/complete', [ChallengeController::class, 'markAsCompleted'])->name('challenge.complete');
 Route::post('/challenge/{id}/cancel', [ChallengeController::class, 'cancel'])->name('challenge.cancel');
+Route::delete('/challenge/{id}/delete', [ChallengeController::class, 'destroy'])->name('challenge.destroy');
 
 
 // Route::middleware([
