@@ -25,6 +25,7 @@ class ChallengeController extends Controller
 
         if ($user) {
             $latestChallenge = Challenge::where('user_id', $user->id)
+                ->where('status', 'accepted')
                 ->latest()
                 ->first();
 
@@ -137,5 +138,40 @@ class ChallengeController extends Controller
     public function getCurrentSeason()
     {
         return Season::orderBy('id', 'desc')->first();
+    }
+
+    public function complete(string $id)
+    {
+        $user = Auth::user();
+
+        $challenge = Challenge::where('user_id', $user->id)
+            ->where('id', $id)
+            ->with(['position', 'classe', 'origin', 'constraint'])
+            ->firstOrFail();
+
+        $results = [
+            'position' => random_int(1, 100) <= 75,
+            'classe' => random_int(1, 100) <= 75,
+            'origin' => random_int(1, 100) <= 75,
+            'constraint' => random_int(1, 100) <= 75,
+        ];
+
+        if (in_array(false, $results)) {
+            return Inertia::render('Challenge/Fail', [
+                'challenge' => $challenge,
+                'results' => $results
+            ]);
+        }
+
+        $challenge->status = 'success';
+        $challenge->save();
+
+        $user->score = $user->score+1;
+        $user->save();
+
+        return Inertia::render('Challenge/Success', [
+            'challenge' => $challenge,
+            'results' => $results
+        ]);
     }
 }

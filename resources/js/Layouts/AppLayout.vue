@@ -61,12 +61,12 @@ const logout = () => {
                             Accueil
                         </NavLink>
                         <NavLink
-                            :href="route('homepage')"
-                            :active="route().current('homepage')"
+                            :href="route('glossary')"
+                            :active="route().current('glossary')"
                             class="text-white hover:text-yellow-300"
                             active-class="text-yellow-300"
                         >
-                            Challenges
+                            Glossary
                         </NavLink>
                         <NavLink
                             :href="route('homepage')"

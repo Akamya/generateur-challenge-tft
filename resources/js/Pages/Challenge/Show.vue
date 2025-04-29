@@ -23,10 +23,6 @@ const props = defineProps({
 
 //     return "/default-icon.png";
 // }
-
-function markAsCompleted() {
-    $inertia.post(route("challenge.complete", props.challenge.id));
-}
 </script>
 
 <template>
@@ -115,7 +111,13 @@ function markAsCompleted() {
                     <!-- Action Buttons -->
                     <div class="flex justify-center space-x-6">
                         <button
-                            @click="markAsCompleted"
+                            @click="
+                                $inertia.post(
+                                    route('challenge.complete', {
+                                        id: challenge.id,
+                                    })
+                                )
+                            "
                             class="bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-6 rounded-lg flex items-center"
                         >
                             <svg

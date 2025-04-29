@@ -24,20 +24,6 @@ const activeCategory = ref("origins"); // Default to origins tab
 const setActiveCategory = (category) => {
     activeCategory.value = category;
 };
-
-// Search functionality
-const searchQuery = ref("");
-const filteredItems = (items) => {
-    if (!searchQuery.value) return items;
-    return items.filter(
-        (item) =>
-            item.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-            (item.description &&
-                item.description
-                    .toLowerCase()
-                    .includes(searchQuery.value.toLowerCase()))
-    );
-};
 </script>
 
 <template>
@@ -128,34 +114,6 @@ const filteredItems = (items) => {
                     </button>
                 </div>
 
-                <!-- Search Bar -->
-                <div class="w-full max-w-md mb-8">
-                    <div class="relative">
-                        <input
-                            v-model="searchQuery"
-                            type="text"
-                            placeholder="Rechercher..."
-                            class="w-full px-4 py-2 bg-blue-900/60 border border-blue-700 rounded-full text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                        />
-                        <div
-                            class="absolute inset-y-0 right-0 flex items-center pr-3"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5 text-blue-300"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                            >
-                                <path
-                                    fill-rule="evenodd"
-                                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                    clip-rule="evenodd"
-                                />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Content Container -->
                 <div class="bg-blue-900/80 rounded-lg p-8 max-w-4xl w-full">
                     <!-- Origins Content -->
@@ -167,11 +125,11 @@ const filteredItems = (items) => {
                         </h2>
 
                         <div
-                            v-if="props.origins && props.origins.length > 0"
+                            v-if="props.origins"
                             class="grid grid-cols-1 md:grid-cols-2 gap-6"
                         >
                             <div
-                                v-for="origin in filteredItems(props.origins)"
+                                v-for="origin in props.origins"
                                 :key="origin.id"
                                 class="bg-blue-800/60 rounded-lg p-4 hover:bg-blue-800/80 transition-colors"
                             >
@@ -194,9 +152,6 @@ const filteredItems = (items) => {
                                 </p>
                             </div>
                         </div>
-                        <div v-else class="text-center text-white">
-                            Aucune origine trouvée.
-                        </div>
                     </div>
 
                     <!-- Positions Content -->
@@ -210,14 +165,9 @@ const filteredItems = (items) => {
                             POSITIONS
                         </h2>
 
-                        <div
-                            v-if="props.positions && props.positions.length > 0"
-                            class="space-y-8"
-                        >
+                        <div v-if="props.positions" class="space-y-8">
                             <div
-                                v-for="position in filteredItems(
-                                    props.positions
-                                )"
+                                v-for="position in props.positions"
                                 :key="position.id"
                                 class="bg-blue-800/60 rounded-lg p-6 hover:bg-blue-800/80 transition-colors"
                             >
@@ -258,9 +208,6 @@ const filteredItems = (items) => {
                                 </p>
                             </div>
                         </div>
-                        <div v-else class="text-center text-white">
-                            Aucune position trouvée.
-                        </div>
                     </div>
 
                     <!-- Classes Content -->
@@ -272,11 +219,11 @@ const filteredItems = (items) => {
                         </h2>
 
                         <div
-                            v-if="props.classes && props.classes.length > 0"
+                            v-if="props.classes"
                             class="grid grid-cols-1 md:grid-cols-2 gap-6"
                         >
                             <div
-                                v-for="classe in filteredItems(props.classes)"
+                                v-for="classe in props.classes"
                                 :key="classe.id"
                                 class="bg-blue-800/60 rounded-lg p-4 hover:bg-blue-800/80 transition-colors"
                             >
@@ -299,9 +246,6 @@ const filteredItems = (items) => {
                                 </p>
                             </div>
                         </div>
-                        <div v-else class="text-center text-white">
-                            Aucune classe trouvée.
-                        </div>
                     </div>
 
                     <!-- Constraints Content -->
@@ -315,17 +259,9 @@ const filteredItems = (items) => {
                             CONTRAINTES
                         </h2>
 
-                        <div
-                            v-if="
-                                props.constraints &&
-                                props.constraints.length > 0
-                            "
-                            class="space-y-6"
-                        >
+                        <div v-if="props.constraints" class="space-y-6">
                             <div
-                                v-for="constraint in filteredItems(
-                                    props.constraints
-                                )"
+                                v-for="constraint in props.constraints"
                                 :key="constraint.id"
                                 class="bg-blue-800/60 rounded-lg p-6 hover:bg-blue-800/80 transition-colors"
                             >
@@ -347,9 +283,6 @@ const filteredItems = (items) => {
                                     {{ constraint.description }}
                                 </p>
                             </div>
-                        </div>
-                        <div v-else class="text-center text-white">
-                            Aucune contrainte trouvée.
                         </div>
                     </div>
                 </div>
