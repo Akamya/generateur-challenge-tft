@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChallengeController;
+use App\Http\Controllers\GlossaryController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -12,6 +13,8 @@ Route::get('/challenge/{id}', [ChallengeController::class, 'show'])->name('chall
 Route::post('/challenge/{id}/complete', [ChallengeController::class, 'markAsCompleted'])->name('challenge.complete');
 Route::post('/challenge/{id}/cancel', [ChallengeController::class, 'cancel'])->name('challenge.cancel');
 Route::delete('/challenge/{id}/delete', [ChallengeController::class, 'destroy'])->name('challenge.destroy');
+
+Route::get('/glossary', [GlossaryController::class, 'index'])->name('glossary');
 
 
 // Route::middleware([

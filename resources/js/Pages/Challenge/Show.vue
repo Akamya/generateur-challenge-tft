@@ -160,6 +160,18 @@ function markAsCompleted() {
                     </div>
                 </div>
             </main>
+            <!-- Footer -->
+            <footer class="relative z-10 bg-blue-950/80 py-6 px-4 text-center">
+                <div class="container mx-auto">
+                    <div class="flex justify-center mb-2">
+                        <img src="" alt="TFT Logo" class="h-8 w-8 mr-2" />
+                        <span class="text-white font-bold">OPÉRATION TFT</span>
+                    </div>
+                    <p class="text-white text-sm">
+                        © Opération TFT. All rights reserved. By Elodie Langlet.
+                    </p>
+                </div>
+            </footer>
         </div>
     </AppLayout>
 </template>
