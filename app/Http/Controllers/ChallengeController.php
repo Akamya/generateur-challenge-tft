@@ -21,6 +21,18 @@ class ChallengeController extends Controller
 
     public function index()
     {
+        $user = Auth::user();
+
+        if ($user) {
+            $latestChallenge = Challenge::where('user_id', $user->id)
+                ->latest()
+                ->first();
+
+            if ($latestChallenge) {
+                return redirect()->route('challenge.show', ['id' => $latestChallenge->id]);
+            }
+        }
+
         return Inertia::render('Challenge/Index', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
@@ -125,22 +137,5 @@ class ChallengeController extends Controller
     public function getCurrentSeason()
     {
         return Season::orderBy('id', 'desc')->first();
-    }
-
-    public function markAsCompleted($id)
-    {
-        $challenge = Challenge::findOrFail($id);
-        // Update challenge status to completed
-        // If you have a user system, associate this completed challenge with the user
-
-        return redirect()->route('homepage')->with('success', 'Challenge completed successfully!');
-    }
-
-    public function cancel($id)
-    {
-        $challenge = Challenge::findOrFail($id);
-        // Update challenge status to cancelled or delete the user's association with this challenge
-
-        return redirect()->route('homepage')->with('info', 'Challenge cancelled.');
     }
 }

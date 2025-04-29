@@ -5,12 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Challenge/Index', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-    ]);
-})->name('homepage');
+Route::get('/', [ChallengeController::class, 'index'])->name('homepage');
 Route::get('/challenge/generate', [ChallengeController::class, 'generate'])->name('challenge.generate');
 Route::post('/challenge/accept', [ChallengeController::class, 'accept'])->name('challenge.accept');
 Route::get('/challenge/{id}', [ChallengeController::class, 'show'])->name('challenge.show');
