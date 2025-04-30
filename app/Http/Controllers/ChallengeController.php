@@ -25,7 +25,7 @@ class ChallengeController extends Controller
 
         if ($user) {
             $latestChallenge = Challenge::where('user_id', $user->id)
-                ->where('status', 'accepted')
+                ->where('status', 'active')
                 ->latest()
                 ->first();
 
@@ -163,7 +163,7 @@ class ChallengeController extends Controller
             ]);
         }
 
-        $challenge->status = 'success';
+        $challenge->status = 'completed';
         $challenge->save();
 
         $user->score = $user->score+1;

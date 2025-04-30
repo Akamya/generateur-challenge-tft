@@ -15,6 +15,19 @@ class Challenge extends Model
         'user_id'
     ];
 
+    public const ACTIVE = 'active';
+    public const COMPLETED = 'completed';
+    public const FAILED = 'failed';
+
+    public static function status(): array
+    {
+        return [
+            self::ACTIVE,
+            self::COMPLETED,
+            self::FAILED,
+        ];
+    }
+
     public function user() {
         return $this->belongsTo(User::class);
     }

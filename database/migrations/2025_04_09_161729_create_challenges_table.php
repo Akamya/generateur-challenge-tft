@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Challenge;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +20,7 @@ return new class extends Migration
             $table->foreignId('constraint_id')->constrained('constraints')->onDelete('cascade');
             $table->foreignId('classe_id')->constrained('classes')->onDelete('cascade');
             $table->foreignId('origin_id')->constrained('origins')->onDelete('cascade');
-            $table->string('status')->default('accepted');
+            $table->enum('status', Challenge::status())->default('active');
             $table->timestamps();
         });
     }

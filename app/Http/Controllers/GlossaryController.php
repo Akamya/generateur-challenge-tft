@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Challenge;
 use App\Models\Classe;
 use App\Models\Constraint;
 use App\Models\Origin;
 use App\Models\Position;
-use App\Models\Season;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;

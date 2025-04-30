@@ -2,12 +2,16 @@
 
 use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\GlossaryController;
+use App\Http\Controllers\HistoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ChallengeController::class, 'index'])->name('homepage');
 Route::get('/challenge/generate', [ChallengeController::class, 'generate'])->name('challenge.generate');
 
 Route::get('/glossary', [GlossaryController::class, 'index'])->name('glossary');
+
+Route::get('/history/{userID}', [HistoryController::class, 'index'])->name('history');
+
 
 Route::middleware([
     'auth:sanctum',
