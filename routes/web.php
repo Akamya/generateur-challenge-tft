@@ -11,6 +11,7 @@ Route::get('/challenge/generate', [ChallengeController::class, 'generate'])->nam
 
 Route::get('/glossary', [GlossaryController::class, 'index'])->name('glossary');
 
+Route::get('/user/search', [HistoryController::class, 'search'])->name('user.search');
 Route::get('/history/{userID}', [HistoryController::class, 'index'])->name('history');
 
 Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');

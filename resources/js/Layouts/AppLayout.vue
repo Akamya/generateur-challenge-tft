@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { Head, Link, router } from "@inertiajs/vue3";
-import ApplicationMark from "@/Components/ApplicationMark.vue";
+import UserSearch from "@/Components/UserSearch.vue";
 import Banner from "@/Components/Banner.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
@@ -86,6 +86,7 @@ const logout = () => {
                             My History
                         </NavLink>
                     </div>
+                    <UserSearch />
 
                     <!-- User is authenticated -->
                     <div

@@ -3,13 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Challenge;
-use App\Models\Classe;
-use App\Models\Constraint;
-use App\Models\Origin;
-use App\Models\Position;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class HistoryController extends Controller
@@ -39,5 +34,24 @@ class HistoryController extends Controller
             'currentChallenge' => $currentChallenge,
             'completedChallenges' => $completedChallenges,
         ]);
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $searchResults = [];
+
+        if (!empty($query) && strlen($query) >= 2) {
+            $searchResults = User::where('username', 'like', "%{$query}%")
+                ->orWhere('riot_username', 'like', "%{$query}%")
+                ->select('id', 'username', 'riot_username')
+                ->limit(10)
+                ->get();
+
+            return response()->json(['searchResults' => $searchResults]);
+        }
+
+        return response()->json(['searchResults' => []]);
     }
 }
