@@ -83,7 +83,7 @@ const logout = () => {
                             class="text-white hover:text-yellow-300"
                             active-class="text-yellow-300"
                         >
-                            My History
+                            History
                         </NavLink>
                     </div>
                     <UserSearch />
@@ -416,7 +416,7 @@ const logout = () => {
                             class="text-white hover:text-yellow-300"
                             active-class="bg-blue-800 text-yellow-300"
                         >
-                            My History
+                            History
                         </ResponsiveNavLink>
                     </div>
 
