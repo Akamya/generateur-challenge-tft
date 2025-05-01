@@ -58,7 +58,7 @@ const logout = () => {
                             class="text-white hover:text-yellow-300"
                             active-class="text-yellow-300"
                         >
-                            Accueil
+                            Home
                         </NavLink>
                         <NavLink
                             :href="route('glossary')"
@@ -69,12 +69,21 @@ const logout = () => {
                             Glossary
                         </NavLink>
                         <NavLink
-                            :href="route('homepage')"
-                            :active="route().current('homepage')"
+                            :href="route('leaderboard')"
+                            :active="route().current('leaderboard')"
                             class="text-white hover:text-yellow-300"
                             active-class="text-yellow-300"
                         >
-                            Classement
+                            Leaderboard
+                        </NavLink>
+                        <NavLink
+                            v-if="$page.props.auth && $page.props.auth.user"
+                            :href="route('history', $page.props.auth.user.id)"
+                            :active="route().current('history')"
+                            class="text-white hover:text-yellow-300"
+                            active-class="text-yellow-300"
+                        >
+                            My History
                         </NavLink>
                     </div>
 
@@ -381,23 +390,32 @@ const logout = () => {
                             class="text-white hover:text-yellow-300"
                             active-class="bg-blue-800 text-yellow-300"
                         >
-                            Accueil
+                            Home
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
-                            :href="route('homepage')"
-                            :active="route().current('homepage')"
+                            :href="route('glossary')"
+                            :active="route().current('glossary')"
                             class="text-white hover:text-yellow-300"
                             active-class="bg-blue-800 text-yellow-300"
                         >
-                            Challenges
+                            Glossary
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
-                            :href="route('homepage')"
-                            :active="route().current('homepage')"
+                            :href="route('leaderboard')"
+                            :active="route().current('leaderboard')"
                             class="text-white hover:text-yellow-300"
                             active-class="bg-blue-800 text-yellow-300"
                         >
-                            Classement
+                            Leaderboard
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            v-if="$page.props.auth && $page.props.auth.user"
+                            :href="route('history', $page.props.auth.user)"
+                            :active="route().current('history')"
+                            class="text-white hover:text-yellow-300"
+                            active-class="bg-blue-800 text-yellow-300"
+                        >
+                            My History
                         </ResponsiveNavLink>
                     </div>
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\GlossaryController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\LeaderboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ChallengeController::class, 'index'])->name('homepage');
@@ -11,6 +12,8 @@ Route::get('/challenge/generate', [ChallengeController::class, 'generate'])->nam
 Route::get('/glossary', [GlossaryController::class, 'index'])->name('glossary');
 
 Route::get('/history/{userID}', [HistoryController::class, 'index'])->name('history');
+
+Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
 
 
 Route::middleware([
