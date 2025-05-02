@@ -27,6 +27,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'username',
+        'riot_username',
         'email',
         'password',
     ];

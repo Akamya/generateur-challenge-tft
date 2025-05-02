@@ -10,6 +10,7 @@ import TextInput from "@/Components/TextInput.vue";
 
 const form = useForm({
     username: "",
+    riot_username: "",
     email: "",
     password: "",
     password_confirmation: "",
@@ -44,6 +45,20 @@ const submit = () => {
                     autocomplete="username"
                 />
                 <InputError class="mt-2" :message="form.errors.username" />
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="riot_username" value="Riot Username" />
+                <TextInput
+                    id="riot_username"
+                    v-model="form.riot_username"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                    autofocus
+                    autocomplete="riot_username"
+                />
+                <InputError class="mt-2" :message="form.errors.riot_username" />
             </div>
 
             <div class="mt-4">

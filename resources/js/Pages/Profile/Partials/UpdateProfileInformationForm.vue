@@ -16,6 +16,7 @@ const props = defineProps({
 const form = useForm({
     _method: "PUT",
     username: props.user.username,
+    riot_username: props.user.riot_username,
     email: props.user.email,
     photo: null,
 });
@@ -151,6 +152,20 @@ const clearPhotoFileInput = () => {
                     autocomplete="username"
                 />
                 <InputError :message="form.errors.username" class="mt-2" />
+            </div>
+
+            <!-- Riot Userame -->
+            <div class="col-span-6 sm:col-span-4">
+                <InputLabel for="riot_username" value="Riot Username" />
+                <TextInput
+                    id="riot_username"
+                    v-model="form.riot_username"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                    autocomplete="riot_username"
+                />
+                <InputError :message="form.errors.riot_username" class="mt-2" />
             </div>
 
             <!-- Email -->
