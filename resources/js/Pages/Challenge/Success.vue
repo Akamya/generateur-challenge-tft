@@ -123,6 +123,7 @@ const stats = computed(() => {
                                     {{ key }}
                                     {{ challenge[key].name }}
                                     {{ challenge[key].description }}
+                                    {{ status.info }}
                                 </div>
                                 <div class="text-green-300">Critère validé</div>
                             </div>

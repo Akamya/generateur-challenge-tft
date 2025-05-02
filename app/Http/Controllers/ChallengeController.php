@@ -10,8 +10,48 @@ use App\Models\Position;
 use App\Models\Season;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+function getPuuidFromRiotId($riotUsername)
+{
+    $apiKey = env('RIOT_API_KEY');
+
+    $riotUsername = urlencode($riotUsername);
+    $response = Http::get("https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{$riotUsername}/EUW?api_key={$apiKey}");
+    if ($response->failed()) {
+        return null;
+    }
+    $puuid = $response->json()['puuid'];
+    return $puuid;
+}
+
+function getLastMatch($puuid)
+{
+    $apiKey = env('RIOT_API_KEY');
+    $matchesResponse = Http::get("https://europe.api.riotgames.com/tft/match/v1/matches/by-puuid/{$puuid}/ids?api_key={$apiKey}");
+    if ($matchesResponse->failed()) {
+        return null;
+    }
+    $matchIDs = $matchesResponse->json();
+    $matchID = $matchIDs[0];
+    $matchResponse = Http::get("https://europe.api.riotgames.com/tft/match/v1/matches/{$matchID}?api_key={$apiKey}");
+    if ($matchResponse->failed()) {
+        return null;
+    }
+    $match = $matchResponse->json();
+    $matchInfo = collect($match["info"]["participants"])->firstWhere('puuid', $puuid);
+
+    return $matchInfo;
+}
+
+function verifyPosition($requiredPosition, $position)
+{
+    $success = $position <= $requiredPosition->value;
+    $info = "You reached position ".$position;
+    return ["success"=>$success, "info"=>$info];
+}
 
 class ChallengeController extends Controller
 {
@@ -140,6 +180,7 @@ class ChallengeController extends Controller
         return Season::orderBy('id', 'desc')->first();
     }
 
+
     public function complete(string $id)
     {
         $user = Auth::user();
@@ -149,14 +190,36 @@ class ChallengeController extends Controller
             ->with(['position', 'classe', 'origin', 'constraint'])
             ->firstOrFail();
 
-        $results = [
-            'position' => random_int(1, 100) <= 75,
-            'classe' => random_int(1, 100) <= 75,
-            'origin' => random_int(1, 100) <= 75,
-            'constraint' => random_int(1, 100) <= 75,
-        ];
+        $puuid = getPuuidFromRiotId($user->riot_username);
+        if(!$puuid){
+            return Inertia::render('Challenge/RiotIDError');
+        }
 
-        if (in_array(false, $results)) {
+        $matchInfo = getLastMatch($puuid);
+
+        $positionResult = verifyPosition($challenge->position, $matchInfo["placement"]);
+        $results = ["position"=>$positionResult];
+
+
+
+
+
+
+
+
+
+
+        // $results = [
+        //     'position' => random_int(1, 100) <= 75,
+        //     'classe' => random_int(1, 100) <= 75,
+        //     'origin' => random_int(1, 100) <= 75,
+        //     'constraint' => random_int(1, 100) <= 75,
+        // ];
+        $positionSuccess = $results["position"]["success"];
+        $success = $positionSuccess;
+
+
+        if (!$success) {
             return Inertia::render('Challenge/Fail', [
                 'challenge' => $challenge,
                 'results' => $results
@@ -174,4 +237,6 @@ class ChallengeController extends Controller
             'results' => $results
         ]);
     }
+
 }
+

@@ -21,13 +21,17 @@ class PositionSeeder extends Seeder
             'fifth',
             'sixth',
             'seventh',
-            'eighth',
         ];
+
+        $index = 1;
 
         foreach ($positions as $name) {
             Position::create([
                 'name' => $name,
+                'value' => $index,
             ]);
+
+            $index++;
         }
     }
 }

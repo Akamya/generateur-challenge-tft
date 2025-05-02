@@ -100,15 +100,21 @@ const stats = computed(() => {
                             :key="key"
                             class="flex items-center p-4 rounded-lg"
                             :class="
-                                status ? 'bg-green-900/40' : 'bg-red-900/40'
+                                status.success
+                                    ? 'bg-green-900/40'
+                                    : 'bg-red-900/40'
                             "
                         >
                             <div
                                 class="rounded-full p-2 mr-4 flex items-center justify-center"
-                                :class="status ? 'bg-green-500' : 'bg-red-500'"
+                                :class="
+                                    status.success
+                                        ? 'bg-green-500'
+                                        : 'bg-red-500'
+                                "
                             >
                                 <svg
-                                    v-if="status"
+                                    v-if="status.success"
                                     xmlns="http://www.w3.org/2000/svg"
                                     class="h-6 w-6 text-white"
                                     fill="none"
@@ -143,16 +149,17 @@ const stats = computed(() => {
                                     {{ key }}
                                     {{ challenge[key].name }}
                                     {{ challenge[key].description }}
+                                    {{ status.info }}
                                 </div>
                                 <div
                                     :class="
-                                        status
+                                        status.success
                                             ? 'text-green-300'
                                             : 'text-red-300'
                                     "
                                 >
                                     {{
-                                        status
+                                        status.success
                                             ? "Critère validé"
                                             : "Critère non validé"
                                     }}
