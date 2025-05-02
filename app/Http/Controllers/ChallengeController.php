@@ -53,6 +53,11 @@ function verifyPosition($requiredPosition, $position)
     return ["success"=>$success, "info"=>$info];
 }
 
+function verifyOrigin($requiredOrigin, $origin)
+{
+
+}
+
 class ChallengeController extends Controller
 {
     /**
@@ -199,7 +204,7 @@ class ChallengeController extends Controller
 
         $positionResult = verifyPosition($challenge->position, $matchInfo["placement"]);
         $results = ["position"=>$positionResult];
-
+        dd($matchInfo);
 
 
 
