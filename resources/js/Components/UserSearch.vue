@@ -71,7 +71,7 @@ if (typeof window !== "undefined") {
                 v-model="searchQuery"
                 @focus="showResults = searchResults.length > 0"
                 type="text"
-                placeholder="Nordous-EUW"
+                placeholder="Ex: Nordous"
                 class="w-full bg-blue-800/60 border border-blue-700 rounded-full py-2 px-4 text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-yellow-500"
             />
             <div class="absolute inset-y-0 right-0 flex items-center pr-3">
