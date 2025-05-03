@@ -14,7 +14,7 @@ const stats = computed(() => {
 
     const total = Object.keys(props.results).length;
     const success = Object.values(props.results).filter(
-        (status) => status
+        (status) => status.success
     ).length;
     const successRate = total > 0 ? Math.round((success / total) * 100) : 0;
 

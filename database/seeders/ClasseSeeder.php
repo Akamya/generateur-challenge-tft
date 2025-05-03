@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Classe;
 use App\Models\Season;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ClasseSeeder extends Seeder
@@ -15,22 +14,24 @@ class ClasseSeeder extends Seeder
     public function run(): void
     {
         $classes = [
-            'A.M.P',
-            'Bastion',
-            'Bruiser',
-            'Dynamo',
-            'Executioner',
-            'Marksman',
-            'Rapidfire',
-            'Slayer',
-            'Strategist',
-            'Techie',
-            'Vanguard',
+            ['description' => 'Reach level bronze with trait A.M.P.', 'name' => 'A.M.P.', 'technical_name' => 'TFT14_Supercharge'],
+            ['description' => 'Reach level bronze with trait Bastion', 'name' => 'Bastion', 'technical_name' => 'TFT14_Armorclad'],
+            ['description' => 'Reach level bronze with trait Bruiser', 'name' => 'Bruiser', 'technical_name' => 'TFT14_Bruiser'],
+            ['description' => 'Reach level bronze with trait Dynamo', 'name' => 'Dynamo', 'technical_name' => 'TFT14_Thirsty'],
+            ['description' => 'Reach level bronze with trait Executioner', 'name' => 'Executioner', 'technical_name' => 'TFT14_Cutter'],
+            ['description' => 'Reach level bronze with trait Marksman', 'name' => 'Marksman', 'technical_name' => 'TFT14_Marksman'],
+            ['description' => 'Reach level bronze with trait Rapidfire', 'name' => 'Rapidfire', 'technical_name' => 'TFT14_Swift'],
+            ['description' => 'Reach level bronze with trait Slayer', 'name' => 'Slayer', 'technical_name' => 'TFT14_Strong'],
+            ['description' => 'Reach level bronze with trait Strategist', 'name' => 'Strategist', 'technical_name' => 'TFT14_Controller'],
+            ['description' => 'Reach level bronze with trait Techie', 'name' => 'Techie', 'technical_name' => 'TFT14_Techie'],
+            ['description' => 'Reach level bronze with trait Vanguard', 'name' => 'Vanguard', 'technical_name' => 'TFT14_Vanguard'],
         ];
 
-        foreach ($classes as $name) {
+        foreach ($classes as $classe) {
             Classe::create([
-                'name' => $name,
+                'name' => $classe["name"],
+                'technical_name' => $classe["technical_name"],
+                'description' => $classe["description"],
                 'season_id' => Season::first()->id
             ]);
         }

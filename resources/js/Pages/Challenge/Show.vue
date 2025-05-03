@@ -62,6 +62,9 @@ const props = defineProps({
                             <span class="text-white text-lg"
                                 >Position : {{ challenge.position.name }}</span
                             >
+                            <span class="text-white text-lg p-2 mr-4">
+                                {{ challenge.position.description }}</span
+                            >
                         </div>
 
                         <div class="flex items-center">
@@ -75,6 +78,9 @@ const props = defineProps({
                             <span class="text-white text-lg"
                                 >Classe : {{ challenge.classe.name }}</span
                             >
+                            <span class="text-white text-lg p-2 mr-4">
+                                {{ challenge.classe.description }}</span
+                            >
                         </div>
 
                         <div class="flex items-center">
@@ -87,6 +93,9 @@ const props = defineProps({
                             </div> -->
                             <span class="text-white text-lg"
                                 >Origine : {{ challenge.origin.name }}</span
+                            >
+                            <span class="text-white text-lg p-2 mr-4">
+                                {{ challenge.origin.description }}</span
                             >
                         </div>
 

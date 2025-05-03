@@ -52,9 +52,49 @@ function verifyPosition($requiredPosition, $position)
     return ["success"=>$success, "info"=>$info];
 }
 
-function verifyOrigin($requiredOrigin, $origin)
+function verifyTrait($requiredTrait, $traits, $level)
 {
+    $technicalName = $requiredTrait->technical_name;
+    $foundTrait = collect($traits)->firstWhere('name', $technicalName);
+    if(!$foundTrait){
+        return ["success"=>false, "info"=>"You did not enable {$requiredTrait->name}"];
+    }
+    switch ($foundTrait['style']) {
+        case 0:
+            return ["success"=>false, "info"=>"You did not enable {$requiredTrait->name}"];
 
+        case 1:
+            if($level === 'bronze'){
+                return ["success"=>true, "info"=>"{$requiredTrait->name} reached level Bronze"];
+            }
+            else{
+                return ["success"=>false, "info"=>"{$requiredTrait->name} reached level Bronze"];
+            }
+
+        case 2:
+            if($level === 'bronze' || $level === 'silver'){
+                return ["success"=>true, "info"=>"{$requiredTrait->name} reached level Silver"];
+            }
+            else{
+                return ["success"=>false, "info"=>"{$requiredTrait->name} reached level Silver"];
+            }
+
+        case 3:
+            if($level === 'bronze' || $level === 'silver' || $level === 'gold'){
+                return ["success"=>true, "info"=>"{$requiredTrait->name} reached level Gold"];
+            }
+            else{
+                return ["success"=>false, "info"=>"{$requiredTrait->name} reached level Gold"];
+            }
+
+        case 4:
+            return ["success"=>true, "info"=>"{$requiredTrait->name} reached level Chromatic"];
+
+
+        default:
+        return ["success"=>false, "info"=>"You did not enable {$requiredTrait->name}"];
+
+    }
 }
 
 class ChallengeController extends Controller
@@ -206,25 +246,15 @@ class ChallengeController extends Controller
         $link = "https://www.metatft.com/player/euw/{$riotUsername}-EUW?match={$matchID}";
 
         $positionResult = verifyPosition($challenge->position, $matchInfo["placement"]);
-        $results = ["position"=>$positionResult];
-        // dd($matchInfo);
+        $traits = $matchInfo['traits'];
+        $originResult = verifyTrait($challenge->origin, $traits, 'gold');
+        $classeResult = verifyTrait($challenge->classe, $traits, 'bronze');
+        $results = ["position"=>$positionResult, 'origin'=>$originResult, "classe"=>$classeResult];
 
-
-
-
-
-
-
-
-        // $results = [
-        //     'position' => random_int(1, 100) <= 75,
-        //     'classe' => random_int(1, 100) <= 75,
-        //     'origin' => random_int(1, 100) <= 75,
-        //     'constraint' => random_int(1, 100) <= 75,
-        // ];
         $positionSuccess = $results["position"]["success"];
-        $success = $positionSuccess;
-
+        $originSuccess = $results["origin"]["success"];
+        $classeSuccess = $results["classe"]["success"];
+        $success = $positionSuccess && $originSuccess && $classeSuccess;
 
         if (!$success) {
             return Inertia::render('Challenge/Fail', [
