@@ -14,6 +14,18 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+function formatRound(int $last_round): string {
+    if ($last_round < 5) {
+        $stage = 1;
+        $round_number = $last_round;
+    } else {
+        $stage = intdiv($last_round - 5, 7) + 2;
+        $round_number = ($last_round - 5) % 7 + 1;
+    }
+
+    return "{$stage}-{$round_number}";
+}
+
 function getPuuidFromRiotId($riotUsername)
 {
     $apiKey = env('RIOT_API_KEY');
@@ -97,6 +109,70 @@ function verifyTrait($requiredTrait, $traits, $level)
     }
 }
 
+function verifyConstraint($requiredConstraint, $matchInfo)
+{
+    switch ($requiredConstraint['name']) {
+        case "Hard stuck":
+            $reachedLevel = $matchInfo["level"];
+            return ["success"=>$reachedLevel===8, "info"=>"You reached level {$reachedLevel}"];
+
+        case "Solo leveling":
+            $reachedLevel = $matchInfo["level"];
+            return ["success"=>$reachedLevel===10, "info"=>"You reached level {$reachedLevel}"];
+
+        case "Greedy":
+            $goldLeft = $matchInfo["gold_left"];
+            return ["success"=>$goldLeft>=50, "info"=>"You had {$goldLeft} gold left"];
+
+        case "Killer":
+            $eliminations = $matchInfo["players_eliminated"];
+            return ["success"=>$eliminations>=2, "info"=>"You eliminated {$eliminations} players"];
+
+        case "Big D-DPS":
+            $damages = $matchInfo["total_damage_to_players"];
+            return ["success"=>$damages>=150, "info"=>"You inflicted {$damages} damages"];
+
+        case "Rainbow":
+            $validateTraits = collect($matchInfo['traits'])->filter(function ($trait) {
+                return $trait['style'] >= 1;
+            });
+            $traitsNumber = count($validateTraits);
+            return ["success"=>$traitsNumber>=6, "info"=>"You enabled {$traitsNumber} traits"];
+
+        case "Legen... Dary":
+            $units = $matchInfo["units"];
+            $legendaries = count(collect($units)->where('rarity', 4));
+            return ["success"=>$legendaries>=2, "info"=>"You played {$legendaries} lengary units"];
+
+        case "Santa":
+            $units = $matchInfo["units"];
+            $noItemUnits = collect($units)->filter(function ($unit) {
+                return empty($unit['itemNames']) || count($unit['itemNames']) === 0;
+            });
+            $numberNoItemUnits = count($noItemUnits);
+            $unitNames = $noItemUnits
+            ->pluck('character_id')
+            ->map(function ($id) {
+                return substr($id, 6);
+            })
+            ->implode(', ');
+            return ["success"=>$numberNoItemUnits===0, "info"=>"{$unitNames} had no item"];
+
+        case "Tenacity":
+            $lastRound = $matchInfo["last_round"];
+            $stage = formatRound($lastRound);
+            return ["success"=>$lastRound>=32, "info"=>"You survived until {$stage}"];
+
+        case "Overpopulated":
+            $numberUnits = count($matchInfo["units"]);
+            return ["success"=>$numberUnits>=10, "info"=>"Your board contained {$numberUnits} units"];
+
+        default:
+        return ["success"=>false, "info"=>"Unknow Constraint"];
+        }
+
+}
+
 class ChallengeController extends Controller
 {
     /**
@@ -125,22 +201,6 @@ class ChallengeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(string $id)
@@ -150,22 +210,6 @@ class ChallengeController extends Controller
         return Inertia::render('Challenge/Show', [
             'challenge' => $challenge,
         ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
     }
 
     /**
@@ -249,13 +293,16 @@ class ChallengeController extends Controller
         $traits = $matchInfo['traits'];
         $originResult = verifyTrait($challenge->origin, $traits, 'gold');
         $classeResult = verifyTrait($challenge->classe, $traits, 'bronze');
-        $results = ["position"=>$positionResult, 'origin'=>$originResult, "classe"=>$classeResult];
+        $constraintResult = verifyConstraint($challenge->constraint, $matchInfo);
+        $results = ["position"=>$positionResult, 'origin'=>$originResult, "classe"=>$classeResult, "constraint"=>$constraintResult];
 
         $positionSuccess = $results["position"]["success"];
         $originSuccess = $results["origin"]["success"];
         $classeSuccess = $results["classe"]["success"];
-        $success = $positionSuccess && $originSuccess && $classeSuccess;
+        $constraintSuccess = $results["constraint"]["success"];
+        $success = $positionSuccess && $originSuccess && $classeSuccess && $constraintSuccess;
 
+        // dd($matchInfo);
         if (!$success) {
             return Inertia::render('Challenge/Fail', [
                 'challenge' => $challenge,
