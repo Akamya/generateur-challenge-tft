@@ -6,6 +6,7 @@ import { defineProps, computed } from "vue";
 const props = defineProps({
     challenge: Object,
     results: Object,
+    link: String,
 });
 
 const stats = computed(() => {
@@ -191,6 +192,13 @@ const stats = computed(() => {
                         </svg>
                         Revenir au challenge
                     </button>
+                    <a
+                        :href="link"
+                        target="_blank"
+                        class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-6 rounded-lg flex items-center transition-colors"
+                    >
+                        See the match
+                    </a>
                 </div>
             </main>
 

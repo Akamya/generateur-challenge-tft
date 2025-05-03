@@ -18,7 +18,6 @@ function getPuuidFromRiotId($riotUsername)
 {
     $apiKey = env('RIOT_API_KEY');
 
-    $riotUsername = urlencode($riotUsername);
     $response = Http::get("https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{$riotUsername}/EUW?api_key={$apiKey}");
     if ($response->failed()) {
         return null;
@@ -43,7 +42,7 @@ function getLastMatch($puuid)
     $match = $matchResponse->json();
     $matchInfo = collect($match["info"]["participants"])->firstWhere('puuid', $puuid);
 
-    return $matchInfo;
+    return ['matchInfo'=>$matchInfo, 'matchID'=>$matchID];
 }
 
 function verifyPosition($requiredPosition, $position)
@@ -189,23 +188,26 @@ class ChallengeController extends Controller
     public function complete(string $id)
     {
         $user = Auth::user();
+        $riotUsername = urlencode($user->riot_username);
 
         $challenge = Challenge::where('user_id', $user->id)
             ->where('id', $id)
             ->with(['position', 'classe', 'origin', 'constraint'])
             ->firstOrFail();
 
-        $puuid = getPuuidFromRiotId($user->riot_username);
+        $puuid = getPuuidFromRiotId($riotUsername);
         if(!$puuid){
             return Inertia::render('Challenge/RiotIDError');
         }
 
-        $matchInfo = getLastMatch($puuid);
+        $match = getLastMatch($puuid);
+        $matchInfo = $match['matchInfo'];
+        $matchID = $match['matchID'];
+        $link = "https://www.metatft.com/player/euw/{$riotUsername}-EUW?match={$matchID}";
 
         $positionResult = verifyPosition($challenge->position, $matchInfo["placement"]);
         $results = ["position"=>$positionResult];
-        dd($matchInfo);
-
+        // dd($matchInfo);
 
 
 
@@ -227,7 +229,8 @@ class ChallengeController extends Controller
         if (!$success) {
             return Inertia::render('Challenge/Fail', [
                 'challenge' => $challenge,
-                'results' => $results
+                'results' => $results,
+                'link' => $link,
             ]);
         }
 
@@ -239,7 +242,8 @@ class ChallengeController extends Controller
 
         return Inertia::render('Challenge/Success', [
             'challenge' => $challenge,
-            'results' => $results
+            'results' => $results,
+            'link' => $link,
         ]);
     }
 
