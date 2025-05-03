@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignId('classe_id')->constrained('classes')->onDelete('cascade');
             $table->foreignId('origin_id')->constrained('origins')->onDelete('cascade');
             $table->enum('status', Challenge::status())->default('active');
+            $table->string('match_id')->nullable();
             $table->timestamps();
         });
     }

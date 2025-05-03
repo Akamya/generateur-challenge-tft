@@ -12,7 +12,8 @@ class Challenge extends Model
         'classe_id',
         'constraint_id',
         'season_id',
-        'user_id'
+        'user_id',
+        'match_id',
     ];
 
     public const ACTIVE = 'active';

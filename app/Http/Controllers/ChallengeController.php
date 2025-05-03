@@ -235,6 +235,7 @@ class ChallengeController extends Controller
         }
 
         $challenge->status = 'completed';
+        $challenge->match_id = $matchID;
         $challenge->save();
 
         $user->score = $user->score+1;
