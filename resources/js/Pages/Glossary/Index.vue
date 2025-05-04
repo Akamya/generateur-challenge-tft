@@ -1,6 +1,6 @@
 <script setup>
 import { ref, defineProps } from "vue";
-import { Head, Link } from "@inertiajs/vue3";
+import { Head } from "@inertiajs/vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
 
 const props = defineProps({
@@ -17,10 +17,8 @@ const props = defineProps({
     constraints: Array,
 });
 
-// Active category state
-const activeCategory = ref("origins"); // Default to origins tab
+const activeCategory = ref("classes");
 
-// Function to change active category
 const setActiveCategory = (category) => {
     activeCategory.value = category;
 };
@@ -28,7 +26,7 @@ const setActiveCategory = (category) => {
 
 <template>
     <AppLayout>
-        <Head title="Glossaire - Opération TFT" />
+        <Head title="Glossary" />
 
         <div class="min-h-screen flex flex-col relative overflow-hidden">
             <!-- Background image -->
@@ -56,40 +54,12 @@ const setActiveCategory = (category) => {
                             class="h-16 w-16"
                         />
                     </div>
-                    <h1 class="text-white text-5xl font-bold mb-2">
-                        GLOSSAIRE TFT
-                    </h1>
+                    <h1 class="text-white text-5xl font-bold mb-2">GLOSSARY</h1>
                     <div class="w-64 h-1 bg-yellow-500 mb-6"></div>
-                    <p class="text-white text-xl mb-6">
-                        Toutes les informations sur les origines, positions,
-                        classes et contraintes
-                    </p>
                 </div>
 
                 <!-- Category Navigation -->
                 <div class="flex flex-wrap justify-center gap-2 mb-8">
-                    <button
-                        @click="setActiveCategory('origins')"
-                        class="px-6 py-3 rounded-full text-lg font-bold transition-colors"
-                        :class="
-                            activeCategory === 'origins'
-                                ? 'bg-yellow-500 text-blue-900'
-                                : 'bg-blue-900/60 text-white hover:bg-blue-900/80'
-                        "
-                    >
-                        Origines
-                    </button>
-                    <button
-                        @click="setActiveCategory('positions')"
-                        class="px-6 py-3 rounded-full text-lg font-bold transition-colors"
-                        :class="
-                            activeCategory === 'positions'
-                                ? 'bg-yellow-500 text-blue-900'
-                                : 'bg-blue-900/60 text-white hover:bg-blue-900/80'
-                        "
-                    >
-                        Positions
-                    </button>
                     <button
                         @click="setActiveCategory('classes')"
                         class="px-6 py-3 rounded-full text-lg font-bold transition-colors"
@@ -102,6 +72,17 @@ const setActiveCategory = (category) => {
                         Classes
                     </button>
                     <button
+                        @click="setActiveCategory('origins')"
+                        class="px-6 py-3 rounded-full text-lg font-bold transition-colors"
+                        :class="
+                            activeCategory === 'origins'
+                                ? 'bg-yellow-500 text-blue-900'
+                                : 'bg-blue-900/60 text-white hover:bg-blue-900/80'
+                        "
+                    >
+                        Origins
+                    </button>
+                    <button
                         @click="setActiveCategory('constraints')"
                         class="px-6 py-3 rounded-full text-lg font-bold transition-colors"
                         :class="
@@ -110,7 +91,18 @@ const setActiveCategory = (category) => {
                                 : 'bg-blue-900/60 text-white hover:bg-blue-900/80'
                         "
                     >
-                        Contraintes
+                        Constraints
+                    </button>
+                    <button
+                        @click="setActiveCategory('positions')"
+                        class="px-6 py-3 rounded-full text-lg font-bold transition-colors"
+                        :class="
+                            activeCategory === 'positions'
+                                ? 'bg-yellow-500 text-blue-900'
+                                : 'bg-blue-900/60 text-white hover:bg-blue-900/80'
+                        "
+                    >
+                        Positions
                     </button>
                 </div>
 
@@ -121,7 +113,7 @@ const setActiveCategory = (category) => {
                         <h2
                             class="text-white text-2xl font-bold mb-6 text-center border-b border-yellow-500 pb-2"
                         >
-                            ORIGINES
+                            ORIGINS
                         </h2>
 
                         <div
@@ -256,7 +248,7 @@ const setActiveCategory = (category) => {
                         <h2
                             class="text-white text-2xl font-bold mb-6 text-center border-b border-yellow-500 pb-2"
                         >
-                            CONTRAINTES
+                            CONSTRAINTS
                         </h2>
 
                         <div v-if="props.constraints" class="space-y-6">
@@ -287,23 +279,6 @@ const setActiveCategory = (category) => {
                     </div>
                 </div>
             </main>
-
-            <!-- Footer -->
-            <footer class="relative z-10 bg-blue-950/80 py-6 px-4 text-center">
-                <div class="container mx-auto">
-                    <div class="flex justify-center mb-2">
-                        <img
-                            src="/placeholder.svg"
-                            alt="TFT Logo"
-                            class="h-8 w-8 mr-2"
-                        />
-                        <span class="text-white font-bold">OPÉRATION TFT</span>
-                    </div>
-                    <p class="text-white text-sm">
-                        © Opération TFT. All rights reserved. By Elodie Langlet.
-                    </p>
-                </div>
-            </footer>
         </div>
     </AppLayout>
 </template>

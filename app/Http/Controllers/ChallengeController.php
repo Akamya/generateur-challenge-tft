@@ -294,7 +294,7 @@ class ChallengeController extends Controller
         $originResult = verifyTrait($challenge->origin, $traits, 'gold');
         $classeResult = verifyTrait($challenge->classe, $traits, 'bronze');
         $constraintResult = verifyConstraint($challenge->constraint, $matchInfo);
-        $results = ["position"=>$positionResult, 'origin'=>$originResult, "classe"=>$classeResult, "constraint"=>$constraintResult];
+        $results = ["position"=>$positionResult, "classe"=>$classeResult, 'origin'=>$originResult,  "constraint"=>$constraintResult];
 
         $positionSuccess = $results["position"]["success"];
         $originSuccess = $results["origin"]["success"];

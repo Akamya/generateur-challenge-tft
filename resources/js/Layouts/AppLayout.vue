@@ -7,6 +7,7 @@ import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
 import NavLink from "@/Components/NavLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
+import Footer from "@/Components/Footer.vue";
 
 defineProps({
     title: String,
@@ -46,7 +47,7 @@ const logout = () => {
                     <!-- Logo -->
                     <div class="flex items-center">
                         <span class="text-white text-xl font-bold"
-                            >OPERATION TFT</span
+                            >TFT OPERATION</span
                         >
                     </div>
 
@@ -324,13 +325,13 @@ const logout = () => {
                             :href="route('login')"
                             class="bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2 px-4 rounded-full"
                         >
-                            Connexion
+                            Sign In
                         </Link>
                         <Link
                             :href="route('register')"
                             class="bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2 px-4 rounded-full"
                         >
-                            Inscription
+                            Sign Up
                         </Link>
                     </div>
 
@@ -618,7 +619,7 @@ const logout = () => {
                                     class="text-white hover:text-yellow-300"
                                     active-class="bg-blue-800 text-yellow-300"
                                 >
-                                    Connexion
+                                    Sign In
                                 </ResponsiveNavLink>
                                 <ResponsiveNavLink
                                     :href="route('register')"
@@ -626,7 +627,7 @@ const logout = () => {
                                     class="text-white hover:text-yellow-300"
                                     active-class="bg-blue-800 text-yellow-300"
                                 >
-                                    Inscription
+                                    Sign Up
                                 </ResponsiveNavLink>
                             </div>
                         </template>
@@ -644,6 +645,7 @@ const logout = () => {
             <!-- Page Content -->
             <main>
                 <slot />
+                <Footer></Footer>
             </main>
         </div>
     </div>

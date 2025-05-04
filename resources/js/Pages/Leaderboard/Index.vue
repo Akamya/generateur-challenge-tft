@@ -1,7 +1,7 @@
 <script setup>
 import { Head } from "@inertiajs/vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
-import { defineProps, ref } from "vue";
+import { defineProps } from "vue";
 
 const props = defineProps({
     topPlayers: Array,
@@ -9,7 +9,6 @@ const props = defineProps({
     auth: Object,
 });
 
-// For highlighting the current user in the leaderboard
 const isCurrentUser = (userId) => {
     return props.auth?.user?.id === userId;
 };
@@ -17,7 +16,7 @@ const isCurrentUser = (userId) => {
 
 <template>
     <AppLayout>
-        <Head title="Classement - Opération TFT" />
+        <Head title="Leaderboard - TFT Operation" />
 
         <div class="min-h-screen flex flex-col relative overflow-hidden">
             <!-- Background image -->
@@ -46,11 +45,11 @@ const isCurrentUser = (userId) => {
                         />
                     </div>
                     <h1 class="text-white text-5xl font-bold mb-2">
-                        CLASSEMENT
+                        LEADERBOARD
                     </h1>
                     <div class="w-64 h-1 bg-yellow-500 mb-6"></div>
                     <p class="text-white text-xl mb-6">
-                        Les meilleurs joueurs d'Opération TFT
+                        The best players of TFT Operation
                     </p>
                 </div>
 
@@ -62,7 +61,7 @@ const isCurrentUser = (userId) => {
                     <h2
                         class="text-white text-2xl font-bold mb-6 text-center border-b border-yellow-500 pb-2"
                     >
-                        VOTRE CLASSEMENT
+                        YOUR RANKING
                     </h2>
 
                     <div
@@ -89,7 +88,7 @@ const isCurrentUser = (userId) => {
                             <div class="text-3xl font-bold text-white mb-2">
                                 {{ userRanking.score }}
                             </div>
-                            <div class="text-sm text-blue-200">Score total</div>
+                            <div class="text-sm text-blue-200">Total score</div>
                         </div>
                     </div>
                 </div>
@@ -101,16 +100,16 @@ const isCurrentUser = (userId) => {
                     <h2
                         class="text-white text-2xl font-bold mb-6 text-center border-b border-yellow-500 pb-2"
                     >
-                        TOP 10 JOUEURS
+                        TOP 10 PLAYERS
                     </h2>
 
                     <div class="overflow-x-auto">
                         <table class="w-full">
                             <thead>
                                 <tr class="text-left border-b border-blue-700">
-                                    <th class="p-3 text-white">Rang</th>
-                                    <th class="p-3 text-white">Joueur</th>
-                                    <th class="p-3 text-white">Nom Riot</th>
+                                    <th class="p-3 text-white">Rank</th>
+                                    <th class="p-3 text-white">Player</th>
+                                    <th class="p-3 text-white">Riot Name</th>
                                     <th class="p-3 text-white text-right">
                                         Score
                                     </th>
@@ -208,27 +207,10 @@ const isCurrentUser = (userId) => {
                                 clip-rule="evenodd"
                             />
                         </svg>
-                        Mon historique
+                        My History
                     </button>
                 </div>
             </main>
-
-            <!-- Footer -->
-            <footer class="relative z-10 bg-blue-950/80 py-6 px-4 text-center">
-                <div class="container mx-auto">
-                    <div class="flex justify-center mb-2">
-                        <img
-                            src="/placeholder.svg"
-                            alt="TFT Logo"
-                            class="h-8 w-8 mr-2"
-                        />
-                        <span class="text-white font-bold">OPÉRATION TFT</span>
-                    </div>
-                    <p class="text-white text-sm">
-                        © Opération TFT. All rights reserved. By Elodie Langlet.
-                    </p>
-                </div>
-            </footer>
         </div>
     </AppLayout>
 </template>

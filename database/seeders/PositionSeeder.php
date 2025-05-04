@@ -26,9 +26,12 @@ class PositionSeeder extends Seeder
         $index = 1;
 
         foreach ($positions as $name) {
+            $description = "Finish in the $name place or better";
+
             Position::create([
                 'name' => $name,
                 'value' => $index,
+                'description' => $description,
             ]);
 
             $index++;
