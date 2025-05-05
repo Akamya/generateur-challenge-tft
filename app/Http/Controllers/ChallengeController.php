@@ -26,6 +26,16 @@ function formatRound(int $last_round): string {
     return "{$stage}-{$round_number}";
 }
 
+function getActiveChallenge($user){
+    if ($user) {
+        $latestChallenge = Challenge::where('user_id', $user->id)
+            ->where('status', 'active')
+            ->first();
+
+        return $latestChallenge;
+    }
+}
+
 function getPuuidFromRiotId($riotUsername)
 {
     $apiKey = env('RIOT_API_KEY');
@@ -183,15 +193,9 @@ class ChallengeController extends Controller
     {
         $user = Auth::user();
 
-        if ($user) {
-            $latestChallenge = Challenge::where('user_id', $user->id)
-                ->where('status', 'active')
-                ->latest()
-                ->first();
-
-            if ($latestChallenge) {
-                return redirect()->route('challenge.show', ['id' => $latestChallenge->id]);
-            }
+        $latestChallenge = getActiveChallenge($user);
+        if ($latestChallenge) {
+            return redirect()->route('challenge.show', ['id' => $latestChallenge->id]);
         }
 
         return Inertia::render('Challenge/Index', [
@@ -225,6 +229,12 @@ class ChallengeController extends Controller
 
     public function generate()
     {
+        $user = Auth::user();
+        $latestChallenge = getActiveChallenge($user);
+        if ($latestChallenge) {
+            return redirect()->route('challenge.show', ['id' => $latestChallenge->id]);
+        }
+
         $challenge = [
             'position' => Position::inRandomOrder()->first(),
             'constraint' => Constraint::inRandomOrder()->first(),
@@ -244,6 +254,12 @@ class ChallengeController extends Controller
 
     public function accept(Request $request)
     {
+        $user = Auth::user();
+        $latestChallenge = getActiveChallenge($user);
+        if ($latestChallenge) {
+            return redirect()->route('challenge.show', ['id' => $latestChallenge->id]);
+        }
+
         $data = $request->validate([
             'position_id' => 'required|exists:positions,id',
             'classe_id' => 'required|exists:classes,id',
