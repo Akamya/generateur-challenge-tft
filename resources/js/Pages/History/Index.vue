@@ -53,20 +53,10 @@ const formatDate = (dateString) => {
 </script>
 
 <template>
-    <AppLayout>
+    <AppLayout :show-background="true">
         <Head title="History" />
 
         <div class="min-h-screen flex flex-col relative overflow-hidden">
-            <!-- Background image -->
-            <div class="absolute inset-0 z-0">
-                <img
-                    src="/storage/tft-wallpaper.jpg"
-                    alt="TFT Background"
-                    class="w-full h-full object-cover opacity-100"
-                />
-                <div class="absolute inset-0 bg-blue-900/70"></div>
-            </div>
-
             <!-- Main Content -->
             <main
                 class="relative flex-grow flex flex-col items-center py-12 px-4"

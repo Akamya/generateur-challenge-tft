@@ -11,6 +11,10 @@ import Footer from "@/Components/Footer.vue";
 
 defineProps({
     title: String,
+    showBackground: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const showingNavigationDropdown = ref(false);
@@ -38,7 +42,7 @@ const logout = () => {
 
         <Banner />
 
-        <div class="min-h-screen">
+        <div class="flex flex-col min-h-screen">
             <!-- Primary Navigation Menu -->
             <nav class="relative z-10 bg-blue-950 py-4 px-6 shadow-lg">
                 <div
@@ -643,10 +647,20 @@ const logout = () => {
             </header>
 
             <!-- Page Content -->
-            <main>
+            <main
+                class="relative py-12 px-4 flex flex-col items-center justify-center flex-grow"
+            >
+                <div v-if="showBackground" class="absolute inset-0 z-0">
+                    <img
+                        src="/storage/tft-wallpaper.jpg"
+                        alt="TFT Background"
+                        class="w-full h-full object-cover"
+                    />
+                    <div class="absolute inset-0 bg-blue-900/70"></div>
+                </div>
                 <slot />
-                <Footer></Footer>
             </main>
+            <Footer></Footer>
         </div>
     </div>
 </template>

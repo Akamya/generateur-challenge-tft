@@ -15,24 +15,14 @@ const props = defineProps({
 </script>
 
 <template>
-    <AppLayout>
-        <div class="min-h-screen flex flex-col relative overflow-hidden">
-            <!-- Background image -->
-            <div class="absolute inset-0 z-0">
-                <img
-                    src="/storage/tft-wallpaper.jpg"
-                    alt="TFT Background"
-                    class="w-full h-full object-cover opacity-100"
-                />
-                <div class="absolute inset-0 bg-blue-900/70"></div>
-            </div>
-
+    <AppLayout :show-background="true">
+        <div class="min-h-full flex flex-col relative overflow-hidden">
             <!-- Main Content -->
             <main
                 class="relative flex-grow flex flex-col items-center justify-center py-12 px-4"
             >
                 <!-- Logo and Title -->
-                <div class="flex flex-col items-center mb-8">
+                <div v-if="!challenge" class="flex flex-col items-center mb-8">
                     <div
                         class="bg-blue-900 rounded-full p-3 border-4 border-yellow-500 mb-6"
                     >
@@ -65,7 +55,7 @@ const props = defineProps({
                 <!-- Challenge Requirements -->
                 <div
                     v-if="challenge"
-                    class="bg-blue-900/80 rounded-lg p-8 max-w-2xl w-full"
+                    class="bg-blue-900/80 rounded-lg p-8 max-w-2xl w-full min-h-[480px] min-w-[700px] flex flex-col justify-between"
                 >
                     <h2
                         class="text-white text-2xl font-bold mb-6 text-center border-b border-yellow-500 pb-2"
@@ -239,7 +229,7 @@ const props = defineProps({
                     </div>
 
                     <!-- Action Buttons -->
-                    <div class="flex flex-wrap justify-center gap-4 mt-8">
+                    <div class="flex justify-center space-x-6">
                         <button
                             v-if="props.auth.user"
                             @click="
