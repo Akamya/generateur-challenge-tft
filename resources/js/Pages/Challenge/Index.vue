@@ -53,7 +53,10 @@ const props = defineProps({
                         Generate a Challenge
                     </button>
 
-                    <p class="text-white text-center text-sm max-w-md">
+                    <p
+                        v-if="!props.auth.user"
+                        class="text-white text-center text-sm max-w-md"
+                    >
                         Sign up to track your completed challenges and maybe
                         appear in the leaderboard.
                     </p>

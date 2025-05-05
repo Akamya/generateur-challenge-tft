@@ -38,9 +38,9 @@ const logout = () => {
 
         <Banner />
 
-        <div class="min-h-screen bg-blue-950">
+        <div class="min-h-screen">
             <!-- Primary Navigation Menu -->
-            <nav class="relative z-10 bg-blue-950/80 py-4 px-6 shadow-lg">
+            <nav class="relative z-10 bg-blue-950 py-4 px-6 shadow-lg">
                 <div
                     class="container mx-auto flex justify-between items-center"
                 >
@@ -636,7 +636,7 @@ const logout = () => {
             </nav>
 
             <!-- Page Heading -->
-            <header v-if="$slots.header" class="bg-blue-900/80 shadow">
+            <header v-if="$slots.header" class="bg-blue-900 shadow">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <slot name="header" />
                 </div>

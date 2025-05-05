@@ -131,10 +131,10 @@ if (typeof window !== "undefined") {
                     </div>
                     <div>
                         <div class="text-white font-medium">
-                            {{ user?.username || "Nom inconnu" }}
+                            {{ user?.username }}
                         </div>
                         <div class="text-blue-300 text-sm">
-                            {{ user?.riot_username || "No Riot username" }}
+                            {{ user?.riot_username }}
                         </div>
                     </div>
                 </div>
@@ -151,7 +151,7 @@ if (typeof window !== "undefined") {
             "
             class="absolute z-50 mt-2 w-full bg-blue-900 border border-blue-700 rounded-lg shadow-lg py-4 px-4 text-center"
         >
-            <p class="text-blue-300">Aucun joueur trouvé</p>
+            <p class="text-blue-300">No players found</p>
         </div>
     </div>
 </template>
