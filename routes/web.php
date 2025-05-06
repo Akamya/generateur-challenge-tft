@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\GlossaryController;
 use App\Http\Controllers\HistoryController;
@@ -27,4 +28,10 @@ Route::middleware([
     Route::get('/challenge/{id}/complete', [ChallengeController::class, 'index']);
     Route::post('/challenge/{id}/complete', [ChallengeController::class, 'complete'])->name('challenge.complete');
     Route::delete('/challenge/{id}/delete', [ChallengeController::class, 'destroy'])->name('challenge.destroy');
+});
+
+Route::middleware(['auth'])->prefix('admin')->group(function () {
+    Route::get('/index', [AdminUserController::class, "index"])->name('admin.index');
+    Route::put('/season/store', [AdminUserController::class, "upsertSeason"])->name('admin.season.upsert');
+    Route::delete('/season/{id}/delete', [AdminUserController::class, "destroySeason"])->name('admin.season.delete');
 });
