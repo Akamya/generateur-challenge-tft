@@ -11,6 +11,8 @@ const props = defineProps({
     classes: Array,
 });
 
+console.log(props.classes);
+
 // Active tab state
 const activeTab = ref("seasons");
 const originallyActive = ref(false);
@@ -19,15 +21,21 @@ const canActivate = computed(() => {
     return !props.seasons.some((season) => season.active);
 });
 
-console.log("canActivate", canActivate.value);
 // Modal states
 const showSeasonModal = ref(false);
+const showClasseModal = ref(false);
 const isEditing = ref(false);
 
 const seasonForm = useForm({
     id: null,
     name: "",
     active: false,
+});
+
+const classeForm = useForm({
+    id: null,
+    name: "",
+    technical_name: "",
 });
 
 const showDeleteModal = ref(false);
@@ -55,6 +63,22 @@ const openSeasonForm = (season = null) => {
     showSeasonModal.value = true;
 };
 
+const openClasseForm = (classe = null) => {
+    isEditing.value = !!classe;
+
+    if (classe) {
+        classeForm.id = classe.id;
+        classeForm.name = classe.name;
+        classeForm.technical_name = classe.technical_name;
+    } else {
+        classeForm.id = null;
+        classeForm.name = "";
+        classeForm.technical_name = "";
+    }
+
+    showClasseModal.value = true;
+};
+
 function openDeleteSeasonModal(season) {
     selectedSeason.value = season;
     confirmationText.value = "";
@@ -76,12 +100,6 @@ const formatDate = (dateString) => {
         day: "numeric",
     };
     return new Date(dateString).toLocaleDateString("en-EN", options);
-};
-
-// Format date for input fields (YYYY-MM-DD)
-const formatDateForInput = (dateString) => {
-    const date = new Date(dateString);
-    return date.toISOString().split("T")[0];
 };
 </script>
 
@@ -272,11 +290,8 @@ const formatDateForInput = (dateString) => {
                     <div class="flex justify-between items-center mb-6">
                         <div>
                             <h2 class="text-white text-2xl font-bold">
-                                Classes
+                                TFT Classes
                             </h2>
-                            <p class="text-blue-300">
-                                Manage champion classes for TFT
-                            </p>
                         </div>
                         <div class="flex space-x-4">
                             <div class="relative">
@@ -308,6 +323,7 @@ const formatDateForInput = (dateString) => {
                                 </div>
                             </div>
                             <button
+                                @click="openClasseForm()"
                                 class="bg-gradient-to-r from-yellow-500 to-yellow-400 hover:from-yellow-400 hover:to-yellow-300 text-black font-bold py-2 px-4 rounded-lg transition-colors shadow-md flex items-center"
                             >
                                 <svg
@@ -328,89 +344,23 @@ const formatDateForInput = (dateString) => {
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Example classes - replace with actual data -->
                         <div
+                            v-for="classe in props.classes"
+                            :key="classe.id"
                             class="bg-blue-800/40 rounded-lg p-6 border border-blue-700/30 flex flex-col h-full"
                         >
                             <div class="flex justify-between items-start mb-4">
                                 <h3 class="text-xl font-bold text-yellow-400">
-                                    Hyperpop
+                                    {{ classe.name }}
                                 </h3>
                                 <span
                                     class="px-3 py-1 rounded-full text-sm font-medium bg-purple-500/20 text-purple-400"
                                 >
-                                    Set 10
+                                    {{ classe.season.name }}
                                 </span>
                             </div>
                             <p class="text-white flex-grow mb-4">
-                                Hyperpop champions create a beat that grows in
-                                intensity.
-                            </p>
-                            <div class="flex justify-end space-x-2 mt-auto">
-                                <button
-                                    class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded transition-colors"
-                                    title="Edit class"
-                                >
-                                    Edit
-                                </button>
-                                <button
-                                    class="bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded transition-colors"
-                                    title="Delete class"
-                                >
-                                    Delete
-                                </button>
-                            </div>
-                        </div>
-
-                        <div
-                            class="bg-blue-800/40 rounded-lg p-6 border border-blue-700/30 flex flex-col h-full"
-                        >
-                            <div class="flex justify-between items-start mb-4">
-                                <h3 class="text-xl font-bold text-yellow-400">
-                                    Disco
-                                </h3>
-                                <span
-                                    class="px-3 py-1 rounded-full text-sm font-medium bg-purple-500/20 text-purple-400"
-                                >
-                                    Set 10
-                                </span>
-                            </div>
-                            <p class="text-white flex-grow mb-4">
-                                Disco champions dance around the board, healing
-                                allies.
-                            </p>
-                            <div class="flex justify-end space-x-2 mt-auto">
-                                <button
-                                    class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded transition-colors"
-                                    title="Edit class"
-                                >
-                                    Edit
-                                </button>
-                                <button
-                                    class="bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded transition-colors"
-                                    title="Delete class"
-                                >
-                                    Delete
-                                </button>
-                            </div>
-                        </div>
-
-                        <div
-                            class="bg-blue-800/40 rounded-lg p-6 border border-blue-700/30 flex flex-col h-full"
-                        >
-                            <div class="flex justify-between items-start mb-4">
-                                <h3 class="text-xl font-bold text-yellow-400">
-                                    EDM
-                                </h3>
-                                <span
-                                    class="px-3 py-1 rounded-full text-sm font-medium bg-purple-500/20 text-purple-400"
-                                >
-                                    Set 10
-                                </span>
-                            </div>
-                            <p class="text-white flex-grow mb-4">
-                                EDM champions drop the bass, stunning nearby
-                                enemies.
+                                {{ classe.description }}
                             </p>
                             <div class="flex justify-end space-x-2 mt-auto">
                                 <button
@@ -703,30 +653,29 @@ const formatDateForInput = (dateString) => {
                 </div>
             </div>
         </div>
+
         <!-- delete season modal -->
         <div
             v-if="showDeleteModal"
             class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
         >
             <div class="bg-white p-6 rounded-lg w-full max-w-md">
-                <h2 class="text-lg font-semibold mb-4">
-                    Confirmer la suppression
-                </h2>
+                <h2 class="text-lg font-semibold mb-4">Confirm deletion</h2>
 
                 <h3>
                     All the origins, classes and challenges related to this
                     season will be deleted !
                 </h3>
                 <p class="mb-4">
-                    Pour supprimer cette saison, tape
-                    <strong>DELETE</strong> ci-dessous :
+                    Confirm deletion by taping
+                    <strong>DELETE</strong> below :
                 </p>
 
                 <input
                     v-model="confirmationText"
                     type="text"
                     class="w-full border border-gray-300 rounded px-3 py-2 mb-4"
-                    placeholder="Tapez DELETE pour confirmer"
+                    placeholder="Type DELETE to confirm"
                 />
 
                 <div class="flex justify-end gap-2">
@@ -734,7 +683,7 @@ const formatDateForInput = (dateString) => {
                         @click="showDeleteModal = false"
                         class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
                     >
-                        Annuler
+                        Cancel
                     </button>
 
                     <button
@@ -742,8 +691,75 @@ const formatDateForInput = (dateString) => {
                         @click="confirmDelete"
                         class="px-4 py-2 bg-red-600 text-white rounded disabled:opacity-50"
                     >
-                        Supprimer
+                        Delete
                     </button>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="showClasseModal" class="fixed inset-0 z-50 overflow-y-auto">
+            <div class="flex items-center justify-center min-h-screen px-4">
+                <div
+                    class="fixed inset-0 bg-black/70 transition-opacity"
+                    @click="showClasseModal = false"
+                ></div>
+
+                <div
+                    class="relative bg-blue-900 rounded-lg max-w-md w-full p-6 shadow-xl border border-blue-800"
+                >
+                    <h3 class="text-xl font-bold text-white mb-4">
+                        {{ isEditing ? "Edit Class" : "Add New Class" }}
+                    </h3>
+
+                    <form
+                        @submit.prevent="
+                            classeForm.put(route('admin.classe.upsert'));
+                            showClasseModal = false;
+                        "
+                    >
+                        <div class="space-y-4">
+                            <div>
+                                <label
+                                    class="block text-yellow-400 text-sm font-medium mb-1"
+                                    >Name</label
+                                >
+                                <input
+                                    v-model="classeForm.name"
+                                    type="text"
+                                    class="w-full bg-blue-800 border border-blue-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                                    required
+                                />
+                            </div>
+                            <div class="flex items-center">
+                                <label
+                                    class="block text-yellow-400 text-sm font-medium mb-1"
+                                    >Technical Name</label
+                                >
+                                <input
+                                    v-model="classeForm.technical_name"
+                                    type="text"
+                                    class="w-full bg-blue-800 border border-blue-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end space-x-3 mt-6">
+                            <button
+                                type="button"
+                                @click="showClasseModal = false"
+                                class="bg-blue-700 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                class="bg-gradient-to-r from-yellow-500 to-yellow-400 hover:from-yellow-400 hover:to-yellow-300 text-black font-bold px-4 py-2 rounded-lg transition-colors"
+                            >
+                                {{ isEditing ? "Update" : "Create" }}
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
