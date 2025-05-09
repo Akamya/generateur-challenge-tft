@@ -22,6 +22,13 @@ const props = defineProps({
                         YOUR CHALLENGE
                     </h2>
 
+                    <div class="flex justify-center items-center mb-6">
+                        <p class="text-white text-center text-sm max-w-md">
+                            Give it your all in TFT! Then let’s verify if you
+                            crushed the challenge!
+                        </p>
+                    </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <!-- Position Card -->
                         <div

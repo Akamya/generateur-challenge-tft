@@ -62,6 +62,24 @@ const props = defineProps({
                     >
                         YOUR CHALLENGE
                     </h2>
+                    <div
+                        v-if="!props.auth.user"
+                        class="flex justify-center items-center mb-6"
+                    >
+                        <p class="text-white text-center text-sm max-w-md">
+                            Sign up to accept this challenge and climb the
+                            ladder!
+                        </p>
+                    </div>
+
+                    <div
+                        v-if="props.auth.user"
+                        class="flex justify-center items-center mb-6"
+                    >
+                        <p class="text-white text-center text-sm max-w-md">
+                            Accept this challenge and climb the ladder!
+                        </p>
+                    </div>
 
                     <!-- Challenge Grid Layout -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
