@@ -16,7 +16,7 @@ const isCurrentUser = (userId) => {
 
 <template>
     <AppLayout :show-background="true">
-        <Head title="Leaderboard - TFT Operation" />
+        <Head title="Leaderboard" />
 
         <main
             class="relative w-full flex-grow flex flex-col items-center py-12 px-4"

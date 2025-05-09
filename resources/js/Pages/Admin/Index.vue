@@ -4,6 +4,7 @@ import { defineProps, ref } from "vue";
 import SeasonsTab from "@/Pages/Admin/SeasonsTab.vue";
 import ClassesTab from "@/Pages/Admin/ClassesTab.vue";
 import OriginsTab from "@/Pages/Admin/OriginsTab.vue";
+import { Head } from "@inertiajs/vue3";
 
 const props = defineProps({
     seasons: Array,
@@ -16,6 +17,7 @@ const activeTab = ref("seasons");
 
 <template>
     <AppLayout :show-background="true">
+        <Head title="Admin" />
         <main class="relative flex-grow flex flex-col items-center py-12 px-4">
             <!-- Logo and Title -->
             <div class="flex flex-col items-center mb-10">
