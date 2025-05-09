@@ -227,6 +227,11 @@ class ChallengeController extends Controller
         return redirect()->route('homepage')->with('success', 'Challenge deleted');
     }
 
+    public function getCurrentSeason()
+    {
+        return Season::where('active', true)->first();
+    }
+
     public function generate()
     {
         $user = Auth::user();
@@ -235,11 +240,13 @@ class ChallengeController extends Controller
             return redirect()->route('challenge.show', ['id' => $latestChallenge->id]);
         }
 
+        $currentSeason = $this->getCurrentSeason();
+
         $challenge = [
             'position' => Position::inRandomOrder()->first(),
             'constraint' => Constraint::inRandomOrder()->first(),
-            'classe' => Classe::inRandomOrder()->first(),
-            'origin' => Origin::inRandomOrder()->first(),
+            'classe' => Classe::where('season_id', $currentSeason->id)->inRandomOrder()->first(),
+            'origin' => Origin::where('season_id', $currentSeason->id)->inRandomOrder()->first(),
         ];
 
         return Inertia::render('Challenge/Index', [
@@ -278,12 +285,6 @@ class ChallengeController extends Controller
 
         return redirect()->route('challenge.show', $challenge->id)->with('success', 'Challenge accepted and registered !');
     }
-
-    public function getCurrentSeason()
-    {
-        return Season::orderBy('id', 'desc')->first();
-    }
-
 
     public function complete(string $id)
     {
