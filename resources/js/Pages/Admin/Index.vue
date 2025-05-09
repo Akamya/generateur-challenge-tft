@@ -1,10 +1,8 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { defineProps, ref } from "vue";
-import { useForm } from "@inertiajs/vue3";
-import { Inertia } from "@inertiajs/inertia";
-import { computed } from "vue";
 import SeasonsTab from "@/Pages/Admin/SeasonsTab.vue";
+import ClassesTab from "@/Pages/Admin/ClassesTab.vue";
 
 const props = defineProps({
     seasons: Array,
@@ -12,38 +10,7 @@ const props = defineProps({
     classes: Array,
 });
 
-console.log(props.classes);
-
-// Active tab state
 const activeTab = ref("seasons");
-
-// Modal states
-
-const showClasseModal = ref(false);
-
-const classeForm = useForm({
-    id: null,
-    name: "",
-    technical_name: "",
-});
-
-const openClasseForm = (classe = null) => {
-    isEditing.value = !!classe;
-
-    if (classe) {
-        classeForm.id = classe.id;
-        classeForm.name = classe.name;
-        classeForm.technical_name = classe.technical_name;
-    } else {
-        classeForm.id = null;
-        classeForm.name = "";
-        classeForm.technical_name = "";
-    }
-
-    showClasseModal.value = true;
-};
-
-// Format date for display
 </script>
 
 <template>
@@ -120,112 +87,7 @@ const openClasseForm = (classe = null) => {
                     v-if="activeTab === 'classes'"
                     class="bg-blue-900/80 rounded-lg p-8 backdrop-blur-sm shadow-xl border border-blue-800/50"
                 >
-                    <div class="flex justify-between items-center mb-6">
-                        <div>
-                            <h2 class="text-white text-2xl font-bold">
-                                TFT Classes
-                            </h2>
-                        </div>
-                        <div class="flex space-x-4">
-                            <div class="relative">
-                                <select
-                                    class="bg-blue-800 text-white border border-blue-700 rounded-lg px-4 py-2 appearance-none pr-10 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                                >
-                                    <option
-                                        v-for="season in props.seasons"
-                                        :key="season.id"
-                                        :value="season.id"
-                                    >
-                                        {{ season.name }}
-                                    </option>
-                                </select>
-                                <div
-                                    class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
-                                >
-                                    <svg
-                                        class="w-5 h-5 text-yellow-400"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                    >
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                            clip-rule="evenodd"
-                                        ></path>
-                                    </svg>
-                                </div>
-                            </div>
-                            <button
-                                @click="openClasseForm()"
-                                class="bg-gradient-to-r from-yellow-500 to-yellow-400 hover:from-yellow-400 hover:to-yellow-300 text-black font-bold py-2 px-4 rounded-lg transition-colors shadow-md flex items-center"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5 mr-2"
-                                    viewBox="0 0 20 20"
-                                    fill="currentColor"
-                                >
-                                    <path
-                                        fill-rule="evenodd"
-                                        d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                                        clip-rule="evenodd"
-                                    />
-                                </svg>
-                                Add Class
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div
-                            v-for="classe in props.classes"
-                            :key="classe.id"
-                            class="bg-blue-800/40 rounded-lg p-6 border border-blue-700/30 flex flex-col h-full"
-                        >
-                            <div class="flex justify-between items-start mb-4">
-                                <h3 class="text-xl font-bold text-yellow-400">
-                                    {{ classe.name }}
-                                </h3>
-                                <span
-                                    class="px-3 py-1 rounded-full text-sm font-medium bg-purple-500/20 text-purple-400"
-                                >
-                                    {{ classe.season.name }}
-                                </span>
-                            </div>
-                            <p class="text-white flex-grow mb-4">
-                                {{ classe.description }}
-                            </p>
-                            <div class="flex justify-end space-x-2 mt-auto">
-                                <button
-                                    class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded transition-colors"
-                                    title="Edit class"
-                                >
-                                    Edit
-                                </button>
-                                <button
-                                    class="bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded transition-colors"
-                                    title="Delete class"
-                                >
-                                    Delete
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Empty state for no classes -->
-                        <div
-                            v-if="false"
-                            class="col-span-2 text-center py-10 bg-blue-800/40 rounded-lg"
-                        >
-                            <p class="text-blue-300 text-lg">
-                                No classes found for this season.
-                            </p>
-                            <button
-                                class="mt-4 bg-yellow-500 hover:bg-yellow-400 text-black font-medium py-2 px-4 rounded transition-colors"
-                            >
-                                Add your first class
-                            </button>
-                        </div>
-                    </div>
+                    <ClassesTab :seasons="seasons" :classes="classes" />
                 </div>
 
                 <!-- Origins Tab -->
@@ -410,72 +272,5 @@ const openClasseForm = (classe = null) => {
                 </div>
             </div>
         </main>
-
-        <div v-if="showClasseModal" class="fixed inset-0 z-50 overflow-y-auto">
-            <div class="flex items-center justify-center min-h-screen px-4">
-                <div
-                    class="fixed inset-0 bg-black/70 transition-opacity"
-                    @click="showClasseModal = false"
-                ></div>
-
-                <div
-                    class="relative bg-blue-900 rounded-lg max-w-md w-full p-6 shadow-xl border border-blue-800"
-                >
-                    <h3 class="text-xl font-bold text-white mb-4">
-                        {{ isEditing ? "Edit Class" : "Add New Class" }}
-                    </h3>
-
-                    <form
-                        @submit.prevent="
-                            classeForm.put(route('admin.classe.upsert'));
-                            showClasseModal = false;
-                        "
-                    >
-                        <div class="space-y-4">
-                            <div>
-                                <label
-                                    class="block text-yellow-400 text-sm font-medium mb-1"
-                                    >Name</label
-                                >
-                                <input
-                                    v-model="classeForm.name"
-                                    type="text"
-                                    class="w-full bg-blue-800 border border-blue-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                                    required
-                                />
-                            </div>
-                            <div class="flex items-center">
-                                <label
-                                    class="block text-yellow-400 text-sm font-medium mb-1"
-                                    >Technical Name</label
-                                >
-                                <input
-                                    v-model="classeForm.technical_name"
-                                    type="text"
-                                    class="w-full bg-blue-800 border border-blue-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                                    required
-                                />
-                            </div>
-                        </div>
-
-                        <div class="flex justify-end space-x-3 mt-6">
-                            <button
-                                type="button"
-                                @click="showClasseModal = false"
-                                class="bg-blue-700 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                type="submit"
-                                class="bg-gradient-to-r from-yellow-500 to-yellow-400 hover:from-yellow-400 hover:to-yellow-300 text-black font-bold px-4 py-2 rounded-lg transition-colors"
-                            >
-                                {{ isEditing ? "Update" : "Create" }}
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
     </AppLayout>
 </template>

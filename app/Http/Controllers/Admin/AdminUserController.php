@@ -122,14 +122,14 @@ class AdminUserController extends Controller
         return redirect()->back();
     }
 
-    public function destroyClasses($id){
+    public function destroyClasse($id){
         Gate::authorize('is_admin', User::class);
         $classe = Classe::findOrFail($id);
         $classe->delete();
         return redirect()->back();
     }
 
-    public function destroyOrigins($id){
+    public function destroyOrigin($id){
         Gate::authorize('is_admin', User::class);
         $origin = Origin::findOrFail($id);
         $origin->delete();

@@ -254,44 +254,54 @@ const formatDate = (dateString) => {
 
     <!-- delete season modal -->
     <teleport to="body">
-        <div
-            v-if="showDeleteModal"
-            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-        >
-            <div class="bg-white p-6 rounded-lg w-full max-w-md">
-                <h2 class="text-lg font-semibold mb-4">Confirm deletion</h2>
+        <div v-if="showDeleteModal" class="fixed inset-0 z-50 overflow-y-auto">
+            <div class="flex items-center justify-center min-h-screen px-4">
+                <!-- Overlay -->
+                <div
+                    class="fixed inset-0 bg-black/70 transition-opacity"
+                    @click="showDeleteModal = false"
+                ></div>
 
-                <h3>
-                    All the origins, classes and challenges related to this
-                    season will be deleted !
-                </h3>
-                <p class="mb-4">
-                    Confirm deletion by taping
-                    <strong>DELETE</strong> below :
-                </p>
+                <!-- Modal Content -->
+                <div
+                    class="relative bg-blue-900 rounded-lg max-w-md w-full p-6 shadow-xl border border-blue-800"
+                >
+                    <h2 class="text-xl font-bold text-white mb-4">
+                        Confirm Deletion
+                    </h2>
 
-                <input
-                    v-model="confirmationText"
-                    type="text"
-                    class="w-full border border-gray-300 rounded px-3 py-2 mb-4"
-                    placeholder="Type DELETE to confirm"
-                />
+                    <h3 class="text-yellow-400 mb-2">
+                        All the origins, classes and challenges related to this
+                        season will be deleted!
+                    </h3>
+                    <p class="text-white mb-4">
+                        Confirm deletion by typing
+                        <strong class="text-yellow-400">DELETE</strong> below:
+                    </p>
 
-                <div class="flex justify-end gap-2">
-                    <button
-                        @click="showDeleteModal = false"
-                        class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
-                    >
-                        Cancel
-                    </button>
+                    <input
+                        v-model="confirmationText"
+                        type="text"
+                        class="w-full bg-blue-800 border border-blue-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 mb-4"
+                        placeholder="Type DELETE to confirm"
+                    />
 
-                    <button
-                        :disabled="confirmationText !== 'DELETE'"
-                        @click="confirmDelete"
-                        class="px-4 py-2 bg-red-600 text-white rounded disabled:opacity-50"
-                    >
-                        Delete
-                    </button>
+                    <div class="flex justify-end space-x-3">
+                        <button
+                            @click="showDeleteModal = false"
+                            class="bg-blue-700 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
+                        >
+                            Cancel
+                        </button>
+
+                        <button
+                            :disabled="confirmationText !== 'DELETE'"
+                            @click="confirmDelete"
+                            class="bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-bold px-4 py-2 rounded-lg transition-colors disabled:opacity-50"
+                        >
+                            Delete
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
