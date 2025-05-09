@@ -20,6 +20,7 @@ class AdminUserController extends Controller
         return Inertia::render('Admin/Index', [
             'seasons' => Season::all(),
             'classes' => Classe::with(['season'])->get(),
+            'origins' => Origin::with(['season'])->get(),
         ]);
     }
 
@@ -89,21 +90,26 @@ class AdminUserController extends Controller
         $validatedData = $request->validate([
             'id' => 'nullable|numeric',
             'name' => 'required|string|max:255',
-            'active' => 'required|boolean',
+            'technical_name' => 'required|string|max:255',
+            'season_id' => 'required|numeric',
         ]);
 
         $id = $validatedData['id'];
         if($id){
-            $season = Season::findOrFail($id);
-            $season->name = $validatedData['name'];
-            $season->active = $validatedData['active'];
-            $season->save();
+            $origin = Origin::findOrFail($id);
+            $origin->name = $validatedData['name'];
+            $origin->technical_name = $validatedData['technical_name'];
+            $origin->description = 'Reach level gold';
+            $origin->season_id = $validatedData['season_id'];
+            $origin->save();
         }
         else{
-            $season = new Season();
-            $season->name = $validatedData['name'];
-            $season->active = $validatedData['active'];
-            $season->save();
+            $origin = new Origin();
+            $origin->name = $validatedData['name'];
+            $origin->technical_name = $validatedData['technical_name'];
+            $origin->description = 'Reach level gold';
+            $origin->season_id = $validatedData['season_id'];
+            $origin->save();
         }
 
         return redirect()->back();
@@ -129,6 +135,4 @@ class AdminUserController extends Controller
         $origin->delete();
         return redirect()->back();
     }
-
-
 }
