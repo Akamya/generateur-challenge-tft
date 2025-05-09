@@ -7,24 +7,29 @@ const props = defineProps({
     user: Object,
     currentChallenge: Object,
     completedChallenges: Array,
+    seasons: Array,
+    classes: Array,
+    origins: Array,
+    constraints: Array,
+    positions: Array,
+});
+
+const filters = ref({
+    season_id:
+        props.seasons.find((season) => !!season.active)?.id ||
+        props.seasons[O]?.id,
+    position_id: "",
+    constraint_id: "",
+    classe_id: "",
+    origin_id: "",
 });
 
 // For pagination of completed challenges
 const itemsPerPage = 5;
 const currentPage = ref(1);
 
-const paginatedChallenges = computed(() => {
-    const start = (currentPage.value - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-    return props.completedChallenges
-        ? props.completedChallenges.slice(start, end)
-        : [];
-});
-
 const totalPages = computed(() => {
-    return props.completedChallenges
-        ? Math.ceil(props.completedChallenges.length / itemsPerPage)
-        : 0;
+    return Math.ceil(filteredChallenges.value.length / itemsPerPage);
 });
 
 const nextPage = () => {
@@ -50,6 +55,41 @@ const formatDate = (dateString) => {
     };
     return new Date(dateString).toLocaleDateString("en-EN", options);
 };
+
+const filteredOrigins = computed(() => {
+    return props.origins.filter(
+        (origin) => origin.season_id === filters.value.season_id
+    );
+});
+
+const filteredClasses = computed(() => {
+    return props.classes.filter(
+        (classe) => classe.season_id === filters.value.season_id
+    );
+});
+
+const filteredChallenges = computed(() => {
+    return props.completedChallenges.filter((challenge) => {
+        return (
+            (!filters.value.season_id ||
+                challenge.season_id === filters.value.season_id) &&
+            (!filters.value.position_id ||
+                challenge.position_id === filters.value.position_id) &&
+            (!filters.value.constraint_id ||
+                challenge.constraint_id === filters.value.constraint_id) &&
+            (!filters.value.classe_id ||
+                challenge.classe_id === filters.value.classe_id) &&
+            (!filters.value.origin_id ||
+                challenge.origin_id === filters.value.origin_id)
+        );
+    });
+});
+
+const paginatedChallenges = computed(() => {
+    const start = (currentPage.value - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    return filteredChallenges.value.slice(start, end);
+});
 </script>
 
 <template>
@@ -254,14 +294,112 @@ const formatDate = (dateString) => {
                     </h2>
 
                     <div
+                        class="flex flex-wrap items-center gap-4 mb-6 justify-center"
+                    >
+                        <!-- Saison -->
+                        <div>
+                            <label class="text-yellow-300 text-sm font-medium"
+                                >Season</label
+                            >
+                            <select
+                                v-model="filters.season_id"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                            >
+                                <option
+                                    v-for="season in seasons"
+                                    :key="season.id"
+                                    :value="season.id"
+                                >
+                                    {{ season.name }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="text-yellow-300 text-sm font-medium"
+                                >Position</label
+                            >
+                            <select
+                                v-model="filters.position_id"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                            >
+                                <option value="">All</option>
+                                <option
+                                    v-for="position in positions"
+                                    :key="position.id"
+                                    :value="position.id"
+                                >
+                                    {{ position.name }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="text-yellow-300 text-sm font-medium"
+                                >Constraint</label
+                            >
+                            <select
+                                v-model="filters.constraint_id"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                            >
+                                <option value="">All</option>
+                                <option
+                                    v-for="constraint in constraints"
+                                    :key="constraint.id"
+                                    :value="constraint.id"
+                                >
+                                    {{ constraint.name }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="text-yellow-300 text-sm font-medium"
+                                >Class</label
+                            >
+                            <select
+                                v-model="filters.classe_id"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                            >
+                                <option value="">All</option>
+                                <option
+                                    v-for="classe in filteredClasses"
+                                    :key="classe.id"
+                                    :value="classe.id"
+                                >
+                                    {{ classe.name }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="text-yellow-300 text-sm font-medium"
+                                >Origine</label
+                            >
+                            <select
+                                v-model="filters.origin_id"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                            >
+                                <option value="">All</option>
+                                <option
+                                    v-for="origin in filteredOrigins"
+                                    :key="origin.id"
+                                    :value="origin.id"
+                                >
+                                    {{ origin.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div
                         v-if="
-                            completedChallenges &&
-                            completedChallenges.length > 0
+                            filteredChallenges && filteredChallenges.length > 0
                         "
                         class="space-y-4"
                     >
                         <div
-                            v-for="challenge in paginatedChallenges"
+                            v-for="challenge in filteredChallenges"
                             :key="challenge.id"
                             class="bg-gradient-to-br from-blue-800/60 to-blue-900/60 rounded-lg p-5 shadow-md border border-blue-700/30"
                         >
