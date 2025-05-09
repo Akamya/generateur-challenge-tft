@@ -63,14 +63,8 @@ const formatDate = (dateString) => {
             >
                 <!-- Logo and Title -->
                 <div class="flex flex-col items-center mb-10">
-                    <div
-                        class="bg-blue-900 rounded-full p-3 border-4 border-yellow-500 mb-6 shadow-lg shadow-blue-900/50"
-                    >
-                        <img
-                            src="/placeholder.svg"
-                            alt="TFT Logo"
-                            class="h-16 w-16"
-                        />
+                    <div class="p-3 mb-2">
+                        <img src="/storage/opTft.svg" alt="TFT Logo" />
                     </div>
                     <h1
                         class="text-white text-5xl font-bold mb-2 tracking-wider"

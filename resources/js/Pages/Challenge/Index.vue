@@ -23,11 +23,10 @@ const props = defineProps({
             >
                 <!-- Logo and Title -->
                 <div v-if="!challenge" class="flex flex-col items-center mb-8">
-                    <div
-                        class="bg-blue-900 rounded-full p-3 border-4 border-yellow-500 mb-6"
-                    >
-                        <img src="" alt="TFT Logo" class="h-16 w-16" />
+                    <div class="p-3 mb-2">
+                        <img src="/storage/opTft.svg" alt="TFT Logo" />
                     </div>
+
                     <h1 class="text-white text-5xl font-bold mb-2">
                         TFT OPERATION
                     </h1>

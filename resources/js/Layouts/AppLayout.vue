@@ -50,6 +50,11 @@ const logout = () => {
                 >
                     <!-- Logo -->
                     <div class="flex items-center">
+                        <img
+                            src="/storage/opTft.svg"
+                            alt="TFT Logo"
+                            class="h-8 w-8 mr-2"
+                        />
                         <span class="text-white text-xl font-bold"
                             >TFT OPERATION</span
                         >
