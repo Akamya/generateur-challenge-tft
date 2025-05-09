@@ -38,7 +38,9 @@ const logout = () => {
 
 <template>
     <div>
-        <Head :title="title" />
+        <Head :title="title">
+            <link rel="icon" href="/storage/opTft.svg" type="image/x-icon" />
+        </Head>
 
         <Banner />
 
