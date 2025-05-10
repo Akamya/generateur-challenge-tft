@@ -1,7 +1,7 @@
 <script setup>
 import { Head } from "@inertiajs/vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
-import { defineProps, ref, computed } from "vue";
+import { defineProps, ref, computed, watch } from "vue";
 
 const props = defineProps({
     user: Object,
@@ -17,7 +17,7 @@ const props = defineProps({
 const filters = ref({
     season_id:
         props.seasons.find((season) => !!season.active)?.id ||
-        props.seasons[O]?.id,
+        props.seasons[0]?.id,
     position_id: "",
     constraint_id: "",
     classe_id: "",
@@ -27,6 +27,15 @@ const filters = ref({
 // For pagination of completed challenges
 const itemsPerPage = 5;
 const currentPage = ref(1);
+
+// reset pagination if filters change
+watch(
+    () => ({ ...filters.value }),
+    () => {
+        currentPage.value = 1;
+    },
+    { deep: true }
+);
 
 const totalPages = computed(() => {
     return Math.ceil(filteredChallenges.value.length / itemsPerPage);
@@ -399,7 +408,7 @@ const paginatedChallenges = computed(() => {
                         class="space-y-4"
                     >
                         <div
-                            v-for="challenge in filteredChallenges"
+                            v-for="challenge in paginatedChallenges"
                             :key="challenge.id"
                             class="bg-gradient-to-br from-blue-800/60 to-blue-900/60 rounded-lg p-5 shadow-md border border-blue-700/30"
                         >
