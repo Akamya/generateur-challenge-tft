@@ -45,19 +45,20 @@ const logout = () => {
         <Banner />
 
         <div class="flex flex-col min-h-screen">
-            <!-- Primary Navigation Menu -->
-            <nav class="relative z-10 bg-blue-950 py-4 px-6 shadow-lg">
+            <nav
+                class="relative z-10 bg-primary-dark py-2 px-20 shadow-lg border-b border-primary-first"
+            >
                 <div
                     class="container mx-auto flex justify-between items-center"
                 >
                     <!-- Logo -->
-                    <div class="flex items-center">
+                    <div class="flex items-center mb-2 mt-3">
                         <img
                             src="/storage/opTft.svg"
-                            alt="TFT Logo"
+                            alt="TFT OP Logo"
                             class="h-8 w-8 mr-2"
                         />
-                        <span class="text-white text-xl font-bold"
+                        <span class="text-primary-light text-xl font-bold mt-2"
                             >TFT OPERATION</span
                         >
                     </div>
@@ -67,37 +68,39 @@ const logout = () => {
                         <NavLink
                             :href="route('homepage')"
                             :active="route().current('homepage')"
-                            class="text-white hover:text-yellow-300"
-                            active-class="text-yellow-300"
+                            class="text-primary-light hover:text-primary-first"
                         >
                             Home
                         </NavLink>
                         <NavLink
                             :href="route('glossary')"
                             :active="route().current('glossary')"
-                            class="text-white hover:text-yellow-300"
-                            active-class="text-yellow-300"
+                            class="text-primary-light hover:text-primary-first"
                         >
                             Glossary
                         </NavLink>
                         <NavLink
                             :href="route('leaderboard')"
                             :active="route().current('leaderboard')"
-                            class="text-white hover:text-yellow-300"
-                            active-class="text-yellow-300"
+                            class="text-primary-light hover:text-primary-first"
                         >
                             Leaderboard
                         </NavLink>
                         <NavLink
                             v-if="$page.props.auth && $page.props.auth.user"
                             :href="route('history', $page.props.auth.user.id)"
-                            :active="route().current('history')"
-                            class="text-white hover:text-yellow-300"
-                            active-class="text-yellow-300"
+                            :active="
+                                route().current('history', {
+                                    userID: $page.props.auth.user.id,
+                                })
+                            "
+                            class="text-primary-light hover:text-primary-first"
                         >
                             History
                         </NavLink>
                     </div>
+
+                    <!-- Search Bar -->
                     <UserSearch />
 
                     <!-- User is authenticated -->
@@ -349,7 +352,7 @@ const logout = () => {
                     <!-- Hamburger -->
                     <div class="-me-2 flex items-center sm:hidden">
                         <button
-                            class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-yellow-300 hover:bg-blue-900 focus:outline-none focus:bg-blue-900 focus:text-yellow-300 transition duration-150 ease-in-out"
+                            class="inline-flex items-center justify-center p-2 rounded-md text-primary-light hover:text-yellow-300 hover:bg-blue-900 focus:outline-none focus:bg-blue-900 focus:text-yellow-300 transition duration-150 ease-in-out"
                             @click="
                                 showingNavigationDropdown =
                                     !showingNavigationDropdown
@@ -400,7 +403,7 @@ const logout = () => {
                         <ResponsiveNavLink
                             :href="route('homepage')"
                             :active="route().current('homepage')"
-                            class="text-white hover:text-yellow-300"
+                            class="text-primary-light hover:text-yellow-300"
                             active-class="bg-blue-800 text-yellow-300"
                         >
                             Home
@@ -408,7 +411,7 @@ const logout = () => {
                         <ResponsiveNavLink
                             :href="route('glossary')"
                             :active="route().current('glossary')"
-                            class="text-white hover:text-yellow-300"
+                            class="text-primary-light hover:text-yellow-300"
                             active-class="bg-blue-800 text-yellow-300"
                         >
                             Glossary
@@ -416,7 +419,7 @@ const logout = () => {
                         <ResponsiveNavLink
                             :href="route('leaderboard')"
                             :active="route().current('leaderboard')"
-                            class="text-white hover:text-yellow-300"
+                            class="text-primary-light hover:text-yellow-300"
                             active-class="bg-blue-800 text-yellow-300"
                         >
                             Leaderboard
@@ -425,7 +428,7 @@ const logout = () => {
                             v-if="$page.props.auth && $page.props.auth.user"
                             :href="route('history', $page.props.auth.user)"
                             :active="route().current('history')"
-                            class="text-white hover:text-yellow-300"
+                            class="text-primary-light hover:text-yellow-300"
                             active-class="bg-blue-800 text-yellow-300"
                         >
                             History
@@ -462,7 +465,7 @@ const logout = () => {
 
                                 <div>
                                     <div
-                                        class="font-medium text-base text-white"
+                                        class="font-medium text-base text-primary-light"
                                     >
                                         {{
                                             $page.props.auth.user.username ||
@@ -481,7 +484,7 @@ const logout = () => {
                                 <ResponsiveNavLink
                                     :href="route('profile.show')"
                                     :active="route().current('profile.show')"
-                                    class="text-white hover:text-yellow-300"
+                                    class="text-primary-light hover:text-yellow-300"
                                     active-class="bg-blue-800 text-yellow-300"
                                 >
                                     Profile
@@ -496,7 +499,7 @@ const logout = () => {
                                     :active="
                                         route().current('api-tokens.index')
                                     "
-                                    class="text-white hover:text-yellow-300"
+                                    class="text-primary-light hover:text-yellow-300"
                                     active-class="bg-blue-800 text-yellow-300"
                                 >
                                     API Tokens
@@ -506,7 +509,7 @@ const logout = () => {
                                 <form method="POST" @submit.prevent="logout">
                                     <ResponsiveNavLink
                                         as="button"
-                                        class="text-white hover:text-yellow-300"
+                                        class="text-primary-light hover:text-yellow-300"
                                     >
                                         Log Out
                                     </ResponsiveNavLink>
@@ -537,7 +540,7 @@ const logout = () => {
                                             )
                                         "
                                         :active="route().current('teams.show')"
-                                        class="text-white hover:text-yellow-300"
+                                        class="text-primary-light hover:text-yellow-300"
                                         active-class="bg-blue-800 text-yellow-300"
                                     >
                                         Team Settings
@@ -551,7 +554,7 @@ const logout = () => {
                                         :active="
                                             route().current('teams.create')
                                         "
-                                        class="text-white hover:text-yellow-300"
+                                        class="text-primary-light hover:text-yellow-300"
                                         active-class="bg-blue-800 text-yellow-300"
                                     >
                                         Create New Team
@@ -584,7 +587,7 @@ const logout = () => {
                                             >
                                                 <ResponsiveNavLink
                                                     as="button"
-                                                    class="text-white hover:text-yellow-300"
+                                                    class="text-primary-light hover:text-yellow-300"
                                                 >
                                                     <div
                                                         class="flex items-center"
@@ -627,7 +630,7 @@ const logout = () => {
                                 <ResponsiveNavLink
                                     :href="route('login')"
                                     :active="route().current('login')"
-                                    class="text-white hover:text-yellow-300"
+                                    class="text-primary-light hover:text-yellow-300"
                                     active-class="bg-blue-800 text-yellow-300"
                                 >
                                     Sign In
@@ -635,7 +638,7 @@ const logout = () => {
                                 <ResponsiveNavLink
                                     :href="route('register')"
                                     :active="route().current('register')"
-                                    class="text-white hover:text-yellow-300"
+                                    class="text-primary-light hover:text-yellow-300"
                                     active-class="bg-blue-800 text-yellow-300"
                                 >
                                     Sign Up
@@ -655,7 +658,7 @@ const logout = () => {
 
             <!-- Page Content -->
             <main
-                class="relative py-12 px-4 flex flex-col items-center justify-center flex-grow"
+                class="relative flex flex-col items-center justify-center flex-grow"
             >
                 <div v-if="showBackground" class="absolute inset-0 z-0">
                     <img
@@ -663,7 +666,7 @@ const logout = () => {
                         alt="TFT Background"
                         class="w-full h-full object-cover"
                     />
-                    <div class="absolute inset-0 bg-blue-900/70"></div>
+                    <div class="absolute inset-0 bg-primary-blue/70"></div>
                 </div>
                 <slot />
             </main>

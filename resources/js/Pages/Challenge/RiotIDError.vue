@@ -5,7 +5,7 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 
 <template>
     <AppLayout :show-background="true">
-        <Head title="Summoner Not Found - Opération TFT" />
+        <Head title="Match Not Found - Opération TFT" />
 
         <div class="flex flex-col relative">
             <!-- Main Content -->

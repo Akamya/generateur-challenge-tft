@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch } from "vue";
-import { router, usePage } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
 import debounce from "lodash/debounce";
 
 const props = defineProps({
@@ -71,26 +71,20 @@ if (typeof window !== "undefined") {
                 v-model="searchQuery"
                 @focus="showResults = searchResults.length > 0"
                 type="text"
-                placeholder="Ex: Nordous"
-                class="w-full bg-blue-800/60 border border-blue-700 rounded-full py-2 px-4 text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                placeholder="E.g. Nordous"
+                class="w-full bg-primary-blue/60 border border-primary-blue rounded-full py-2 px-4 text-primary-light placeholder-primary-light/50 focus:outline-none focus:ring-2 focus:ring-primary-first"
             />
             <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-                <svg
+                <font-awesome-icon
                     v-if="!isSearching"
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5 text-blue-300"
-                    viewBox="0 0 20 20"
+                    :icon="['fas', 'magnifying-glass']"
+                    class="text-primary-light/70"
                     fill="currentColor"
-                >
-                    <path
-                        fill-rule="evenodd"
-                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                        clip-rule="evenodd"
-                    />
-                </svg>
+                />
+
                 <svg
                     v-else
-                    class="animate-spin h-5 w-5 text-blue-300"
+                    class="animate-spin h-5 w-5 text-primary-light/70"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -115,25 +109,20 @@ if (typeof window !== "undefined") {
         <!-- Search Results Dropdown -->
         <div
             v-if="showResults && searchResults.length > 0"
-            class="absolute z-50 mt-2 w-full bg-blue-900 border border-blue-700 rounded-lg shadow-lg py-1 max-h-60 overflow-y-auto"
+            class="absolute z-50 mt-2 w-full bg-primary-dark border border-primary-blue rounded-lg shadow-lg py-1 max-h-60 overflow-y-auto"
         >
             <div
                 v-for="user in searchResults"
                 :key="user.id"
                 @click="viewUserHistory(user.id)"
-                class="px-4 py-2 hover:bg-blue-800 cursor-pointer transition-colors"
+                class="px-4 py-2 hover:bg-primary-blue/40 cursor-pointer transition-colors"
             >
                 <div class="flex items-center">
-                    <div class="bg-blue-800 rounded-full p-1 mr-3">
-                        <span class="text-white font-bold">
-                            {{ user?.username?.charAt(0) || "?" }}
-                        </span>
-                    </div>
                     <div>
-                        <div class="text-white font-medium">
+                        <div class="text-primary-light font-medium">
                             {{ user?.username }}
                         </div>
-                        <div class="text-blue-300 text-sm">
+                        <div class="text-primary-first text-sm">
                             {{ user?.riot_username }}
                         </div>
                     </div>
@@ -149,9 +138,9 @@ if (typeof window !== "undefined") {
                 searchResults.length === 0 &&
                 !isSearching
             "
-            class="absolute z-50 mt-2 w-full bg-blue-900 border border-blue-700 rounded-lg shadow-lg py-4 px-4 text-center"
+            class="absolute z-50 mt-2 w-full bg-primary-dark border border-primary-blue rounded-lg shadow-lg py-4 px-4 text-center"
         >
-            <p class="text-blue-300">No players found</p>
+            <p class="text-primary-light/70">No players found</p>
         </div>
     </div>
 </template>
