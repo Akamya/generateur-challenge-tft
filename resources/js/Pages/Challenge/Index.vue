@@ -27,7 +27,9 @@ const props = defineProps({
                         <img src="/storage/opTft.svg" alt="TFT OP Logo" />
                     </div>
 
-                    <h1 class="text-white text-5xl font-bold mb-2">
+                    <h1
+                        class="text-white text-5xl font-bold mb-2 font-parkinsans"
+                    >
                         TFT OPERATION
                     </h1>
                     <div class="w-64 h-1 bg-yellow-500 mb-6"></div>
