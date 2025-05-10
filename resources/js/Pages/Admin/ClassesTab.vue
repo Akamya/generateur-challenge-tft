@@ -1,8 +1,6 @@
 <script setup>
-import { defineProps, ref } from "vue";
-import { useForm } from "@inertiajs/vue3";
-import { Inertia } from "@inertiajs/inertia";
-import { computed } from "vue";
+import { defineProps, ref, computed } from "vue";
+import { useForm, router } from "@inertiajs/vue3";
 
 const props = defineProps({
     seasons: Array,
@@ -57,7 +55,7 @@ function openDeleteClasseModal(classe) {
 
 function confirmDelete() {
     if (confirmationText.value === "DELETE") {
-        Inertia.delete(route("admin.classe.delete", selectedClasse.value.id));
+        router.delete(route("admin.classe.delete", selectedClasse.value.id));
         showDeleteModal.value = false;
     }
 }

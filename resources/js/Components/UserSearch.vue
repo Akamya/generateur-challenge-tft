@@ -72,7 +72,7 @@ if (typeof window !== "undefined") {
                 @focus="showResults = searchResults.length > 0"
                 type="text"
                 placeholder="E.g. Nordous"
-                class="w-full bg-primary-blue/60 border border-primary-blue rounded-full py-2 px-4 text-primary-light placeholder-primary-light/50 focus:outline-none focus:ring-2 focus:ring-primary-first"
+                class="w-full bg-primary-blue/60 border border-primary-blue rounded-xl py-2 px-4 text-primary-light text-sm placeholder-primary-light/50 focus:outline-none focus:ring-2 focus:ring-primary-first"
             />
             <div class="absolute inset-y-0 right-0 flex items-center pr-3">
                 <font-awesome-icon

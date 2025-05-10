@@ -270,10 +270,10 @@ const logout = () => {
                                                 $page.props.jetstream
                                                     .managesProfilePhotos
                                             "
-                                            class="bg-primary-first hover:bg-opacity-90 text-black font-bold py-2 px-4 rounded-full flex items-center"
+                                            class="bg-primary-first hover:bg-opacity-90 text-black font-medium py-1 px-2.5 rounded-xl flex items-center text-sm transition-all duration-200"
                                         >
                                             <img
-                                                class="size-8 rounded-full object-cover mr-2"
+                                                class="size-6 rounded-full object-cover mr-1.5"
                                                 :src="
                                                     $page.props.auth.user
                                                         .profile_photo_url
@@ -292,7 +292,7 @@ const logout = () => {
                                         >
                                             <button
                                                 type="button"
-                                                class="bg-primary-first hover:bg-opacity-90 text-black font-bold py-2 px-4 rounded-full flex items-center"
+                                                class="bg-primary-first hover:bg-opacity-90 text-black font-bold py-1.5 px-3 rounded-md flex items-center text-sm"
                                             >
                                                 {{
                                                     $page.props.auth.user
@@ -320,16 +320,21 @@ const logout = () => {
 
                                     <template #content>
                                         <!-- Account Management -->
-                                        <div
-                                            class="block px-4 py-2 text-xs text-gray-400"
-                                        >
-                                            Manage Account
-                                        </div>
 
                                         <DropdownLink
                                             :href="route('profile.show')"
                                         >
                                             Profile
+                                        </DropdownLink>
+
+                                        <DropdownLink
+                                            v-if="
+                                                $page.props.auth.user &&
+                                                $page.props.auth.user.is_admin
+                                            "
+                                            :href="route('admin.index')"
+                                        >
+                                            Admin
                                         </DropdownLink>
 
                                         <DropdownLink
@@ -360,13 +365,13 @@ const logout = () => {
                         <div v-else class="hidden sm:flex space-x-4">
                             <Link
                                 :href="route('login')"
-                                class="bg-primary-first hover:bg-opacity-90 text-black font-bold py-2 px-4 rounded-full"
+                                class="bg-primary-first hover:bg-opacity-90 text-black font-bold py-1.5 px-3 rounded-xl text-sm"
                             >
                                 Sign In
                             </Link>
                             <Link
                                 :href="route('register')"
-                                class="bg-primary-first hover:bg-opacity-90 text-black font-bold py-2 px-4 rounded-full"
+                                class="bg-primary-first hover:bg-opacity-90 text-black font-bold py-1.5 px-3 rounded-xl text-sm"
                             >
                                 Sign Up
                             </Link>

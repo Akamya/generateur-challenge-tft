@@ -1,8 +1,6 @@
 <script setup>
-import { defineProps, ref } from "vue";
+import { defineProps, ref, computed } from "vue";
 import { useForm } from "@inertiajs/vue3";
-import { Inertia } from "@inertiajs/inertia";
-import { computed } from "vue";
 
 const props = defineProps({
     seasons: Array,
@@ -54,7 +52,7 @@ const isEditingCurrentActive = computed(() => {
 
 function confirmDelete() {
     if (confirmationText.value === "DELETE") {
-        Inertia.delete(route("admin.season.delete", selectedSeason.value.id));
+        router.delete(route("admin.season.delete", selectedSeason.value.id));
         showDeleteModal.value = false;
     }
 }
