@@ -56,6 +56,9 @@ function getLastMatch($puuid)
         return null;
     }
     $matchIDs = $matchesResponse->json();
+    if(!$matchIDs){
+        return null;
+    }
     $matchID = $matchIDs[0];
     $matchResponse = Http::get("https://europe.api.riotgames.com/tft/match/v1/matches/{$matchID}?api_key={$apiKey}");
     if ($matchResponse->failed()) {
@@ -297,11 +300,17 @@ class ChallengeController extends Controller
             ->firstOrFail();
 
         $puuid = getPuuidFromRiotId($riotUsername);
+
         if(!$puuid){
             return Inertia::render('Challenge/RiotIDError');
         }
 
         $match = getLastMatch($puuid);
+
+        if(!$match){
+            return Inertia::render('Challenge/RiotIDError');
+        }
+
         $matchInfo = $match['matchInfo'];
         $matchID = $match['matchID'];
         $link = "https://www.metatft.com/player/euw/{$riotUsername}-EUW?match={$matchID}";

@@ -37,7 +37,7 @@ import AppLayout from "@/Layouts/AppLayout.vue";
                     class="bg-blue-900/80 rounded-lg p-8 max-w-lg w-full text-center mb-8"
                 >
                     <h1 class="text-white text-2xl font-bold mb-4">
-                        We couldn't find your summoner.
+                        We couldn't find your matches.
                     </h1>
                     <p class="text-white text-xl mb-6">
                         Please verify your Riot username.
