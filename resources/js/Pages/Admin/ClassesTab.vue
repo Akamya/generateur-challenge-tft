@@ -274,6 +274,7 @@ function deleteImage() {
                                 forceFormData: true,
                                 onSuccess: () => {
                                     showClasseModal = false;
+                                    imagePreview = null;
                                 },
                             })
                         "

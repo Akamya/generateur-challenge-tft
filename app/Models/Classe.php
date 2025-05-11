@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Classe extends Model
 {
+    protected $fillable = [
+        'name',
+        'technical_name',
+        'image',
+    ];
+
     public function challenges() {
         return $this->hasMany(Challenge::class);
     }

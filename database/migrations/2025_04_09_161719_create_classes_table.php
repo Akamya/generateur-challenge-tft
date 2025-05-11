@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('technical_name');
             $table->text('description');
+            $table->string('image')->nullable();
             $table->foreignId('season_id')->constrained('seasons')->onDelete('cascade');
             $table->timestamps();
         });

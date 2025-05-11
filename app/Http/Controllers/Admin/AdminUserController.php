@@ -62,15 +62,39 @@ class AdminUserController extends Controller
             'name' => 'required|string|max:255',
             'technical_name' => 'required|string|max:255',
             'season_id' => 'required|numeric',
+            'image' => 'nullable|image|max:2048',
+            'delete_image' => 'nullable|boolean',
         ]);
 
         $id = $validatedData['id'];
+        $imagePath = null;
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('classes', 'public');
+        }
+
         if($id){
             $classe = Classe::findOrFail($id);
             $classe->name = $validatedData['name'];
             $classe->technical_name = $validatedData['technical_name'];
             $classe->description = 'Reach level bronze';
             $classe->season_id = $validatedData['season_id'];
+
+            // Supprimer l’image existante si demandé
+            if ($request->boolean('delete_image') && $classe->image) {
+                Storage::disk('public')->delete($classe->image);
+                $classe->image = null;
+            }
+
+            // Remplacer l’image si une nouvelle est uploadée
+            if ($imagePath) {
+                // Supprimer l’ancienne image si elle existe
+                if ($classe->image) {
+                    Storage::disk('public')->delete($classe->image);
+                }
+                $classe->image = $imagePath;
+            }
+
             $classe->save();
         }
         else{
@@ -79,6 +103,7 @@ class AdminUserController extends Controller
             $classe->technical_name = $validatedData['technical_name'];
             $classe->description = 'Reach level bronze';
             $classe->season_id = $validatedData['season_id'];
+            $classe->image = $imagePath;
             $classe->save();
         }
 
