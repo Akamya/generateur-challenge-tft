@@ -21,6 +21,7 @@ const originForm = useForm({
     name: "",
     technical_name: "",
     season_id: selectedSeasonId,
+    image: null,
 });
 
 const filteredOrigins = computed(() => {
@@ -136,6 +137,12 @@ function confirmDelete() {
             <p class="text-white flex-grow mb-4">
                 {{ origin.description }}
             </p>
+            <img
+                v-if="origin.image"
+                :src="`/storage/${origin.image}`"
+                alt="Origin Image"
+                class="w-full h-auto rounded mb-4"
+            />
             <div class="flex justify-end space-x-2 mt-auto">
                 <button
                     @click="openOriginForm(origin)"
@@ -187,8 +194,12 @@ function confirmDelete() {
 
                     <form
                         @submit.prevent="
-                            originForm.put(route('admin.origin.upsert'));
-                            showOriginModal = false;
+                            originForm.post(route('admin.origin.upsert'), {
+                                forceFormData: true,
+                                onSuccess: () => {
+                                    showOriginModal = false;
+                                },
+                            })
                         "
                     >
                         <div class="space-y-4">
@@ -214,6 +225,22 @@ function confirmDelete() {
                                     type="text"
                                     class="w-full bg-blue-800 border border-blue-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
                                     required
+                                />
+                            </div>
+                            <div class="flex items-center">
+                                <label
+                                    class="block text-yellow-400 text-sm font-medium mb-1"
+                                    >Image</label
+                                >
+                                <input
+                                    type="file"
+                                    @change="
+                                        (e) =>
+                                            (originForm.image =
+                                                e.target.files[0])
+                                    "
+                                    accept="image/*"
+                                    class="w-full bg-blue-800 border border-blue-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
                                 />
                             </div>
                         </div>

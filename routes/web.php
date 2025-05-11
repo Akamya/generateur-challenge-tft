@@ -34,7 +34,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/index', [AdminUserController::class, "index"])->name('admin.index');
     Route::put('/season/upsert', [AdminUserController::class, "upsertSeason"])->name('admin.season.upsert');
     Route::put('/classe/upsert', [AdminUserController::class, "upsertClasse"])->name('admin.classe.upsert');
-    Route::put('/origin/upsert', [AdminUserController::class, "upsertOrigin"])->name('admin.origin.upsert');
+    Route::post('/origin/upsert', [AdminUserController::class, "upsertOrigin"])->name('admin.origin.upsert');
     Route::delete('/season/{id}/delete', [AdminUserController::class, "destroySeason"])->name('admin.season.delete');
     Route::delete('/classe/{id}/delete', [AdminUserController::class, "destroyClasse"])->name('admin.classe.delete');
     Route::delete('/origin/{id}/delete', [AdminUserController::class, "destroyOrigin"])->name('admin.origin.delete');

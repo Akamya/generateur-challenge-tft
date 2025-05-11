@@ -9,6 +9,7 @@ class Origin extends Model
     protected $fillable = [
         'name',
         'technical_name',
+        'image',
     ];
 
     public function challenges() {

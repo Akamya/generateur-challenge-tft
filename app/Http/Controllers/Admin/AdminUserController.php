@@ -92,7 +92,14 @@ class AdminUserController extends Controller
             'name' => 'required|string|max:255',
             'technical_name' => 'required|string|max:255',
             'season_id' => 'required|numeric',
+            'image' => 'nullable|image|max:2048',
         ]);
+
+        $imagePath = null;
+
+        if ($request->hasFile('image')) {
+             $imagePath = $request->file('image')->store('origins', 'public');
+        }
 
         $id = $validatedData['id'];
         if($id){
@@ -101,6 +108,9 @@ class AdminUserController extends Controller
             $origin->technical_name = $validatedData['technical_name'];
             $origin->description = 'Reach level gold';
             $origin->season_id = $validatedData['season_id'];
+            if ($imagePath) {
+                $origin->image = $imagePath;
+            }
             $origin->save();
         }
         else{
@@ -109,6 +119,7 @@ class AdminUserController extends Controller
             $origin->technical_name = $validatedData['technical_name'];
             $origin->description = 'Reach level gold';
             $origin->season_id = $validatedData['season_id'];
+            $origin->image = $imagePath;
             $origin->save();
         }
 
