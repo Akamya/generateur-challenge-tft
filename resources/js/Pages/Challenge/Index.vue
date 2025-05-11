@@ -62,7 +62,11 @@ const generateChallenge = () => {
                 <!-- Logo and Title -->
                 <div class="flex flex-col items-center mb-10">
                     <div class="p-3 mb-2">
-                        <img src="/storage/opTft.svg" alt="TFT OP Logo" />
+                        <img
+                            src="/storage/opTft.svg"
+                            alt="TFT OP Logo"
+                            class="w-24 h-auto"
+                        />
                     </div>
 
                     <h1
@@ -78,7 +82,7 @@ const generateChallenge = () => {
                     <button
                         v-if="!challenge"
                         @click="generateChallenge"
-                        class="bg-primary-first hover:bg-opacity-90 text-black text-xl font-bold py-3 px-8 rounded-full mb-6 transition-colors transform hover:scale-105 active:scale-95 flex items-center"
+                        class="bg-primary-first hover:bg-opacity-90 text-black text-xl font-bold py-3 px-6 rounded-xl mb-6 transition-colors transform hover:scale-105 active:scale-95 flex items-center"
                         :disabled="isLoading"
                     >
                         <svg
@@ -151,33 +155,12 @@ const generateChallenge = () => {
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <!-- Position Card -->
                         <div
-                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md transform hover:scale-105"
+                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md transform"
                         >
                             <div class="flex items-center mb-3">
                                 <div
                                     class="bg-primary-first rounded-full p-2 mr-3 flex items-center justify-center w-10 h-10"
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="h-6 w-6 text-primary-dark"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                                        />
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                                        />
-                                    </svg>
-                                </div>
+                                ></div>
                                 <div>
                                     <h3
                                         class="text-primary-first text-sm font-semibold uppercase tracking-wider"
@@ -200,7 +183,7 @@ const generateChallenge = () => {
 
                         <!-- Class Card -->
                         <div
-                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md transform hover:scale-105"
+                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md transform"
                         >
                             <div class="flex items-center mb-3">
                                 <div
@@ -243,7 +226,7 @@ const generateChallenge = () => {
 
                         <!-- Origin Card -->
                         <div
-                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md transform hover:scale-105"
+                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md transform"
                         >
                             <div class="flex items-center mb-3">
                                 <div
@@ -286,7 +269,7 @@ const generateChallenge = () => {
 
                         <!-- Constraint Card -->
                         <div
-                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md transform hover:scale-105"
+                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md transform"
                         >
                             <div class="flex items-center mb-3">
                                 <div
@@ -376,25 +359,10 @@ const generateChallenge = () => {
                                     stroke="currentColor"
                                     stroke-width="4"
                                 ></circle>
-                                <path
-                                    class="opacity-75"
-                                    fill="currentColor"
-                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                ></path>
+                                <font-awesome-icon :icon="['fas', 'dice']" />
                             </svg>
-                            <svg
-                                v-else
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5 mr-2"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                            >
-                                <path
-                                    fill-rule="evenodd"
-                                    d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
-                                    clip-rule="evenodd"
-                                />
-                            </svg>
+                            <font-awesome-icon v-else :icon="['fas', 'dice']" />
+
                             {{ isLoading ? "Generating..." : "Reroll" }}
                         </button>
                     </div>

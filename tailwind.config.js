@@ -24,6 +24,7 @@ export default {
                     first: "rgb(255, 183, 3)",
                     blue: "rgb(2,48,71)",
                     light: "rgb(237, 246, 250)",
+                    icon: "rgb(251, 133, 0)",
                 },
             },
         },
