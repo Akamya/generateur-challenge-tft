@@ -273,15 +273,25 @@ const logout = () => {
                                             class="bg-primary-first hover:bg-opacity-90 text-black font-medium py-1 px-2.5 rounded-xl flex items-center text-sm transition-all duration-200"
                                         >
                                             <img
-                                                class="size-6 rounded-full object-cover mr-1.5"
+                                                class="size-6 rounded-full mr-1.5"
                                                 :src="
                                                     $page.props.auth.user
-                                                        .profile_photo_url
+                                                        .profile_photo_path
+                                                        ? `/storage/${$page.props.auth.user.profile_photo_path}`
+                                                        : '/storage/profile-photos/default-avatar.svg'
                                                 "
                                                 :alt="
                                                     $page.props.auth.user
                                                         .username
                                                 "
+                                                :class="{
+                                                    'object-cover':
+                                                        $page.props.auth.user
+                                                            .profile_photo_path,
+                                                    invert: !$page.props.auth
+                                                        .user
+                                                        .profile_photo_path,
+                                                }"
                                             />
                                             {{ $page.props.auth.user.username }}
                                         </button>

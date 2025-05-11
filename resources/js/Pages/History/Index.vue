@@ -140,15 +140,33 @@ const paginatedChallenges = computed(() => {
                     >
                         <!-- Avatar and Basic Info -->
                         <div class="flex flex-col items-center">
-                            <div
-                                class="bg-blue-800 rounded-full p-1 border-4 border-yellow-500 mb-4 shadow-lg"
-                            >
+                            <div class="relative w-24 h-24 mb-4">
+                                <!-- Yellow border ring -->
                                 <div
-                                    class="bg-gradient-to-br from-blue-700 to-blue-900 rounded-full p-4 h-24 w-24 flex items-center justify-center"
+                                    class="absolute inset-0 rounded-full border-4 border-primary-first shadow-lg"
+                                ></div>
+
+                                <!-- Blue background gradient -->
+                                <div
+                                    class="absolute inset-0 rounded-full bg-gradient-to-br bg-primary-blue transform scale-95"
+                                ></div>
+
+                                <!-- Image container with proper sizing and clipping -->
+                                <div
+                                    class="absolute inset-0 rounded-full overflow-hidden transform scale-90"
                                 >
                                     <img
-                                        src="user?.profile_photo"
-                                        class="text-4xl font-bold text-white"
+                                        :src="
+                                            user?.profile_photo
+                                                ? `/storage/${user.profile_photo}`
+                                                : '/storage/profile-photos/default-avatar.svg'
+                                        "
+                                        alt="Profile picture"
+                                        class="w-full h-full"
+                                        :class="{
+                                            'object-cover': user?.profile_photo,
+                                            invert: !user?.profile_photo,
+                                        }"
                                     />
                                 </div>
                             </div>
