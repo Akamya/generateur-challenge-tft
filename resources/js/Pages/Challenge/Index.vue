@@ -1,55 +1,123 @@
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, ref } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
+import { router, usePage } from "@inertiajs/vue3";
 
 const props = defineProps({
     auth: Object,
     challenge: Object,
 });
+
+const isLoading = ref(false);
+
+// Function to handle challenge generation with loading state
+const generateChallenge = () => {
+    isLoading.value = true;
+    router.get(
+        route("challenge.generate"),
+        {},
+        {
+            onSuccess: () => {
+                isLoading.value = false;
+                // Scroll to the challenge section after it loads
+                setTimeout(() => {
+                    const challengeSection =
+                        document.getElementById("challenge-section");
+                    if (challengeSection) {
+                        challengeSection.scrollIntoView({ behavior: "smooth" });
+                    }
+                }, 100);
+            },
+            onError: () => {
+                isLoading.value = false;
+            },
+        }
+    );
+};
 </script>
+
+<style>
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+</style>
 
 <template>
     <AppLayout :show-background="true">
         <div class="min-h-full flex flex-col relative overflow-hidden">
             <main
-                class="relative flex-grow flex flex-col items-center justify-center py-12 px-4"
+                class="relative flex-grow flex flex-col items-center justify-start py-12 px-4"
             >
                 <!-- Logo and Title -->
-                <div v-if="!challenge" class="flex flex-col items-center mb-8">
+                <div class="flex flex-col items-center mb-10">
                     <div class="p-3 mb-2">
                         <img src="/storage/opTft.svg" alt="TFT OP Logo" />
                     </div>
 
                     <h1
-                        class="text-primary-light text-5xl font-bold mb-2 font-parkinsans"
+                        class="text-primary-light text-5xl font-bold mb-2 font-parkinsans text-center"
                     >
                         TFT OPERATION
                     </h1>
                     <div class="w-96 h-1 bg-primary-first mb-6"></div>
-                    <p class="text-primary-light text-xl mb-6">
+                    <p class="text-primary-light text-xl mb-6 text-center">
                         Will you rise to the challenge?
                     </p>
 
                     <button
-                        @click="$inertia.get(route('challenge.generate'))"
-                        class="bg-primary-first hover:bg-opacity-90 text-black text-xl font-bold py-3 px-8 rounded-full mb-6 transition-colors"
+                        v-if="!challenge"
+                        @click="generateChallenge"
+                        class="bg-primary-first hover:bg-opacity-90 text-black text-xl font-bold py-3 px-8 rounded-full mb-6 transition-colors transform hover:scale-105 active:scale-95 flex items-center"
+                        :disabled="isLoading"
                     >
-                        Generate a Challenge
+                        <svg
+                            v-if="isLoading"
+                            class="animate-spin -ml-1 mr-3 h-5 w-5 text-black"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                        >
+                            <circle
+                                class="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                stroke-width="4"
+                            ></circle>
+                            <path
+                                class="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                            ></path>
+                        </svg>
+                        {{
+                            isLoading ? "Generating..." : "Generate a Challenge"
+                        }}
                     </button>
 
-                    <p
-                        v-if="!props.auth.user"
-                        class="text-primary-light text-center text-sm max-w-md"
-                    >
+                    <p class="text-primary-light text-center text-sm max-w-md">
                         Sign up to track your completed challenges and maybe
                         appear in the leaderboard.
                     </p>
                 </div>
 
-                <!-- Challenge Requirements -->
+                <!-- Challenge Requirements - Only visible when a challenge exists -->
                 <div
                     v-if="challenge"
-                    class="bg-primary-blue/80 rounded-lg p-8 max-w-2xl w-full min-h-[480px] min-w-[700px] flex flex-col justify-between shadow-lg"
+                    id="challenge-section"
+                    class="bg-primary-blue/80 rounded-lg p-8 max-w-2xl w-full min-h-[480px] flex flex-col justify-between shadow-lg mb-12 animate-fadeIn"
                 >
                     <h2
                         class="text-primary-light text-2xl font-bold mb-6 text-center border-b border-primary-first pb-2"
@@ -83,7 +151,7 @@ const props = defineProps({
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <!-- Position Card -->
                         <div
-                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md"
+                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md transform hover:scale-105"
                         >
                             <div class="flex items-center mb-3">
                                 <div
@@ -132,7 +200,7 @@ const props = defineProps({
 
                         <!-- Class Card -->
                         <div
-                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md"
+                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md transform hover:scale-105"
                         >
                             <div class="flex items-center mb-3">
                                 <div
@@ -175,7 +243,7 @@ const props = defineProps({
 
                         <!-- Origin Card -->
                         <div
-                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md"
+                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md transform hover:scale-105"
                         >
                             <div class="flex items-center mb-3">
                                 <div
@@ -218,7 +286,7 @@ const props = defineProps({
 
                         <!-- Constraint Card -->
                         <div
-                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md"
+                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md transform hover:scale-105"
                         >
                             <div class="flex items-center mb-3">
                                 <div
@@ -265,14 +333,14 @@ const props = defineProps({
                         <button
                             v-if="props.auth.user"
                             @click="
-                                $inertia.post(route('challenge.accept'), {
+                                router.post(route('challenge.accept'), {
                                     position_id: challenge.position.id,
                                     classe_id: challenge.classe.id,
                                     origin_id: challenge.origin.id,
                                     constraint_id: challenge.constraint.id,
                                 })
                             "
-                            class="bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-6 rounded-lg flex items-center transition-colors shadow-md"
+                            class="bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-6 rounded-lg flex items-center transition-colors shadow-md transform hover:scale-105 active:scale-95"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -289,10 +357,33 @@ const props = defineProps({
                             Accept
                         </button>
                         <button
-                            @click="$inertia.get(route('challenge.generate'))"
-                            class="bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-6 rounded-lg flex items-center transition-colors shadow-md"
+                            @click="generateChallenge"
+                            class="bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-6 rounded-lg flex items-center transition-colors shadow-md transform hover:scale-105 active:scale-95"
+                            :disabled="isLoading"
                         >
                             <svg
+                                v-if="isLoading"
+                                class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                            >
+                                <circle
+                                    class="opacity-25"
+                                    cx="12"
+                                    cy="12"
+                                    r="10"
+                                    stroke="currentColor"
+                                    stroke-width="4"
+                                ></circle>
+                                <path
+                                    class="opacity-75"
+                                    fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                ></path>
+                            </svg>
+                            <svg
+                                v-else
                                 xmlns="http://www.w3.org/2000/svg"
                                 class="h-5 w-5 mr-2"
                                 viewBox="0 0 20 20"
@@ -304,7 +395,7 @@ const props = defineProps({
                                     clip-rule="evenodd"
                                 />
                             </svg>
-                            Reroll
+                            {{ isLoading ? "Generating..." : "Reroll" }}
                         </button>
                     </div>
                 </div>
