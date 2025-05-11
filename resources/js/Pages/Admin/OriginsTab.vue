@@ -1,6 +1,6 @@
 <script setup>
 import { defineProps, ref, computed } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, router } from "@inertiajs/vue3";
 
 const props = defineProps({
     seasons: Array,
@@ -15,6 +15,7 @@ const confirmationText = ref("");
 const selectedSeasonId = ref(
     props.seasons.length > 0 ? props.seasons[0].id : null
 );
+const imagePreview = ref(null);
 
 const originForm = useForm({
     id: null,
@@ -22,6 +23,7 @@ const originForm = useForm({
     technical_name: "",
     season_id: selectedSeasonId,
     image: null,
+    delete_image: false,
 });
 
 const filteredOrigins = computed(() => {
@@ -38,11 +40,13 @@ const openOriginForm = (origin = null) => {
         originForm.name = origin.name;
         originForm.technical_name = origin.technical_name;
         originForm.season_id = origin.season_id;
+        originForm.image = origin.image;
     } else {
         originForm.id = null;
         originForm.name = "";
         originForm.technical_name = "";
         originForm.season_id = selectedSeasonId;
+        originForm.image = null;
     }
 
     showOriginModal.value = true;
@@ -59,6 +63,21 @@ function confirmDelete() {
         router.delete(route("admin.origin.delete", selectedOrigin.value.id));
         showDeleteModal.value = false;
     }
+}
+
+function onImageChange(event) {
+    const file = event.target.files[0];
+    if (file) {
+        originForm.image = file;
+        imagePreview.value = URL.createObjectURL(file);
+        originForm.delete_image = false;
+    }
+}
+
+function deleteImage() {
+    originForm.delete_image = true;
+    originForm.image = null;
+    imagePreview.value = null;
 }
 </script>
 
@@ -234,13 +253,52 @@ function confirmDelete() {
                                 >
                                 <input
                                     type="file"
-                                    @change="
-                                        (e) =>
-                                            (originForm.image =
-                                                e.target.files[0])
-                                    "
+                                    @change="onImageChange"
                                     accept="image/*"
                                     class="w-full bg-blue-800 border border-blue-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                                />
+
+                                <!-- Aperçu si une nouvelle image a été sélectionnée -->
+                                <div v-if="imagePreview">
+                                    <p>New icon :</p>
+                                    <img
+                                        :src="imagePreview"
+                                        class="w-24 h-24 object-cover"
+                                    />
+                                    <button
+                                        type="button"
+                                        @click="deleteImage"
+                                        class="text-red-500"
+                                    >
+                                        Remove icon
+                                    </button>
+                                </div>
+
+                                <!-- Aperçu de l’image existante si pas encore remplacée -->
+                                <div
+                                    v-else-if="
+                                        originForm.image &&
+                                        !originForm.delete_image
+                                    "
+                                >
+                                    <p>Image actuelle :</p>
+                                    <img
+                                        :src="`/storage/${originForm.image}`"
+                                        class="w-24 h-24 object-cover"
+                                    />
+                                    <button
+                                        type="button"
+                                        @click="deleteImage"
+                                        class="text-red-500"
+                                    >
+                                        Remove icon
+                                    </button>
+                                </div>
+
+                                <input
+                                    type="hidden"
+                                    name="delete_image"
+                                    :value="originForm.delete_image ? 1 : 0"
                                 />
                             </div>
                         </div>

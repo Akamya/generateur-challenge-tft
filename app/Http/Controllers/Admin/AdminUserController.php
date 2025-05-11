@@ -10,6 +10,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
+
 
 class AdminUserController extends Controller
 {
@@ -93,27 +95,40 @@ class AdminUserController extends Controller
             'technical_name' => 'required|string|max:255',
             'season_id' => 'required|numeric',
             'image' => 'nullable|image|max:2048',
+            'delete_image' => 'nullable|boolean',
         ]);
 
+        $id = $validatedData['id'];
         $imagePath = null;
 
         if ($request->hasFile('image')) {
-             $imagePath = $request->file('image')->store('origins', 'public');
+            $imagePath = $request->file('image')->store('origins', 'public');
         }
 
-        $id = $validatedData['id'];
-        if($id){
+        if ($id) {
             $origin = Origin::findOrFail($id);
             $origin->name = $validatedData['name'];
             $origin->technical_name = $validatedData['technical_name'];
             $origin->description = 'Reach level gold';
             $origin->season_id = $validatedData['season_id'];
+
+            // Supprimer l’image existante si demandé
+            if ($request->boolean('delete_image') && $origin->image) {
+                Storage::disk('public')->delete($origin->image);
+                $origin->image = null;
+            }
+
+            // Remplacer l’image si une nouvelle est uploadée
             if ($imagePath) {
+                // Supprimer l’ancienne image si elle existe
+                if ($origin->image) {
+                    Storage::disk('public')->delete($origin->image);
+                }
                 $origin->image = $imagePath;
             }
+
             $origin->save();
-        }
-        else{
+        } else {
             $origin = new Origin();
             $origin->name = $validatedData['name'];
             $origin->technical_name = $validatedData['technical_name'];
@@ -125,6 +140,7 @@ class AdminUserController extends Controller
 
         return redirect()->back();
     }
+
 
     public function destroySeason($id){
         Gate::authorize('is_admin', User::class);
