@@ -154,7 +154,7 @@ const paginatedChallenges = computed(() => {
                                         :src="
                                             user?.profile_photo
                                                 ? `/storage/${user.profile_photo}`
-                                                : '/storage/profile-photos/default-avatar.svg'
+                                                : '/storage/seed/default-avatar.svg'
                                         "
                                         alt="Profile picture"
                                         class="w-full h-full"

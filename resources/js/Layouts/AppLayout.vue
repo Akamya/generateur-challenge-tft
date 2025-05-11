@@ -278,7 +278,7 @@ const logout = () => {
                                                     $page.props.auth.user
                                                         .profile_photo_path
                                                         ? `/storage/${$page.props.auth.user.profile_photo_path}`
-                                                        : '/storage/profile-photos/default-avatar.svg'
+                                                        : '/storage/seed/default-avatar.svg'
                                                 "
                                                 :alt="
                                                     $page.props.auth.user

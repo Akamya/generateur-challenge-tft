@@ -121,7 +121,7 @@ const generateChallenge = () => {
                 <div
                     v-if="challenge"
                     id="challenge-section"
-                    class="bg-primary-blue/80 rounded-lg p-8 max-w-2xl w-full min-h-[480px] flex flex-col justify-between shadow-lg mb-12 animate-fadeIn"
+                    class="bg-primary-blue/80 rounded-xl p-8 max-w-2xl w-full min-h-[480px] flex flex-col justify-between shadow-lg mb-12 animate-fadeIn"
                 >
                     <h2
                         class="text-primary-light text-2xl font-bold mb-6 text-center border-b border-primary-first pb-2"
@@ -155,12 +155,13 @@ const generateChallenge = () => {
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <!-- Position Card -->
                         <div
-                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md transform"
+                            class="bg-primary-dark/80 rounded-xl p-4 hover:bg-primary-dark transition-colors shadow-md transform"
                         >
                             <div class="flex items-center mb-3">
-                                <div
+                                <img
+                                    src="/storage/seed/podium.svg"
                                     class="bg-primary-first rounded-full p-2 mr-3 flex items-center justify-center w-10 h-10"
-                                ></div>
+                                />
                                 <div>
                                     <h3
                                         class="text-primary-first text-sm font-semibold uppercase tracking-wider"
@@ -183,26 +184,20 @@ const generateChallenge = () => {
 
                         <!-- Class Card -->
                         <div
-                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md transform"
+                            class="bg-primary-dark/80 rounded-xl p-4 hover:bg-primary-dark transition-colors shadow-md transform"
                         >
                             <div class="flex items-center mb-3">
                                 <div
                                     class="bg-primary-first rounded-full p-2 mr-3 flex items-center justify-center w-10 h-10"
                                 >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="h-6 w-6 text-primary-dark"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                                        />
-                                    </svg>
+                                    <img
+                                        :src="
+                                            challenge.classe?.image
+                                                ? `/storage/${challenge.classe.image}`
+                                                : '/storage/seed/default-classe.svg'
+                                        "
+                                        class="invert"
+                                    />
                                 </div>
                                 <div>
                                     <h3
@@ -226,27 +221,22 @@ const generateChallenge = () => {
 
                         <!-- Origin Card -->
                         <div
-                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md transform"
+                            class="bg-primary-dark/80 rounded-xl p-4 hover:bg-primary-dark transition-colors shadow-md transform"
                         >
                             <div class="flex items-center mb-3">
                                 <div
                                     class="bg-primary-first rounded-full p-2 mr-3 flex items-center justify-center w-10 h-10"
                                 >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="h-6 w-6 text-primary-dark"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
-                                        />
-                                    </svg>
+                                    <img
+                                        :src="
+                                            challenge.origin?.image
+                                                ? `/storage/${challenge.origin.image}`
+                                                : '/storage/seed/default-origin.svg'
+                                        "
+                                        class="invert"
+                                    />
                                 </div>
+
                                 <div>
                                     <h3
                                         class="text-primary-first text-sm font-semibold uppercase tracking-wider"
@@ -269,27 +259,13 @@ const generateChallenge = () => {
 
                         <!-- Constraint Card -->
                         <div
-                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md transform"
+                            class="bg-primary-dark/80 rounded-xl p-4 hover:bg-primary-dark transition-colors shadow-md transform"
                         >
                             <div class="flex items-center mb-3">
-                                <div
+                                <img
+                                    src="/storage/seed/constraint.svg"
                                     class="bg-primary-first rounded-full p-2 mr-3 flex items-center justify-center w-10 h-10"
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="h-6 w-6 text-primary-dark"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                                        />
-                                    </svg>
-                                </div>
+                                />
                                 <div>
                                     <h3
                                         class="text-primary-first text-sm font-semibold uppercase tracking-wider"
@@ -323,25 +299,17 @@ const generateChallenge = () => {
                                     constraint_id: challenge.constraint.id,
                                 })
                             "
-                            class="bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-6 rounded-lg flex items-center transition-colors shadow-md transform hover:scale-105 active:scale-95"
+                            class="bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-6 rounded-xl flex items-center transition-colors shadow-md transform hover:scale-105 active:scale-95"
                         >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5 mr-2"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                            >
-                                <path
-                                    fill-rule="evenodd"
-                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                    clip-rule="evenodd"
-                                />
-                            </svg>
+                            <font-awesome-icon
+                                :icon="['fas', 'check']"
+                                class="mr-1"
+                            />
                             Accept
                         </button>
                         <button
                             @click="generateChallenge"
-                            class="bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-6 rounded-lg flex items-center transition-colors shadow-md transform hover:scale-105 active:scale-95"
+                            class="bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-6 rounded-xl flex items-center transition-colors shadow-md transform hover:scale-105 active:scale-95"
                             :disabled="isLoading"
                         >
                             <svg
