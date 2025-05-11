@@ -262,10 +262,14 @@ const generateChallenge = () => {
                             class="bg-primary-dark/80 rounded-xl p-4 hover:bg-primary-dark transition-colors shadow-md transform"
                         >
                             <div class="flex items-center mb-3">
-                                <img
-                                    src="/storage/seed/constraint.svg"
+                                <div
                                     class="bg-primary-first rounded-full p-2 mr-3 flex items-center justify-center w-10 h-10"
-                                />
+                                >
+                                    <img
+                                        :src="`/storage/${challenge.constraint.image}`"
+                                    />
+                                </div>
+
                                 <div>
                                     <h3
                                         class="text-primary-first text-sm font-semibold uppercase tracking-wider"

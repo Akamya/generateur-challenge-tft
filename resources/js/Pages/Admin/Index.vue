@@ -35,7 +35,6 @@ const activeTab = ref("seasons");
                 <div class="w-48 h-1 bg-primary-first mb-4"></div>
             </div>
 
-            <!-- Admin Interface -->
             <div
                 class="w-full bg-primary-dark/80 backdrop-blur-sm rounded-xl shadow-lg border border-primary-blue/30 overflow-hidden"
             >
@@ -80,15 +79,15 @@ const activeTab = ref("seasons");
 
                 <!-- Tab Content Containers -->
                 <div class="p-6">
-                    <div v-if="activeTab === 'seasons'" class="rounded-lg">
+                    <div v-if="activeTab === 'seasons'" class="rounded-xl">
                         <SeasonsTab :seasons="seasons" />
                     </div>
 
-                    <div v-if="activeTab === 'classes'" class="rounded-lg">
+                    <div v-if="activeTab === 'classes'" class="rounded-xl">
                         <ClassesTab :seasons="seasons" :classes="classes" />
                     </div>
 
-                    <div v-if="activeTab === 'origins'" class="rounded-lg">
+                    <div v-if="activeTab === 'origins'" class="rounded-xl">
                         <OriginsTab :seasons="seasons" :origins="origins" />
                     </div>
                 </div>
