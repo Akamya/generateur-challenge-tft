@@ -141,17 +141,12 @@ const paginatedChallenges = computed(() => {
                         <!-- Avatar and Basic Info -->
                         <div class="flex flex-col items-center">
                             <div class="relative w-24 h-24 mb-4">
-                                <!-- Yellow border ring -->
                                 <div
                                     class="absolute inset-0 rounded-full border-4 border-primary-first shadow-lg"
                                 ></div>
-
-                                <!-- Blue background gradient -->
                                 <div
                                     class="absolute inset-0 rounded-full bg-gradient-to-br bg-primary-blue transform scale-95"
                                 ></div>
-
-                                <!-- Image container with proper sizing and clipping -->
                                 <div
                                     class="absolute inset-0 rounded-full overflow-hidden transform scale-90"
                                 >

@@ -3,12 +3,6 @@ import { defineProps } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 
 const props = defineProps({
-    canLogin: {
-        type: Boolean,
-    },
-    canRegister: {
-        type: Boolean,
-    },
     auth: Object,
     challenge: Object,
 });
@@ -17,7 +11,6 @@ const props = defineProps({
 <template>
     <AppLayout :show-background="true">
         <div class="min-h-full flex flex-col relative overflow-hidden">
-            <!-- Main Content -->
             <main
                 class="relative flex-grow flex flex-col items-center justify-center py-12 px-4"
             >
@@ -28,25 +21,25 @@ const props = defineProps({
                     </div>
 
                     <h1
-                        class="text-white text-5xl font-bold mb-2 font-parkinsans"
+                        class="text-primary-light text-5xl font-bold mb-2 font-parkinsans"
                     >
                         TFT OPERATION
                     </h1>
-                    <div class="w-64 h-1 bg-yellow-500 mb-6"></div>
-                    <p class="text-white text-xl mb-6">
+                    <div class="w-96 h-1 bg-primary-first mb-6"></div>
+                    <p class="text-primary-light text-xl mb-6">
                         Will you rise to the challenge?
                     </p>
 
                     <button
                         @click="$inertia.get(route('challenge.generate'))"
-                        class="bg-yellow-500 hover:bg-yellow-400 text-black text-xl font-bold py-3 px-8 rounded-full mb-6"
+                        class="bg-primary-first hover:bg-opacity-90 text-black text-xl font-bold py-3 px-8 rounded-full mb-6 transition-colors"
                     >
                         Generate a Challenge
                     </button>
 
                     <p
                         v-if="!props.auth.user"
-                        class="text-white text-center text-sm max-w-md"
+                        class="text-primary-light text-center text-sm max-w-md"
                     >
                         Sign up to track your completed challenges and maybe
                         appear in the leaderboard.
@@ -56,10 +49,10 @@ const props = defineProps({
                 <!-- Challenge Requirements -->
                 <div
                     v-if="challenge"
-                    class="bg-blue-900/80 rounded-lg p-8 max-w-2xl w-full min-h-[480px] min-w-[700px] flex flex-col justify-between"
+                    class="bg-primary-blue/80 rounded-lg p-8 max-w-2xl w-full min-h-[480px] min-w-[700px] flex flex-col justify-between shadow-lg"
                 >
                     <h2
-                        class="text-white text-2xl font-bold mb-6 text-center border-b border-yellow-500 pb-2"
+                        class="text-primary-light text-2xl font-bold mb-6 text-center border-b border-primary-first pb-2"
                     >
                         YOUR CHALLENGE
                     </h2>
@@ -67,7 +60,9 @@ const props = defineProps({
                         v-if="!props.auth.user"
                         class="flex justify-center items-center mb-6"
                     >
-                        <p class="text-white text-center text-sm max-w-md">
+                        <p
+                            class="text-primary-light text-center text-sm max-w-md"
+                        >
                             Sign up to accept this challenge and climb the
                             ladder!
                         </p>
@@ -77,7 +72,9 @@ const props = defineProps({
                         v-if="props.auth.user"
                         class="flex justify-center items-center mb-6"
                     >
-                        <p class="text-white text-center text-sm max-w-md">
+                        <p
+                            class="text-primary-light text-center text-sm max-w-md"
+                        >
                             Accept this challenge and climb the ladder!
                         </p>
                     </div>
@@ -86,15 +83,15 @@ const props = defineProps({
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <!-- Position Card -->
                         <div
-                            class="bg-blue-800/60 rounded-lg p-4 hover:bg-blue-800/80 transition-colors"
+                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md"
                         >
                             <div class="flex items-center mb-3">
                                 <div
-                                    class="bg-orange-500 rounded-full p-2 mr-3 flex items-center justify-center w-10 h-10"
+                                    class="bg-primary-first rounded-full p-2 mr-3 flex items-center justify-center w-10 h-10"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        class="h-6 w-6 text-white"
+                                        class="h-6 w-6 text-primary-dark"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"
@@ -115,31 +112,35 @@ const props = defineProps({
                                 </div>
                                 <div>
                                     <h3
-                                        class="text-yellow-400 text-sm font-semibold uppercase tracking-wider"
+                                        class="text-primary-first text-sm font-semibold uppercase tracking-wider"
                                     >
                                         Position
                                     </h3>
-                                    <p class="text-white text-lg font-bold">
+                                    <p
+                                        class="text-primary-light text-lg font-bold"
+                                    >
                                         {{ challenge.position.value }}
                                     </p>
                                 </div>
                             </div>
-                            <p class="text-blue-200 text-sm ml-13 pl-0.5">
+                            <p
+                                class="text-primary-light/70 text-sm ml-13 pl-0.5"
+                            >
                                 {{ challenge.position.description }}
                             </p>
                         </div>
 
                         <!-- Class Card -->
                         <div
-                            class="bg-blue-800/60 rounded-lg p-4 hover:bg-blue-800/80 transition-colors"
+                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md"
                         >
                             <div class="flex items-center mb-3">
                                 <div
-                                    class="bg-orange-500 rounded-full p-2 mr-3 flex items-center justify-center w-10 h-10"
+                                    class="bg-primary-first rounded-full p-2 mr-3 flex items-center justify-center w-10 h-10"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        class="h-6 w-6 text-white"
+                                        class="h-6 w-6 text-primary-dark"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"
@@ -154,31 +155,35 @@ const props = defineProps({
                                 </div>
                                 <div>
                                     <h3
-                                        class="text-yellow-400 text-sm font-semibold uppercase tracking-wider"
+                                        class="text-primary-first text-sm font-semibold uppercase tracking-wider"
                                     >
                                         Class
                                     </h3>
-                                    <p class="text-white text-lg font-bold">
+                                    <p
+                                        class="text-primary-light text-lg font-bold"
+                                    >
                                         {{ challenge.classe.name }}
                                     </p>
                                 </div>
                             </div>
-                            <p class="text-blue-200 text-sm ml-13 pl-0.5">
+                            <p
+                                class="text-primary-light/70 text-sm ml-13 pl-0.5"
+                            >
                                 {{ challenge.classe.description }}
                             </p>
                         </div>
 
                         <!-- Origin Card -->
                         <div
-                            class="bg-blue-800/60 rounded-lg p-4 hover:bg-blue-800/80 transition-colors"
+                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md"
                         >
                             <div class="flex items-center mb-3">
                                 <div
-                                    class="bg-orange-500 rounded-full p-2 mr-3 flex items-center justify-center w-10 h-10"
+                                    class="bg-primary-first rounded-full p-2 mr-3 flex items-center justify-center w-10 h-10"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        class="h-6 w-6 text-white"
+                                        class="h-6 w-6 text-primary-dark"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"
@@ -193,31 +198,35 @@ const props = defineProps({
                                 </div>
                                 <div>
                                     <h3
-                                        class="text-yellow-400 text-sm font-semibold uppercase tracking-wider"
+                                        class="text-primary-first text-sm font-semibold uppercase tracking-wider"
                                     >
                                         Origin
                                     </h3>
-                                    <p class="text-white text-lg font-bold">
+                                    <p
+                                        class="text-primary-light text-lg font-bold"
+                                    >
                                         {{ challenge.origin.name }}
                                     </p>
                                 </div>
                             </div>
-                            <p class="text-blue-200 text-sm ml-13 pl-0.5">
+                            <p
+                                class="text-primary-light/70 text-sm ml-13 pl-0.5"
+                            >
                                 {{ challenge.origin.description }}
                             </p>
                         </div>
 
                         <!-- Constraint Card -->
                         <div
-                            class="bg-blue-800/60 rounded-lg p-4 hover:bg-blue-800/80 transition-colors"
+                            class="bg-primary-dark/80 rounded-lg p-4 hover:bg-primary-dark transition-colors shadow-md"
                         >
                             <div class="flex items-center mb-3">
                                 <div
-                                    class="bg-orange-500 rounded-full p-2 mr-3 flex items-center justify-center w-10 h-10"
+                                    class="bg-primary-first rounded-full p-2 mr-3 flex items-center justify-center w-10 h-10"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        class="h-6 w-6 text-white"
+                                        class="h-6 w-6 text-primary-dark"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"
@@ -232,16 +241,20 @@ const props = defineProps({
                                 </div>
                                 <div>
                                     <h3
-                                        class="text-yellow-400 text-sm font-semibold uppercase tracking-wider"
+                                        class="text-primary-first text-sm font-semibold uppercase tracking-wider"
                                     >
                                         Constraint
                                     </h3>
-                                    <p class="text-white text-lg font-bold">
+                                    <p
+                                        class="text-primary-light text-lg font-bold"
+                                    >
                                         {{ challenge.constraint.name }}
                                     </p>
                                 </div>
                             </div>
-                            <p class="text-blue-200 text-sm ml-13 pl-0.5">
+                            <p
+                                class="text-primary-light/70 text-sm ml-13 pl-0.5"
+                            >
                                 {{ challenge.constraint.description }}
                             </p>
                         </div>
@@ -259,7 +272,7 @@ const props = defineProps({
                                     constraint_id: challenge.constraint.id,
                                 })
                             "
-                            class="bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-6 rounded-lg flex items-center transition-colors"
+                            class="bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-6 rounded-lg flex items-center transition-colors shadow-md"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -277,7 +290,7 @@ const props = defineProps({
                         </button>
                         <button
                             @click="$inertia.get(route('challenge.generate'))"
-                            class="bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-6 rounded-lg flex items-center transition-colors"
+                            class="bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-6 rounded-lg flex items-center transition-colors shadow-md"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
