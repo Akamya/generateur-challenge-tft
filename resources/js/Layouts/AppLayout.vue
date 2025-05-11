@@ -46,7 +46,7 @@ const logout = () => {
 
         <div class="flex flex-col min-h-screen">
             <nav
-                class="relative z-10 bg-primary-dark py-2 md:py-2 px-4 sm:px-6 lg:px-8 shadow-lg border-b border-primary-first"
+                class="relative z-11 bg-primary-dark py-2 md:py-2 px-4 sm:px-6 lg:px-8 shadow-lg border-b border-primary-first"
             >
                 <div
                     class="container mx-auto flex flex-wrap items-center justify-between"
@@ -714,7 +714,10 @@ const logout = () => {
                     />
                     <div class="absolute inset-0 bg-primary-blue/70"></div>
                 </div>
-                <slot />
+                <div v-else class="absolute inset-0 z-0 bg-primary-blue"></div>
+                <div class="relative z-10 w-full">
+                    <slot />
+                </div>
             </main>
             <Footer></Footer>
         </div>

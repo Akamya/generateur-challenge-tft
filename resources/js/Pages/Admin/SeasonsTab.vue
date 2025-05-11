@@ -1,6 +1,6 @@
 <script setup>
 import { defineProps, ref, computed } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, router } from "@inertiajs/vue3";
 
 const props = defineProps({
     seasons: Array,
@@ -66,13 +66,17 @@ const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-EN", options);
 };
 </script>
-
 <template>
     <div class="flex justify-between items-center mb-6">
-        <h2 class="text-white text-2xl font-bold">TFT Seasons</h2>
+        <div>
+            <h2 class="text-primary-light text-2xl font-bold">TFT Seasons</h2>
+            <p class="text-primary-light/70 text-sm">
+                Manage game seasons and set active season
+            </p>
+        </div>
         <button
             @click="openSeasonForm()"
-            class="bg-gradient-to-r from-yellow-500 to-yellow-400 hover:from-yellow-400 hover:to-yellow-300 text-black font-bold py-2 px-4 rounded-lg transition-colors shadow-md flex items-center"
+            class="bg-primary-first hover:bg-primary-first/90 text-primary-dark font-bold py-2.5 px-4 rounded-lg transition-all shadow-lg flex items-center"
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -90,49 +94,58 @@ const formatDate = (dateString) => {
         </button>
     </div>
 
-    <div class="overflow-x-auto">
-        <table class="min-w-full bg-blue-800/40 rounded-lg overflow-hidden">
+    <div
+        class="overflow-x-auto rounded-lg border-2 border-primary-blue/40 shadow-lg"
+    >
+        <table class="min-w-full bg-primary-dark">
             <thead>
-                <tr class="bg-blue-800/60 text-left">
+                <tr
+                    class="bg-primary-blue/20 border-b-2 border-primary-blue/40"
+                >
                     <th
-                        class="px-6 py-3 text-yellow-400 font-semibold uppercase tracking-wider text-sm"
+                        class="px-6 py-3.5 text-primary-first font-semibold uppercase tracking-wider text-sm text-left"
                     >
                         Name
                     </th>
                     <th
-                        class="px-6 py-3 text-yellow-400 font-semibold uppercase tracking-wider text-sm"
+                        class="px-6 py-3.5 text-primary-first font-semibold uppercase tracking-wider text-sm text-left"
                     >
                         Creation Date
                     </th>
                     <th
-                        class="px-6 py-3 text-yellow-400 font-semibold uppercase tracking-wider text-sm"
+                        class="px-6 py-3.5 text-primary-first font-semibold uppercase tracking-wider text-sm text-left"
                     >
                         Status
                     </th>
+                    <th
+                        class="px-6 py-3.5 text-primary-first font-semibold uppercase tracking-wider text-sm text-left"
+                    >
+                        Actions
+                    </th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-blue-700/50">
+            <tbody class="divide-y divide-primary-blue/30">
                 <tr
                     v-for="season in props.seasons"
                     :key="season.id"
-                    class="hover:bg-blue-700/30 transition-colors"
+                    class="hover:bg-primary-blue/10 transition-colors"
                 >
-                    <td class="px-6 py-4 text-white">
+                    <td class="px-6 py-4 text-primary-light font-medium">
                         {{ season.name }}
                     </td>
-                    <td class="px-6 py-4 text-white">
+                    <td class="px-6 py-4 text-primary-light/80">
                         {{ formatDate(season.created_at) }}
                     </td>
                     <td class="px-6 py-4">
                         <span
                             v-if="season.active"
-                            class="px-3 py-1 rounded-full text-sm font-medium bg-green-500/20 text-green-400"
+                            class="px-3 py-1 rounded-full text-sm font-medium bg-green-500/20 text-green-400 border border-green-500/30"
                         >
                             Active
                         </span>
                         <span
                             v-else
-                            class="px-3 py-1 rounded-full text-sm font-medium bg-blue-500/20 text-blue-400"
+                            class="px-3 py-1 rounded-full text-sm font-medium bg-primary-blue/20 text-primary-light border border-primary-blue/30"
                         >
                             Inactive
                         </span>
@@ -140,14 +153,14 @@ const formatDate = (dateString) => {
                     <td class="px-6 py-4 flex space-x-2">
                         <button
                             @click="openSeasonForm(season)"
-                            class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded transition-colors"
+                            class="bg-primary-blue hover:bg-primary-blue/80 text-primary-light px-4 py-1.5 rounded-md transition-colors"
                             title="Edit season"
                         >
                             Edit
                         </button>
                         <button
                             @click="openDeleteSeasonModal(season)"
-                            class="bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded transition-colors"
+                            class="bg-red-600 hover:bg-red-500 text-white px-4 py-1.5 rounded-md transition-colors"
                             title="Delete season"
                         >
                             Delete
@@ -160,12 +173,26 @@ const formatDate = (dateString) => {
         <!-- Empty state for no seasons -->
         <div
             v-if="!props.seasons || props.seasons.length === 0"
-            class="text-center py-10 bg-blue-800/40 rounded-lg mt-4"
+            class="text-center py-12 bg-primary-dark"
         >
-            <p class="text-blue-300 text-lg">No seasons found.</p>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-16 w-16 mx-auto text-primary-blue/60 mb-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+            </svg>
+            <p class="text-primary-light/70 text-lg mb-4">No seasons found.</p>
             <button
                 @click="openSeasonForm()"
-                class="mt-4 bg-yellow-500 hover:bg-yellow-400 text-black font-medium py-2 px-4 rounded transition-colors"
+                class="mt-2 bg-primary-first hover:bg-primary-first/90 text-primary-dark font-medium py-2 px-6 rounded-lg transition-colors shadow-lg"
             >
                 Add your first season
             </button>
@@ -177,14 +204,30 @@ const formatDate = (dateString) => {
         <div v-if="showSeasonModal" class="fixed inset-0 z-50 overflow-y-auto">
             <div class="flex items-center justify-center min-h-screen px-4">
                 <div
-                    class="fixed inset-0 bg-black/70 transition-opacity"
+                    class="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity"
                     @click="showSeasonModal = false"
                 ></div>
 
                 <div
-                    class="relative bg-blue-900 rounded-lg max-w-md w-full p-6 shadow-xl border border-blue-800"
+                    class="relative bg-primary-dark rounded-lg max-w-md w-full p-6 shadow-xl border-2 border-primary-blue/60"
                 >
-                    <h3 class="text-xl font-bold text-white mb-4">
+                    <h3
+                        class="text-xl font-bold text-primary-first mb-6 flex items-center"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6 mr-2 text-primary-first"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                            />
+                        </svg>
                         {{ isEditing ? "Edit Season" : "Add New Season" }}
                     </h3>
 
@@ -194,21 +237,23 @@ const formatDate = (dateString) => {
                             showSeasonModal = false;
                         "
                     >
-                        <div class="space-y-4">
+                        <div class="space-y-5">
                             <div>
                                 <label
-                                    class="block text-yellow-400 text-sm font-medium mb-1"
+                                    class="block text-primary-first text-sm font-medium mb-2"
                                     >Season Name</label
                                 >
                                 <input
                                     v-model="seasonForm.name"
                                     type="text"
-                                    class="w-full bg-blue-800 border border-blue-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                                    class="w-full bg-primary-dark border-2 border-primary-blue/60 rounded-lg px-4 py-2.5 text-primary-light focus:outline-none focus:ring-2 focus:ring-primary-first"
                                     placeholder="e.g. Set 10: Remix Rumble"
                                     required
                                 />
                             </div>
-                            <div class="flex items-center">
+                            <div
+                                class="flex items-center p-3 bg-primary-blue/10 rounded-lg border border-primary-blue/30"
+                            >
                                 <input
                                     id="active-checkbox"
                                     v-model="seasonForm.active"
@@ -218,28 +263,28 @@ const formatDate = (dateString) => {
                                         !canActivate &&
                                         !isEditingCurrentActive
                                     "
-                                    class="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-blue-700 rounded"
+                                    class="h-5 w-5 text-primary-first focus:ring-primary-first border-primary-blue/60 rounded"
                                 />
                                 <label
                                     for="active-checkbox"
-                                    class="ml-2 block text-white"
+                                    class="ml-2 block text-primary-light"
                                 >
                                     Set as active season
                                 </label>
                             </div>
                         </div>
 
-                        <div class="flex justify-end space-x-3 mt-6">
+                        <div class="flex justify-end space-x-3 mt-8">
                             <button
                                 type="button"
                                 @click="showSeasonModal = false"
-                                class="bg-blue-700 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
+                                class="bg-primary-dark hover:bg-primary-dark/80 border-2 border-primary-blue/60 text-primary-light px-5 py-2.5 rounded-lg transition-colors"
                             >
                                 Cancel
                             </button>
                             <button
                                 type="submit"
-                                class="bg-gradient-to-r from-yellow-500 to-yellow-400 hover:from-yellow-400 hover:to-yellow-300 text-black font-bold px-4 py-2 rounded-lg transition-colors"
+                                class="bg-primary-first hover:bg-primary-first/90 text-primary-dark font-bold px-5 py-2.5 rounded-lg transition-colors shadow-md"
                             >
                                 {{ isEditing ? "Update" : "Create" }}
                             </button>
@@ -256,38 +301,63 @@ const formatDate = (dateString) => {
             <div class="flex items-center justify-center min-h-screen px-4">
                 <!-- Overlay -->
                 <div
-                    class="fixed inset-0 bg-black/70 transition-opacity"
+                    class="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity"
                     @click="showDeleteModal = false"
                 ></div>
 
                 <!-- Modal Content -->
                 <div
-                    class="relative bg-blue-900 rounded-lg max-w-md w-full p-6 shadow-xl border border-blue-800"
+                    class="relative bg-primary-dark rounded-lg max-w-md w-full p-6 shadow-xl border-2 border-primary-blue/60"
                 >
-                    <h2 class="text-xl font-bold text-white mb-4">
+                    <h2
+                        class="text-xl font-bold text-primary-first mb-4 flex items-center"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6 mr-2 text-red-500"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                            />
+                        </svg>
                         Confirm Deletion
                     </h2>
 
-                    <h3 class="text-yellow-400 mb-2">
-                        All the origins, classes and challenges related to this
-                        season will be deleted!
-                    </h3>
-                    <p class="text-white mb-4">
+                    <div
+                        class="p-4 bg-red-500/10 border border-red-500/30 rounded-lg mb-4"
+                    >
+                        <h3 class="text-primary-first mb-2 font-medium">
+                            Warning: This action cannot be undone
+                        </h3>
+                        <p class="text-primary-light/90 text-sm">
+                            All the origins, classes and challenges related to
+                            this season will be deleted!
+                        </p>
+                    </div>
+
+                    <p class="text-primary-light mb-4">
                         Confirm deletion by typing
-                        <strong class="text-yellow-400">DELETE</strong> below:
+                        <strong class="text-primary-first">DELETE</strong>
+                        below:
                     </p>
 
                     <input
                         v-model="confirmationText"
                         type="text"
-                        class="w-full bg-blue-800 border border-blue-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 mb-4"
+                        class="w-full bg-primary-dark border-2 border-primary-blue/60 rounded-lg px-4 py-2.5 text-primary-light focus:outline-none focus:ring-2 focus:ring-primary-first mb-6"
                         placeholder="Type DELETE to confirm"
                     />
 
                     <div class="flex justify-end space-x-3">
                         <button
                             @click="showDeleteModal = false"
-                            class="bg-blue-700 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
+                            class="bg-primary-dark hover:bg-primary-dark/80 border-2 border-primary-blue/60 text-primary-light px-5 py-2.5 rounded-lg transition-colors"
                         >
                             Cancel
                         </button>
@@ -295,7 +365,7 @@ const formatDate = (dateString) => {
                         <button
                             :disabled="confirmationText !== 'DELETE'"
                             @click="confirmDelete"
-                            class="bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-bold px-4 py-2 rounded-lg transition-colors disabled:opacity-50"
+                            class="bg-red-600 hover:bg-red-500 text-white font-bold px-5 py-2.5 rounded-lg transition-colors disabled:opacity-50 shadow-md"
                         >
                             Delete
                         </button>

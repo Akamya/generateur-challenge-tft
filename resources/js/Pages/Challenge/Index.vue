@@ -361,7 +361,11 @@ const generateChallenge = () => {
                                 ></circle>
                                 <font-awesome-icon :icon="['fas', 'dice']" />
                             </svg>
-                            <font-awesome-icon v-else :icon="['fas', 'dice']" />
+                            <font-awesome-icon
+                                v-else
+                                class="mr-1"
+                                :icon="['fas', 'dice']"
+                            />
 
                             {{ isLoading ? "Generating..." : "Reroll" }}
                         </button>

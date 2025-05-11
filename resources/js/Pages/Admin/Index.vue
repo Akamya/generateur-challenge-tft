@@ -14,35 +14,42 @@ const props = defineProps({
 
 const activeTab = ref("seasons");
 </script>
-
 <template>
-    <AppLayout :show-background="true">
+    <AppLayout :show-background="false">
         <Head title="Admin" />
-        <main class="relative flex-grow flex flex-col items-center py-12 px-4">
+        <div class="w-full max-w-7xl mx-auto px-4 py-8 relative z-10">
             <!-- Logo and Title -->
-            <div class="flex flex-col items-center mb-10">
+            <div class="flex flex-col items-center mb-8">
                 <div class="p-3 mb-2">
-                    <img src="/storage/opTft.svg" alt="TFT Logo" />
+                    <img
+                        src="/storage/opTft.svg"
+                        alt="TFT Logo"
+                        class="w-20 h-auto"
+                    />
                 </div>
-                <h1 class="text-white text-5xl font-bold mb-2 tracking-wider">
+                <h1
+                    class="text-primary-light text-4xl font-bold mb-2 font-parkinsans text-center"
+                >
                     ADMIN PANEL
                 </h1>
-                <div
-                    class="w-64 h-1 bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-500 mb-6 rounded-full"
-                ></div>
+                <div class="w-48 h-1 bg-primary-first mb-4"></div>
             </div>
 
             <!-- Admin Interface -->
-            <div class="max-w-6xl w-full mx-auto">
+            <div
+                class="w-full bg-primary-dark/80 backdrop-blur-sm rounded-xl shadow-lg border border-primary-blue/30 overflow-hidden"
+            >
                 <!-- Navigation Tabs -->
-                <div class="flex mb-8 border-b border-blue-700">
+                <div
+                    class="flex border-b border-primary-blue/30 bg-primary-dark/50"
+                >
                     <button
                         @click="activeTab = 'seasons'"
                         :class="[
-                            'px-6 py-3 font-bold text-lg transition-colors',
+                            'px-6 py-4 font-bold text-lg transition-colors',
                             activeTab === 'seasons'
-                                ? 'text-yellow-400 border-b-2 border-yellow-400'
-                                : 'text-white hover:text-yellow-300',
+                                ? 'text-primary-first border-b-2 border-primary-first bg-primary-dark/30'
+                                : 'text-primary-light hover:text-primary-first hover:bg-primary-dark/20',
                         ]"
                     >
                         Seasons
@@ -50,10 +57,10 @@ const activeTab = ref("seasons");
                     <button
                         @click="activeTab = 'classes'"
                         :class="[
-                            'px-6 py-3 font-bold text-lg transition-colors',
+                            'px-6 py-4 font-bold text-lg transition-colors',
                             activeTab === 'classes'
-                                ? 'text-yellow-400 border-b-2 border-yellow-400'
-                                : 'text-white hover:text-yellow-300',
+                                ? 'text-primary-first border-b-2 border-primary-first bg-primary-dark/30'
+                                : 'text-primary-light hover:text-primary-first hover:bg-primary-dark/20',
                         ]"
                     >
                         Classes
@@ -61,40 +68,31 @@ const activeTab = ref("seasons");
                     <button
                         @click="activeTab = 'origins'"
                         :class="[
-                            'px-6 py-3 font-bold text-lg transition-colors',
+                            'px-6 py-4 font-bold text-lg transition-colors',
                             activeTab === 'origins'
-                                ? 'text-yellow-400 border-b-2 border-yellow-400'
-                                : 'text-white hover:text-yellow-300',
+                                ? 'text-primary-first border-b-2 border-primary-first bg-primary-dark/30'
+                                : 'text-primary-light hover:text-primary-first hover:bg-primary-dark/20',
                         ]"
                     >
                         Origins
                     </button>
                 </div>
 
-                <!-- Seasons Tab -->
-                <div
-                    v-if="activeTab === 'seasons'"
-                    class="bg-blue-900/80 rounded-lg p-8 backdrop-blur-sm shadow-xl border border-blue-800/50"
-                >
-                    <SeasonsTab :seasons="seasons" />
-                </div>
+                <!-- Tab Content Containers -->
+                <div class="p-6">
+                    <div v-if="activeTab === 'seasons'" class="rounded-lg">
+                        <SeasonsTab :seasons="seasons" />
+                    </div>
 
-                <!-- Classes Tab -->
-                <div
-                    v-if="activeTab === 'classes'"
-                    class="bg-blue-900/80 rounded-lg p-8 backdrop-blur-sm shadow-xl border border-blue-800/50"
-                >
-                    <ClassesTab :seasons="seasons" :classes="classes" />
-                </div>
+                    <div v-if="activeTab === 'classes'" class="rounded-lg">
+                        <ClassesTab :seasons="seasons" :classes="classes" />
+                    </div>
 
-                <!-- Origins Tab -->
-                <div
-                    v-if="activeTab === 'origins'"
-                    class="bg-blue-900/80 rounded-lg p-8 backdrop-blur-sm shadow-xl border border-blue-800/50"
-                >
-                    <OriginsTab :seasons="seasons" :origins="origins" />
+                    <div v-if="activeTab === 'origins'" class="rounded-lg">
+                        <OriginsTab :seasons="seasons" :origins="origins" />
+                    </div>
                 </div>
             </div>
-        </main>
+        </div>
     </AppLayout>
 </template>
