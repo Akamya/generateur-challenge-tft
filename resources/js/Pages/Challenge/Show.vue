@@ -43,8 +43,8 @@ const props = defineProps({
                         <p
                             class="text-primary-light text-center text-sm max-w-md bg-primary-dark/30 py-2 px-4 rounded-lg border border-primary-blue/30"
                         >
-                            Give it your all in TFT! Then let's verify if you
-                            crushed the challenge!
+                            Give it your all in TFT! After the match, we will
+                            verify if you crushed the challenge!
                         </p>
                     </div>
 

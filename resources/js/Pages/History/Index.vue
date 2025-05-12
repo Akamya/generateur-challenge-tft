@@ -218,6 +218,24 @@ const paginatedChallenges = computed(() => {
                                     Ranking
                                 </div>
                             </div>
+                            <div
+                                class="bg-primary-dark/80 rounded-lg p-4 text-center shadow-sm border border-primary-blue/20"
+                            >
+                                <div
+                                    class="text-2xl font-bold text-primary-first mb-1"
+                                >
+                                    {{ user.ranking || "N/A" }}
+                                </div>
+                                <div
+                                    class="text-xs text-primary-light/80 uppercase tracking-wider"
+                                >
+                                    <font-awesome-icon
+                                        :icon="['fas', 'medal']"
+                                        class="mr-1"
+                                    />
+                                    Ranking
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
