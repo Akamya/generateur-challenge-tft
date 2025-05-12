@@ -31,7 +31,7 @@ const submit = () => {
 </script>
 
 <template>
-    <AppLayout :show-background="true">
+    <AppLayout show-background="true">
         <Head title="Log In" />
 
         <AuthenticationCard>
