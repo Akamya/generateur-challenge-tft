@@ -1,6 +1,7 @@
 <script setup>
 import { Head } from "@inertiajs/vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
+import Ranking from "@/Components/Ranking.vue";
 import { defineProps, ref, computed, watch } from "vue";
 
 const props = defineProps({
@@ -182,34 +183,34 @@ const paginatedChallenges = computed(() => {
                             class="flex-grow grid grid-cols-1 md:grid-cols-3 gap-3"
                         >
                             <div
-                                class="bg-primary-dark/80 rounded-lg p-4 text-center shadow-sm border border-primary-blue/20"
+                                class="bg-primary-dark/80 rounded-lg p-4 text-center shadow-sm border border-primary-blue/20 content-center"
                             >
                                 <div
-                                    class="text-2xl font-bold text-primary-first mb-1"
+                                    class="text-3xl font-bold text-primary-first mb-1"
                                 >
                                     {{ user.score || 0 }}
                                 </div>
                                 <div
-                                    class="text-xs text-primary-light/80 uppercase tracking-wider"
+                                    class="text-base text-primary-light/80 uppercase tracking-wider items-center"
                                 >
                                     <font-awesome-icon
                                         :icon="['fas', 'trophy']"
                                         class="mr-1"
                                     />
-                                    Completed challenges
+                                    Challenges
                                 </div>
                             </div>
 
                             <div
-                                class="bg-primary-dark/80 rounded-lg p-4 text-center shadow-sm border border-primary-blue/20"
+                                class="bg-primary-dark/80 rounded-lg p-4 text-center shadow-sm border border-primary-blue/20 content-center"
                             >
                                 <div
-                                    class="text-2xl font-bold text-primary-first mb-1"
+                                    class="text-3xl font-bold text-primary-first mb-1"
                                 >
                                     {{ user.ranking || "N/A" }}
                                 </div>
                                 <div
-                                    class="text-xs text-primary-light/80 uppercase tracking-wider"
+                                    class="text-base text-primary-light/80 uppercase tracking-wider"
                                 >
                                     <font-awesome-icon
                                         :icon="['fas', 'medal']"
@@ -219,22 +220,9 @@ const paginatedChallenges = computed(() => {
                                 </div>
                             </div>
                             <div
-                                class="bg-primary-dark/80 rounded-lg p-4 text-center shadow-sm border border-primary-blue/20"
+                                class="bg-primary-dark/80 rounded-lg p-4 text-center shadow-sm border border-primary-blue/20 justify-items-center"
                             >
-                                <div
-                                    class="text-2xl font-bold text-primary-first mb-1"
-                                >
-                                    {{ user.ranking || "N/A" }}
-                                </div>
-                                <div
-                                    class="text-xs text-primary-light/80 uppercase tracking-wider"
-                                >
-                                    <font-awesome-icon
-                                        :icon="['fas', 'medal']"
-                                        class="mr-1"
-                                    />
-                                    Ranking
-                                </div>
+                                <Ranking :ranking="user.ranking" />
                             </div>
                         </div>
                     </div>
