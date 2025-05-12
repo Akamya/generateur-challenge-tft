@@ -1,7 +1,7 @@
 <script setup>
 import { defineProps, ref } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
-import { router, usePage } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
 
 const props = defineProps({
     auth: Object,
@@ -111,7 +111,10 @@ const generateChallenge = () => {
                         }}
                     </button>
 
-                    <p class="text-primary-light text-center text-sm max-w-md">
+                    <p
+                        v-if="!props.auth.user"
+                        class="text-primary-light text-center text-sm max-w-md"
+                    >
                         Sign up to track your completed challenges and maybe
                         appear in the leaderboard.
                     </p>
@@ -133,7 +136,7 @@ const generateChallenge = () => {
                         class="flex justify-center items-center mb-6"
                     >
                         <p
-                            class="text-primary-light text-center text-sm max-w-md"
+                            class="text-primary-light text-center text-sm max-w-md bg-primary-dark/30 py-2 px-4 rounded-lg border border-primary-blue/30"
                         >
                             Sign up to accept this challenge and climb the
                             ladder!
@@ -145,7 +148,7 @@ const generateChallenge = () => {
                         class="flex justify-center items-center mb-6"
                     >
                         <p
-                            class="text-primary-light text-center text-sm max-w-md"
+                            class="text-primary-light text-center text-sm max-w-md bg-primary-dark/30 py-2 px-4 rounded-lg border border-primary-blue/30"
                         >
                             Accept this challenge and climb the ladder!
                         </p>
@@ -307,7 +310,7 @@ const generateChallenge = () => {
                         >
                             <font-awesome-icon
                                 :icon="['fas', 'check']"
-                                class="mr-1"
+                                class="mr-2"
                             />
                             Accept
                         </button>
@@ -335,7 +338,7 @@ const generateChallenge = () => {
                             </svg>
                             <font-awesome-icon
                                 v-else
-                                class="mr-1"
+                                class="mr-2"
                                 :icon="['fas', 'dice']"
                             />
 

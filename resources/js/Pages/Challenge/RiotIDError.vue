@@ -5,62 +5,78 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 
 <template>
     <AppLayout :show-background="true">
-        <Head title="Match Not Found - Opération TFT" />
+        <Head title="Match Not Found" />
 
-        <div class="flex flex-col relative">
-            <!-- Main Content -->
+        <div class="min-h-full flex flex-col relative overflow-hidden">
             <main
                 class="relative flex-grow flex flex-col items-center justify-center py-12 px-4"
             >
-                <!-- Error Icon -->
                 <div
-                    class="bg-blue-900 rounded-full p-6 border-4 border-yellow-500 mb-8"
+                    class="bg-gradient-to-br from-primary-blue/90 to-primary-blue/70 rounded-xl overflow-hidden max-w-lg w-full flex flex-col items-center shadow-lg border-2 border-primary-blue/30"
                 >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-16 w-16 text-red-400"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
+                    <!-- Error Status Banner -->
+                    <div
+                        class="bg-red-600/20 w-full py-3 px-8 border-b border-red-600/30 text-center"
                     >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                        />
-                    </svg>
-                </div>
-
-                <!-- Error Message -->
-                <div
-                    class="bg-blue-900/80 rounded-lg p-8 max-w-lg w-full text-center mb-8"
-                >
-                    <h1 class="text-white text-2xl font-bold mb-4">
-                        We couldn't find your matches.
-                    </h1>
-                    <p class="text-white text-xl mb-6">
-                        Please verify your Riot username.
-                    </p>
-                    <div class="flex flex-wrap justify-center gap-4">
-                        <button
-                            @click="$inertia.visit(route('profile.show'))"
-                            class="bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-3 px-6 rounded-lg flex items-center transition-colors"
+                        <h2
+                            class="text-primary-light text-2xl font-bold flex items-center justify-center"
                         >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5 mr-2"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
+                            <font-awesome-icon
+                                :icon="['fas', 'circle-exclamation']"
+                                class="h-6 w-6 mr-2 text-red-500"
+                            />
+                            MATCH NOT FOUND
+                        </h2>
+                    </div>
+
+                    <!-- Content Container -->
+                    <div class="p-8 w-full flex flex-col items-center">
+                        <div
+                            class="bg-primary-dark/80 rounded-full p-6 border-2 border-red-500/50 mb-6 shadow-lg"
+                        >
+                            <font-awesome-icon
+                                :icon="['fas', 'triangle-exclamation']"
+                                class="h-16 w-16 text-red-500"
+                            />
+                        </div>
+
+                        <div class="text-center mb-8 w-full">
+                            <h1
+                                class="text-primary-light text-2xl font-bold mb-4"
                             >
-                                <path
-                                    fill-rule="evenodd"
-                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-                                    clip-rule="evenodd"
-                                />
-                            </svg>
-                            Update Profile
-                        </button>
+                                We couldn't find your matches.
+                            </h1>
+                            <p
+                                class="text-primary-light/80 text-lg mb-6 bg-primary-dark/30 py-2 px-4 rounded-lg border border-primary-blue/30 max-w-md mx-auto"
+                            >
+                                Please verify your Riot username.
+                            </p>
+                        </div>
+
+                        <!-- Action Button -->
+                        <div
+                            class="bg-primary-dark/50 rounded-xl p-5 border border-primary-blue/30 w-full"
+                        >
+                            <h3
+                                class="text-primary-first text-center mb-4 font-bold"
+                            >
+                                ACCOUNT VERIFICATION
+                            </h3>
+                            <div class="flex justify-center">
+                                <button
+                                    @click="
+                                        $inertia.visit(route('profile.show'))
+                                    "
+                                    class="bg-primary-first hover:bg-primary-first/90 text-primary-dark font-bold py-3 px-6 rounded-xl flex items-center transition-colors shadow-md transform hover:scale-105 active:scale-95"
+                                >
+                                    <font-awesome-icon
+                                        :icon="['fas', 'user']"
+                                        class="mr-2"
+                                    />
+                                    Update Profile
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>

@@ -1,14 +1,14 @@
 <script setup>
-import SectionTitle from './SectionTitle.vue';
+import SectionTitle from "./SectionTitle.vue";
 </script>
 
 <template>
     <div class="md:grid md:grid-cols-3 md:gap-6">
         <SectionTitle>
-            <template #title>
+            <template #titlePerso>
                 <slot name="title" />
             </template>
-            <template #description>
+            <template #descriptionPerso>
                 <slot name="description" />
             </template>
         </SectionTitle>
