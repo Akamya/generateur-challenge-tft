@@ -19,8 +19,6 @@ class GlossaryController extends Controller
             'positions' => Position::all(),
             'classes' => Classe::all(),
             'constraints' => Constraint::all(),
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register'),
             'auth' => [
                 'user' => Auth::user(),
             ],

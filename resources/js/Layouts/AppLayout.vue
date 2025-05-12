@@ -714,7 +714,10 @@ const logout = () => {
                     />
                     <div class="absolute inset-0 bg-primary-blue/70"></div>
                 </div>
-                <div v-else class="absolute inset-0 z-0 bg-primary-blue"></div>
+                <div
+                    v-else
+                    class="absolute inset-0 z-0 bg-primary-dark/95"
+                ></div>
                 <div class="relative z-10 w-full">
                     <slot />
                 </div>
