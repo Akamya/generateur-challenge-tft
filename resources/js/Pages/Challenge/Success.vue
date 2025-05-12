@@ -26,21 +26,26 @@ const stats = computed(() => {
     <AppLayout :show-background="true">
         <Head title="Challenge Completed" />
 
-        <div class="min-h-screen flex flex-col relative overflow-hidden">
-            <!-- Main Content -->
+        <div class="min-h-full flex flex-col relative overflow-hidden">
             <main
                 class="relative flex-grow flex flex-col items-center py-12 px-4"
             >
                 <!-- Logo and Title -->
                 <div class="flex flex-col items-center mb-8">
                     <div class="p-3 mb-2">
-                        <img src="/storage/opTft.svg" alt="TFT Logo" />
+                        <img
+                            src="/storage/opTft.svg"
+                            alt="TFT Logo"
+                            class="w-24 h-auto"
+                        />
                     </div>
-                    <h1 class="text-5xl font-bold mb-2 text-green-400">
+                    <h1
+                        class="text-4xl font-bold mb-2 text-green-500 font-parkinsans text-center"
+                    >
                         CHALLENGE COMPLETED
                     </h1>
-                    <div class="w-64 h-1 bg-yellow-500 mb-6"></div>
-                    <p class="text-white text-xl mb-6">
+                    <div class="w-96 h-1 bg-primary-first mb-6"></div>
+                    <p class="text-primary-light text-xl mb-6 text-center">
                         Congratulations! You have successfully completed this
                         challenge.
                     </p>
@@ -48,102 +53,313 @@ const stats = computed(() => {
 
                 <!-- Results Container -->
                 <div
-                    class="bg-blue-900/80 rounded-lg p-8 max-w-4xl w-full mb-8"
+                    class="bg-gradient-to-br from-primary-blue/90 to-primary-blue/70 rounded-xl overflow-hidden max-w-4xl w-full mb-8 shadow-lg border-2 border-primary-blue/30"
                 >
-                    <!-- Summary Section -->
-                    <div class="mb-8">
+                    <!-- Success Status Banner -->
+                    <div
+                        class="bg-green-600/20 w-full py-3 px-8 border-b border-green-600/30 text-center"
+                    >
                         <h2
-                            class="text-white text-2xl font-bold mb-6 text-center border-b border-yellow-500 pb-2"
+                            class="text-primary-light text-2xl font-bold flex items-center justify-center"
                         >
-                            CHALLENGE SUMMARY
+                            <font-awesome-icon
+                                :icon="['fas', 'circle-check']"
+                                class="h-6 w-6 mr-2 text-green-500"
+                            />
+                            VERIFICATION RESULTS
                         </h2>
-
-                        <!-- Progress Bar -->
-                        <div class="mb-2 flex justify-between text-sm">
-                            <span class="text-white">Success Rate</span>
-                            <span class="text-white"
-                                >{{ stats.successRate }}%</span
-                            >
-                        </div>
-                        <div class="w-full bg-blue-950 rounded-full h-4 mb-6">
-                            <div
-                                class="h-4 rounded-full transition-all duration-500 ease-out bg-green-500"
-                                :style="{ width: `${stats.successRate}%` }"
-                            ></div>
-                        </div>
                     </div>
 
-                    <!-- Detailed Results -->
-                    <h2
-                        class="text-white text-2xl font-bold mb-6 text-center border-b border-yellow-500 pb-2"
-                    >
-                        CRITERIA DETAILS
-                    </h2>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div
-                            v-for="(status, key) in results"
-                            :key="key"
-                            class="p-4 rounded-lg bg-green-900/40 h-full"
-                        >
-                            <div class="flex items-center mb-3">
-                                <div
-                                    class="bg-green-500 rounded-full p-2 mr-3 flex items-center justify-center"
+                    <!-- Content Container -->
+                    <div class="p-8">
+                        <!-- Summary Section -->
+                        <div class="mb-8">
+                            <!-- Progress Bar -->
+                            <div class="mb-2 flex justify-between text-sm">
+                                <span class="text-primary-light"
+                                    >Success rate</span
                                 >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="h-6 w-6 text-white"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M5 13l4 4L19 7"
-                                        />
-                                    </svg>
-                                </div>
-                                <div>
+                                <span class="text-primary-light"
+                                    >{{ stats.successRate }}%</span
+                                >
+                            </div>
+                            <div
+                                class="w-full bg-primary-dark rounded-full h-4 mb-6 border border-primary-blue/30"
+                            >
+                                <div
+                                    class="h-4 rounded-full transition-all duration-500 ease-out bg-green-500"
+                                    :style="{ width: `${stats.successRate}%` }"
+                                ></div>
+                            </div>
+                        </div>
+
+                        <!-- Detailed Results -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Position Card -->
+                            <div
+                                v-if="results.position"
+                                class="bg-primary-dark/80 rounded-xl p-4 hover:bg-primary-dark transition-colors shadow-md border border-green-500/30"
+                            >
+                                <!-- Status Header -->
+                                <div class="flex items-center mb-3">
                                     <div
-                                        class="text-lg font-bold text-white uppercase"
+                                        class="bg-primary-first rounded-full p-2 mr-3 flex items-center justify-center w-10 h-10"
                                     >
-                                        {{ key }}
+                                        <img
+                                            src="/storage/seed/podium.svg"
+                                            class="w-6 h-6"
+                                        />
                                     </div>
-                                    <div class="text-green-300">
-                                        Criterion validated
+                                    <div>
+                                        <div
+                                            class="text-lg font-bold text-primary-first uppercase"
+                                        >
+                                            Position
+                                        </div>
+                                        <div class="text-green-400">Passed</div>
+                                    </div>
+                                </div>
+
+                                <!-- Criterion Details -->
+                                <div class="space-y-3">
+                                    <div
+                                        class="bg-primary-blue/20 p-3 rounded-lg border border-primary-blue/30"
+                                    >
+                                        <span
+                                            class="text-primary-first font-semibold"
+                                            >Required:</span
+                                        >
+                                        <span class="text-primary-light ml-2">{{
+                                            challenge.position.value
+                                        }}</span>
+                                    </div>
+
+                                    <div
+                                        class="bg-primary-blue/20 p-3 rounded-lg border border-primary-blue/30"
+                                    >
+                                        <span
+                                            class="text-primary-first font-semibold"
+                                            >Description:</span
+                                        >
+                                        <span class="text-primary-light ml-2">{{
+                                            challenge.position.description
+                                        }}</span>
+                                    </div>
+
+                                    <div
+                                        class="bg-primary-blue/20 p-3 rounded-lg border border-primary-blue/30"
+                                    >
+                                        <span
+                                            class="text-primary-first font-semibold"
+                                            >Result:</span
+                                        >
+                                        <span class="text-primary-light ml-2">{{
+                                            results.position.info
+                                        }}</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Criterion Details -->
-                            <div class="space-y-2">
-                                <div class="bg-green-800/40 p-3 rounded-md">
-                                    <span class="text-yellow-400 font-semibold"
-                                        >Name:</span
+                            <!-- Class Card -->
+                            <div
+                                v-if="results.classe"
+                                class="bg-primary-dark/80 rounded-xl p-4 hover:bg-primary-dark transition-colors shadow-md border border-green-500/30"
+                            >
+                                <!-- Status Header -->
+                                <div class="flex items-center mb-3">
+                                    <div
+                                        class="bg-primary-first rounded-full p-2 mr-3 flex items-center justify-center w-10 h-10"
                                     >
-                                    <span class="text-white ml-2">{{
-                                        challenge[key].name
-                                    }}</span>
+                                        <img
+                                            :src="
+                                                challenge.classe?.image
+                                                    ? `/storage/${challenge.classe.image}`
+                                                    : '/storage/seed/default-classe.svg'
+                                            "
+                                            class="invert w-6 h-6"
+                                        />
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="text-lg font-bold text-primary-first uppercase"
+                                        >
+                                            Class
+                                        </div>
+                                        <div class="text-green-400">Passed</div>
+                                    </div>
                                 </div>
 
-                                <div class="bg-green-800/40 p-3 rounded-md">
-                                    <span class="text-yellow-400 font-semibold"
-                                        >Description:</span
+                                <!-- Criterion Details -->
+                                <div class="space-y-3">
+                                    <div
+                                        class="bg-primary-blue/20 p-3 rounded-lg border border-primary-blue/30"
                                     >
-                                    <span class="text-white ml-2">{{
-                                        challenge[key].description
-                                    }}</span>
+                                        <span
+                                            class="text-primary-first font-semibold"
+                                            >Required:</span
+                                        >
+                                        <span class="text-primary-light ml-2">{{
+                                            challenge.classe.name
+                                        }}</span>
+                                    </div>
+
+                                    <div
+                                        class="bg-primary-blue/20 p-3 rounded-lg border border-primary-blue/30"
+                                    >
+                                        <span
+                                            class="text-primary-first font-semibold"
+                                            >Description:</span
+                                        >
+                                        <span class="text-primary-light ml-2">{{
+                                            challenge.classe.description
+                                        }}</span>
+                                    </div>
+
+                                    <div
+                                        class="bg-primary-blue/20 p-3 rounded-lg border border-primary-blue/30"
+                                    >
+                                        <span
+                                            class="text-primary-first font-semibold"
+                                            >Result:</span
+                                        >
+                                        <span class="text-primary-light ml-2">{{
+                                            results.classe.info
+                                        }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Origin Card -->
+                            <div
+                                v-if="results.origin"
+                                class="bg-primary-dark/80 rounded-xl p-4 hover:bg-primary-dark transition-colors shadow-md border border-green-500/30"
+                            >
+                                <!-- Status Header -->
+                                <div class="flex items-center mb-3">
+                                    <div
+                                        class="bg-primary-first rounded-full p-2 mr-3 flex items-center justify-center w-10 h-10"
+                                    >
+                                        <img
+                                            :src="
+                                                challenge.origin?.image
+                                                    ? `/storage/${challenge.origin.image}`
+                                                    : '/storage/seed/default-origin.svg'
+                                            "
+                                            class="invert w-6 h-6"
+                                        />
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="text-lg font-bold text-primary-first uppercase"
+                                        >
+                                            Origin
+                                        </div>
+                                        <div class="text-green-400">Passed</div>
+                                    </div>
                                 </div>
 
-                                <div class="bg-green-800/40 p-3 rounded-md">
-                                    <span class="text-yellow-400 font-semibold"
-                                        >Info:</span
+                                <!-- Criterion Details -->
+                                <div class="space-y-3">
+                                    <div
+                                        class="bg-primary-blue/20 p-3 rounded-lg border border-primary-blue/30"
                                     >
-                                    <span class="text-white ml-2">{{
-                                        status.info
-                                    }}</span>
+                                        <span
+                                            class="text-primary-first font-semibold"
+                                            >Required:</span
+                                        >
+                                        <span class="text-primary-light ml-2">{{
+                                            challenge.origin.name
+                                        }}</span>
+                                    </div>
+
+                                    <div
+                                        class="bg-primary-blue/20 p-3 rounded-lg border border-primary-blue/30"
+                                    >
+                                        <span
+                                            class="text-primary-first font-semibold"
+                                            >Description:</span
+                                        >
+                                        <span class="text-primary-light ml-2">{{
+                                            challenge.origin.description
+                                        }}</span>
+                                    </div>
+
+                                    <div
+                                        class="bg-primary-blue/20 p-3 rounded-lg border border-primary-blue/30"
+                                    >
+                                        <span
+                                            class="text-primary-first font-semibold"
+                                            >Result:</span
+                                        >
+                                        <span class="text-primary-light ml-2">{{
+                                            results.origin.info
+                                        }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Constraint Card -->
+                            <div
+                                v-if="results.constraint"
+                                class="bg-primary-dark/80 rounded-xl p-4 hover:bg-primary-dark transition-colors shadow-md border border-green-500/30"
+                            >
+                                <!-- Status Header -->
+                                <div class="flex items-center mb-3">
+                                    <div
+                                        class="bg-primary-first rounded-full p-2 mr-3 flex items-center justify-center w-10 h-10"
+                                    >
+                                        <img
+                                            :src="`/storage/${challenge.constraint.image}`"
+                                            class="w-6 h-6"
+                                        />
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="text-lg font-bold text-primary-first uppercase"
+                                        >
+                                            Constraint
+                                        </div>
+                                        <div class="text-green-400">Passed</div>
+                                    </div>
+                                </div>
+
+                                <!-- Criterion Details -->
+                                <div class="space-y-3">
+                                    <div
+                                        class="bg-primary-blue/20 p-3 rounded-lg border border-primary-blue/30"
+                                    >
+                                        <span
+                                            class="text-primary-first font-semibold"
+                                            >Required:</span
+                                        >
+                                        <span class="text-primary-light ml-2">{{
+                                            challenge.constraint.name
+                                        }}</span>
+                                    </div>
+
+                                    <div
+                                        class="bg-primary-blue/20 p-3 rounded-lg border border-primary-blue/30"
+                                    >
+                                        <span
+                                            class="text-primary-first font-semibold"
+                                            >Description:</span
+                                        >
+                                        <span class="text-primary-light ml-2">{{
+                                            challenge.constraint.description
+                                        }}</span>
+                                    </div>
+
+                                    <div
+                                        class="bg-primary-blue/20 p-3 rounded-lg border border-primary-blue/30"
+                                    >
+                                        <span
+                                            class="text-primary-first font-semibold"
+                                            >Result:</span
+                                        >
+                                        <span class="text-primary-light ml-2">{{
+                                            results.constraint.info
+                                        }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -151,45 +367,32 @@ const stats = computed(() => {
                 </div>
 
                 <!-- Action Buttons -->
-                <div class="flex flex-wrap justify-center gap-4">
-                    <button
-                        @click="$inertia.get(route('challenge.generate'))"
-                        class="bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-3 px-6 rounded-lg flex items-center transition-colors"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 mr-2"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
+                <div
+                    class="bg-primary-dark/50 rounded-xl p-5 border border-primary-blue/30 max-w-md w-full"
+                >
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <button
+                            @click="$inertia.get(route('challenge.generate'))"
+                            class="bg-primary-first hover:bg-primary-first/90 text-primary-dark font-bold py-3 px-6 rounded-xl flex items-center transition-colors shadow-md transform hover:scale-105 active:scale-95"
                         >
-                            <path
-                                fill-rule="evenodd"
-                                d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
-                                clip-rule="evenodd"
+                            <font-awesome-icon
+                                :icon="['fas', 'arrows-rotate']"
+                                class="mr-2"
                             />
-                        </svg>
-                        New Challenge
-                    </button>
-                    <a
-                        :href="link"
-                        target="_blank"
-                        class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-6 rounded-lg flex items-center transition-colors"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 mr-2"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
+                            New Challenge
+                        </button>
+                        <a
+                            :href="link"
+                            target="_blank"
+                            class="bg-primary-blue hover:bg-primary-blue/80 text-primary-light font-bold py-3 px-6 rounded-xl flex items-center transition-colors shadow-md transform hover:scale-105 active:scale-95"
                         >
-                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                            <path
-                                fill-rule="evenodd"
-                                d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                                clip-rule="evenodd"
+                            <font-awesome-icon
+                                :icon="['fas', 'eye']"
+                                class="mr-2"
                             />
-                        </svg>
-                        See the match
-                    </a>
+                            See the match
+                        </a>
+                    </div>
                 </div>
             </main>
         </div>

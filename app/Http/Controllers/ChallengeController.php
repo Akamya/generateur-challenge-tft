@@ -327,6 +327,7 @@ class ChallengeController extends Controller
         $classeSuccess = $results["classe"]["success"];
         $constraintSuccess = $results["constraint"]["success"];
         $success = $positionSuccess && $originSuccess && $classeSuccess && $constraintSuccess;
+        // $success= true;
 
         // dd($matchInfo);
         if (!$success) {
