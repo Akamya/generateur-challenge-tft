@@ -144,6 +144,10 @@ const submit = () => {
                         <InputError class="mt-2" :message="form.errors.terms" />
                     </InputLabel>
                 </div>
+                <div class="text-xs text-primary-icon font-semibold mt-5">
+                    By creating an account and logging in, you accept the use of
+                    session cookies.
+                </div>
 
                 <div class="flex items-center justify-end mt-4">
                     <Link

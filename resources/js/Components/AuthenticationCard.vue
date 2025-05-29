@@ -1,6 +1,6 @@
 <template>
     <div
-        class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0"
+        class="flex flex-col sm:justify-center items-center pt-6 sm:pt-0 mt-2 mb-5"
     >
         <div class="flex flex-col items-center">
             <slot name="logo" />

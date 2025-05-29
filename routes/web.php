@@ -6,6 +6,7 @@ use App\Http\Controllers\GlossaryController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\LeaderboardController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get('/', [ChallengeController::class, 'index'])->name('homepage');
 Route::get('/challenge/generate', [ChallengeController::class, 'generate'])->name('challenge.generate');
@@ -16,6 +17,13 @@ Route::get('/user/search', [HistoryController::class, 'search'])->name('user.sea
 Route::get('/history/{userID}', [HistoryController::class, 'index'])->name('history');
 
 Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
+
+Route::get('/legal-notice', function () {
+    return Inertia::render('Mentions');
+});
+Route::get('/privacy-policy', function () {
+    return Inertia::render('Policies');
+});
 
 
 Route::middleware([

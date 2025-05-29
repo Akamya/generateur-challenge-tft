@@ -10,8 +10,6 @@ const props = defineProps({
     constraints: Array,
 });
 
-console.log("props", props.classes);
-
 const activeCategory = ref("constraints");
 
 const setActiveCategory = (category) => {
